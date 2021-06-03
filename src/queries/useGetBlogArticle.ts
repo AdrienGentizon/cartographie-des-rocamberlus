@@ -72,6 +72,7 @@ export default function useGetBlogArticle(uid?: string) {
 
   useEffect(() => {
     getBlogArticle();
+    // eslint-disable-next-line
   }, []);
 
   return { ...status, getBlogArticle };

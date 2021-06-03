@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useClient } from '../../contexts/ClientProvider/ClientProvider';
 
 import { RichText } from 'prismic-reactjs';
 import { Link } from 'react-router-dom';
@@ -16,6 +15,7 @@ export default function Blog() {
   useEffect(() => {
     if (!data) getBlogArticles();
     if (data) setDocData(data);
+    // eslint-disable-next-line
   }, [data]);
 
   if (!docData) return <p>Loading...</p>;

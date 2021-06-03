@@ -8,7 +8,7 @@ import VectorSource from 'ol/source/Vector';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 
-import { GpsCoordinates, Location } from '../queries/types';
+import { GpsCoordinates } from '../queries/types';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import { GqlLocation } from '../types';
 

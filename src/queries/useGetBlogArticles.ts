@@ -51,6 +51,7 @@ export default function useGetBlogArticles() {
 
   useEffect(() => {
     getBlogArticles();
+    // eslint-disable-next-line
   }, []);
 
   return { ...status, getBlogArticles };

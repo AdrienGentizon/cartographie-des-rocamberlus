@@ -25,9 +25,9 @@ export default function Article() {
       getLocation({ variables: { id: data.data.id_location } });
     }
     if (getLocationData) {
-      console.log(docData?.data.pictures);
       setLocation(getLocationData.location);
     }
+    // eslint-disable-next-line
   }, [data, getLocationData]);
 
   if (!docData) return <p>Loading...</p>;
