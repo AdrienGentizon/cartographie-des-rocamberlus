@@ -1,0 +1,12 @@
+@use '../abstracts/variables' as *;
+
+.btn {
+  border: solid 1px;
+  border-radius: $border-radius;
+  &--transparent {
+    background: none;
+  }
+  &--no-border {
+    border: none;
+  }
+}

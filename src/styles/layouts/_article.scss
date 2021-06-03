@@ -1,0 +1,54 @@
+@use '../abstracts/breakpoints' as *;
+@use '../abstracts/colors' as *;
+
+.Article {
+  display: grid;
+  grid-template:
+    '. article .'
+    '. map .'
+    'gallery gallery gallery'
+    / 1fr 14fr 1fr;
+
+  text-align: center;
+
+  @media screen and (min-width: map-get($breakpoints, mobile)) {
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+
+  article {
+    grid-area: article;
+
+    text-align: justify;
+    margin-bottom: 1rem;
+    border-bottom: solid 1px $color-grey--medium;
+    padding-bottom: 1rem;
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .Map {
+    grid-area: map;
+    height: 400px;
+    .Mapping__map {
+      height: 250px;
+    }
+  }
+
+  .Gallery {
+    grid-area: gallery;
+    border-top: solid 1px $color-grey--medium;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+
+    ul {
+      display: flex;
+      align-items: center;
+      li {
+        margin: 0 0.25rem;
+      }
+    }
+  }
+}

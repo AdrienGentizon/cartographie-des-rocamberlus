@@ -1,0 +1,40 @@
+import React, { useEffect, useState } from 'react';
+import { useClient } from '../../contexts/ClientProvider/ClientProvider';
+
+import { RichText } from 'prismic-reactjs';
+import { Link } from 'react-router-dom';
+import { BLOG } from '../../routes';
+import useGetBlogArticles from '../../queries/useGetBlogArticles';
+import { ArtistLocationArticleDocument } from '../../types';
+
+export default function Blog() {
+  const [docData, setDocData] =
+    useState<undefined | ArtistLocationArticleDocument[]>(undefined);
+
+  const { data, getBlogArticles } = useGetBlogArticles();
+
+  useEffect(() => {
+    if (!data) getBlogArticles();
+    if (data) setDocData(data);
+  }, [data]);
+
+  if (!docData) return <p>Loading...</p>;
+
+  return (
+    <div className="Blog">
+      <div className="container container--flex container--flex-center">
+        <h3>Blog</h3>
+        <p>Une liste des articles publiés par l'équipe de Carte brute</p>
+        <ul>
+          {docData.map((doc, n) => (
+            <li key={`article-${n}`}>
+              <Link to={`${BLOG}/${doc.uid}`}>
+                {RichText.asText(doc.data.title)}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}

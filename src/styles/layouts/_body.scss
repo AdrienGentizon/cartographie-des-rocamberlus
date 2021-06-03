@@ -1,0 +1,10 @@
+@use '../abstracts' as *;
+
+html {
+  @include hide-scrollbar-mobile-only;
+}
+
+body {
+  font-family: $ff-serif;
+  background: $color-light;
+}

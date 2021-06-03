@@ -1,0 +1,38 @@
+@use './colors' as*;
+
+.success {
+  color: $color-success;
+}
+
+.error {
+  color: $color-error;
+}
+
+.warning {
+  color: $color-warning;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 1.6rem;
+}
+
+h3 {
+  font-weight: 300;
+  font-size: 1.4rem;
+}
+
+p {
+  font-size: 0.9rem;
+}
+
+p,
+label,
+a {
+  font-weight: 300;
+}

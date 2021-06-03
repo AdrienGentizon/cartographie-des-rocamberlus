@@ -1,0 +1,55 @@
+@use '../abstracts/colors' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/breakpoints' as *;
+@use '../abstracts/variables' as *;
+
+.Header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  // max-width: $max-width-rem;
+  margin: 0 auto;
+  padding: 0.25rem 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  @media screen and (min-width: map-get($breakpoints, mobile)) {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  background-color: $color-light;
+
+  &--is-on-top {
+    box-shadow: 0 2px 4px -4px $color-grey;
+  }
+
+  &__logo {
+    font-weight: 200;
+    padding: 0;
+    @media screen and (min-width: map-get($breakpoints, mobile)) {
+      padding-left: 1.5rem;
+    }
+  }
+
+  &__burger-button {
+    position: absolute;
+    top: 1rem;
+    right: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 32px;
+    @media screen and (min-width: map-get($breakpoints, mobile)) {
+      display: none;
+    }
+
+    .bar {
+      width: 100%;
+      height: 2px;
+      background-color: $color-dark;
+    }
+  }
+}
