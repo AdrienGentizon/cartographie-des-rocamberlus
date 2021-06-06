@@ -28,9 +28,7 @@ export default function App() {
               <HeaderWithIntersectionObserver />
               <Switch>
                 <Route exact path={HOME} component={Home} />
-                <Route path={MAP}>
-                  <Map id="map-map" />
-                </Route>
+                <Route path={MAP} component={Map} />
                 <Route exact path={BLOG} component={Blog} />
                 <Route path={LOGIN} component={Login} />
                 <Route path={`${BLOG}/:id`} component={Article} />

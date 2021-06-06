@@ -40,17 +40,13 @@ export default function Article() {
   return (
     <div className="Article">
       <article>
-        <h1>{RichText.render(docData.data.title)}</h1>
+        {RichText.render(docData.data.title)}
         {RichText.render(docData.data.text)}
       </article>
       {location && (
         <div className="Map">
           <h2>Emplacement</h2>
-          <Mapping
-            id={`article-map-${docData.id}`}
-            locations={[location]}
-            center={location}
-          />
+          <Mapping locations={[location]} center={location} />
         </div>
       )}
       <div className="Gallery">

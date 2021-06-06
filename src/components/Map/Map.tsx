@@ -32,7 +32,7 @@ export default function Map({ id }: MapProps) {
         </p>
       )}
       {data && data.locations && (
-        <Mapping id={id} locations={data.locations.locations} />
+        <Mapping locations={data.locations.locations} />
       )}
     </div>
   );

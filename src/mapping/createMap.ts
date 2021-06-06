@@ -44,7 +44,7 @@ function initMap(mapId: string, options?: CreateMapOptions) {
       zoom: _options.zoom,
     }),
   });
-  console.log(map);
+
   return map;
 }
 
@@ -134,8 +134,6 @@ export default function createMap({
 }) {
   if (!mapRef.current) return;
 
-  if (map && mapRef.current.id === map.getTarget()) return;
-
   if (!center) {
     map = initMap(mapRef.current.id);
   } else {
@@ -149,9 +147,10 @@ export default function createMap({
       center: aim,
       zoom: 6.25,
     });
-    console.log('create map');
   }
 
   spawnLocationsOnMap(map, locations);
   addMapClickEventListener(map, infoHandler);
+
+  return map;
 }
