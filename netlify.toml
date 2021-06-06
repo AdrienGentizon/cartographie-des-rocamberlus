@@ -7,4 +7,4 @@
 [[headers]]
 for = "/*"
   [headers.values]
-  Access-Control-Allow-Origin = "https://api.cartebrute.art"
+  Access-Control-Allow-Origin = "https://api.cartebrute.art/graphql"
