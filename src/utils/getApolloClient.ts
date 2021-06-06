@@ -26,13 +26,6 @@ function getEnvVar(
 }
 
 export default function getApolloClient(): ApolloClient<NormalizedCacheObject> {
-  // if (!client) {
-  //   client = new ApolloClient({
-  //     uri: getEnvVar('REACT_APP_APOLLO_SERVER_URI'),
-  //     cache: new InMemoryCache(),
-  //   });
-  // }
-  // return client;
   if (!client) {
     const httpLink = createHttpLink({
       uri: getEnvVar('REACT_APP_APOLLO_SERVER_URI'),
