@@ -3,12 +3,14 @@
 .Blog {
   display: grid;
   grid-template:
-    '. title  .' auto
-    '. text .' auto
-    / 1fr 14fr 1fr;
+    'title' auto
+    'text' auto;
 
   @media screen and (min-width: map-get($breakpoints, mobile)) {
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template:
+      '. title  .' auto
+      '. text .' auto
+      / 3fr 10fr 3fr;
   }
 
   &__title {

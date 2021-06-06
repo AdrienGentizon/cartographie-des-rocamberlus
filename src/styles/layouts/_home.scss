@@ -5,13 +5,16 @@
 .Home {
   display: grid;
   grid-template:
-    'header header  header' 10em
-    'hero hero hero' 20em
-    '. text .' auto
-    / 1fr 14fr 1fr;
+    'header' 10em
+    'hero' 20em
+    'text' auto;
 
   @media screen and (min-width: map-get($breakpoints, mobile)) {
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template:
+      'header header  header' 10em
+      'hero hero hero' 20em
+      '. text .' auto
+      / 3fr 10fr 3fr;
   }
 
   &__title {

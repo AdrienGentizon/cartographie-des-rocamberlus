@@ -22,6 +22,7 @@ export default function Article() {
     if (!data) getBlogArticle();
     if (data) {
       setDocData(data);
+      console.log(data.data.text);
       getLocation({ variables: { id: data.data.id_location } });
     }
     if (getLocationData) {
