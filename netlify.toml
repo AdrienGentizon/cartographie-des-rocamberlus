@@ -1,7 +1,7 @@
 [[redirects]]
   from = "https://api.cartebrute.art"
   to = "http://157.230.110.237/graphql"
-  status = 301
+  status = 200
   force = true
 
 [[headers]]
