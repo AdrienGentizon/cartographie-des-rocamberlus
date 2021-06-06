@@ -3,3 +3,8 @@
   to = "http://157.230.110.237/graphql"
   status = 301
   force = true
+
+[[headers]]
+for = "/*"
+  [headers.values]
+  Access-Control-Allow-Origin = "https://api.cartebrute.art"
