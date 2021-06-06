@@ -36,7 +36,7 @@ export default function getApolloClient(): ApolloClient<NormalizedCacheObject> {
   if (!client) {
     const httpLink = createHttpLink({
       uri: getEnvVar('REACT_APP_APOLLO_SERVER_URI'),
-      credentials: 'include',
+      credentials: 'omit',
       fetchOptions: {
         mode: 'cors',
       },
