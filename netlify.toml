@@ -3,6 +3,11 @@
   to = "http://157.230.110.237/graphql"
   status = 200
   force = true
+  
+[[redirects]]
+ from = "/*"
+ to = "/index.html"
+ status = 200
 
 [[headers]]
 for = "/*"
