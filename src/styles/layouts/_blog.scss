@@ -1,0 +1,31 @@
+@use '../abstracts/breakpoints' as *;
+
+.Blog {
+  display: grid;
+  grid-template:
+    '. title  .' auto
+    '. text .' auto
+    / 1fr 14fr 1fr;
+
+  @media screen and (min-width: map-get($breakpoints, mobile)) {
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+
+  &__title {
+    grid-area: title;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  ul {
+    grid-area: text;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}

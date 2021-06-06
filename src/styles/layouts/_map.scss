@@ -3,10 +3,19 @@
 
 .Map {
   display: grid;
+
   grid-template:
     'title' 3rem
-    'sub-title' 1.5rem
+    'sub-title ' 1.5rem
     'mapping' auto;
+
+  @media screen and (min-width: map-get($breakpoints, mobile)) {
+    grid-template:
+      '. title .' 3rem
+      '. sub-title .' 1.5rem
+      '. mapping .' auto
+      / 1fr 14fr 1fr;
+  }
 
   &__title {
     grid-area: title;
@@ -31,7 +40,7 @@
     display: grid;
     grid-template:
       'side' 1rem
-      'map' 400px
+      'map' minmax(auto, 400px)
       'info' auto;
 
     .ol-overlaycontainer-stopevent {

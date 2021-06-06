@@ -30,7 +30,12 @@ export default function Article() {
     // eslint-disable-next-line
   }, [data, getLocationData]);
 
-  if (!docData) return <p>Loading...</p>;
+  if (!docData)
+    return (
+      <div className="Article">
+        <p>Loading...</p>
+      </div>
+    );
 
   return (
     <div className="Article">
@@ -41,7 +46,11 @@ export default function Article() {
       {location && (
         <div className="Map">
           <h2>Emplacement</h2>
-          <Mapping locations={[location]} center={location} />
+          <Mapping
+            id={`article-map-${docData.id}`}
+            locations={[location]}
+            center={location}
+          />
         </div>
       )}
       <div className="Gallery">

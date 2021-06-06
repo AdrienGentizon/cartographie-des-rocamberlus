@@ -3,11 +3,12 @@ import createMap from '../../../mapping/createMap';
 import { GqlLocation } from '../../../types';
 
 interface MappingProps {
+  id: string;
   locations: GqlLocation[];
   center?: GqlLocation;
 }
 
-export default function Mapping({ locations, center }: MappingProps) {
+export default function Mapping({ id, locations, center }: MappingProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
   const [info, setInfo] = useState('');
@@ -16,18 +17,19 @@ export default function Mapping({ locations, center }: MappingProps) {
   useEffect(() => {
     if (mapRef.current && infoRef.current) {
       createMap({
+        mapRef,
         locations,
         infoHandler,
         center,
       });
     }
     // eslint-disable-next-line
-  }, [mapRef, locations, infoRef]);
+  }, [mapRef.current, locations, infoRef.current]);
 
   return (
     <div className="Mapping">
       <div id="side" className="Mapping__side"></div>
-      <div id="map" className="Mapping__map" ref={mapRef}></div>
+      <div id={id} className="Mapping__map" ref={mapRef}></div>
       <div id="info" className="Mapping__info" ref={infoRef}>
         <p>{info}</p>
       </div>

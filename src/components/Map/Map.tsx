@@ -4,7 +4,11 @@ import useGetLocations from '../../queries/useGetLocations';
 
 import Mapping from './Mapping/Mapping';
 
-export default function Map() {
+interface MapProps {
+  id: string;
+}
+
+export default function Map({ id }: MapProps) {
   const { data, error } = useGetLocations({ page: 1, size: 100 });
 
   useEffect(() => {
@@ -28,7 +32,7 @@ export default function Map() {
         </p>
       )}
       {data && data.locations && (
-        <Mapping locations={data.locations.locations} />
+        <Mapping id={id} locations={data.locations.locations} />
       )}
     </div>
   );

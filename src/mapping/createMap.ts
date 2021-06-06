@@ -22,13 +22,13 @@ interface CreateMapOptions {
   zoom: number;
 }
 
-function initMap(options?: CreateMapOptions) {
+function initMap(mapId: string, options?: CreateMapOptions) {
   const _options: CreateMapOptions = options
     ? { ...options }
     : { center: FRANCE_COORDINATES, zoom: 6.25 };
 
-  return new Map({
-    target: 'map',
+  const map = new Map({
+    target: mapId,
     layers: [
       new TileLayer({
         source: new XYZ({
@@ -44,6 +44,8 @@ function initMap(options?: CreateMapOptions) {
       zoom: _options.zoom,
     }),
   });
+  console.log(map);
+  return map;
 }
 
 function generateMarkersFromLocations(
@@ -104,37 +106,7 @@ function addMapClickEventListener(
   map.on('click', clickHandler);
 }
 
-let map: Map | undefined = undefined;
-
-export default function createMap({
-  locations,
-  infoHandler,
-  center,
-}: {
-  locations: GqlLocation[];
-  infoHandler: {
-    infoRef: React.RefObject<HTMLDivElement>;
-    setInfo: React.Dispatch<React.SetStateAction<string>>;
-  };
-  center?: GqlLocation;
-}) {
-  if (!map) {
-    if (!center) {
-      map = initMap();
-    } else {
-      const { address } = center;
-      const aim = {
-        gps_longitude: address.gps_longitude,
-        gps_latitude: address.gps_latitude,
-      };
-
-      map = initMap({
-        center: aim,
-        zoom: 6.25,
-      });
-    }
-  }
-
+function spawnLocationsOnMap(map: Map, locations: GqlLocation[]) {
   const markers = generateMarkersFromLocations(locations);
 
   const vectorSource = new VectorSource({ features: markers });
@@ -142,6 +114,44 @@ export default function createMap({
   const markerVectorLayer = getMarkerStyle(vectorSource);
 
   map.addLayer(markerVectorLayer);
+}
 
+let map: Map | undefined = undefined;
+
+export default function createMap({
+  mapRef,
+  locations,
+  infoHandler,
+  center,
+}: {
+  mapRef: React.RefObject<HTMLDivElement>;
+  locations: GqlLocation[];
+  infoHandler: {
+    infoRef: React.RefObject<HTMLDivElement>;
+    setInfo: React.Dispatch<React.SetStateAction<string>>;
+  };
+  center?: GqlLocation;
+}) {
+  if (!mapRef.current) return;
+
+  if (map && mapRef.current.id === map.getTarget()) return;
+
+  if (!center) {
+    map = initMap(mapRef.current.id);
+  } else {
+    const { address } = center;
+    const aim = {
+      gps_longitude: address.gps_longitude,
+      gps_latitude: address.gps_latitude,
+    };
+
+    map = initMap(mapRef.current.id, {
+      center: aim,
+      zoom: 6.25,
+    });
+    console.log('create map');
+  }
+
+  spawnLocationsOnMap(map, locations);
   addMapClickEventListener(map, infoHandler);
 }

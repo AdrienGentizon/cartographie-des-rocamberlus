@@ -22,19 +22,19 @@ export default function Blog() {
 
   return (
     <div className="Blog">
-      <div className="container container--flex container--flex-center">
+      <div className="Blog__title">
         <h3>Blog</h3>
         <p>Une liste des articles publiés par l'équipe de Carte brute</p>
-        <ul>
-          {docData.map((doc, n) => (
-            <li key={`article-${n}`}>
-              <Link to={`${BLOG}/${doc.uid}`}>
-                {RichText.asText(doc.data.title)}
-              </Link>
-            </li>
-          ))}
-        </ul>
       </div>
+      <ul>
+        {docData.map((doc, n) => (
+          <li key={`article-${n}`}>
+            <Link to={`${BLOG}/${doc.uid}`}>
+              {RichText.asText(doc.data.title)}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
