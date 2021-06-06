@@ -17,15 +17,10 @@
       / 3fr 10fr 3fr;
   }
 
-  text-align: center;
-
   article {
     grid-area: article;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
 
     text-align: justify;
     margin-bottom: 1rem;
@@ -39,8 +34,9 @@
 
     p {
       padding: 0 0.5rem;
-      line-height: 1.5rem;
+      line-height: 1.6rem;
       text-indent: 1rem;
+      margin-bottom: 1rem;
     }
   }
 
@@ -63,6 +59,7 @@
   .Gallery {
     grid-area: gallery;
     padding-top: 1rem;
+    text-align: center;
 
     ul {
       display: flex;

@@ -67,7 +67,7 @@ export default function Home() {
       </div>
       <div className="Home__text">
         <h3 className="Home__text-title">
-          {RichText.asText(docData.text_title)}
+          {RichText.render(docData.text_title)}
         </h3>
         {docData.text_content.map((p: any, n: number) => (
           <p className="Home__text-content" key={`text_content-${n}`}>

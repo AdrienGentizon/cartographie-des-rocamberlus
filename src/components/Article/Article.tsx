@@ -22,7 +22,6 @@ export default function Article() {
     if (!data) getBlogArticle();
     if (data) {
       setDocData(data);
-      console.log(data.data.text);
       getLocation({ variables: { id: data.data.id_location } });
     }
     if (getLocationData) {
@@ -41,8 +40,8 @@ export default function Article() {
   return (
     <div className="Article">
       <article>
-        <h1>{RichText.asText(docData.data.title)}</h1>
-        <p>{RichText.asText(docData.data.text)}</p>
+        <h1>{RichText.render(docData.data.title)}</h1>
+        {RichText.render(docData.data.text)}
       </article>
       {location && (
         <div className="Map">
