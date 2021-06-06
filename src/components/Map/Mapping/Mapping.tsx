@@ -31,6 +31,7 @@ function MapBuilder({
       center,
     });
     return () => map?.dispose();
+    // eslint-disable-next-line
   }, []);
 
   return <></>;
