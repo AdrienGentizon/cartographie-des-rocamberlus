@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import { RichText } from 'prismic-reactjs';
 import { Link } from 'react-router-dom';
-import { BLOG } from '../../routes';
+import { BLOG_URL } from '../../routes';
 import useGetBlogArticles from '../../queries/useGetBlogArticles';
 import { ArtistLocationArticleDocument } from '../../types';
 
 export default function Blog() {
-  const [docData, setDocData] =
-    useState<undefined | ArtistLocationArticleDocument[]>(undefined);
+  const [docData, setDocData] = useState<
+    undefined | ArtistLocationArticleDocument[]
+  >(undefined);
 
   const { data, getBlogArticles } = useGetBlogArticles();
 
@@ -29,7 +30,7 @@ export default function Blog() {
       <ul>
         {docData.map((doc, n) => (
           <li key={`article-${n}`}>
-            <Link to={`${BLOG}/${doc.uid}`}>
+            <Link to={`${BLOG_URL}/${doc.uid}`}>
               {RichText.asText(doc.data.title)}
             </Link>
           </li>

@@ -17,23 +17,20 @@ export default function Map({ id }: MapProps) {
 
   if (error)
     return (
-      <div className="Map">
+      <main className="flex flex-col text-center flex-1">
         <h3>Carte</h3>
-        <p className="error">Oups something went wrong</p>
-      </div>
+        <p className="text-red-500">Oups something went wrong</p>
+      </main>
     );
 
   return (
-    <div className="Map">
-      <h3 className="Map__title">Carte</h3>
-      {data && data.locations && (
-        <p className="Map__sub-title">
-          {data.locations.locations.length} environnements et jardins singuliers
-        </p>
-      )}
+    <main className="flex flex-col text-center flex-1">
+      <h3 className="py-8 text-xl font-thin">
+        Environnements et jardins singuliers
+      </h3>
       {data && data.locations && (
         <Mapping locations={data.locations.locations} />
       )}
-    </div>
+    </main>
   );
 }

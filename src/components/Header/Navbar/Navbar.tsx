@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MAP, BLOG, LOGIN } from '../../../routes';
+import { MAP_URL, BLOG_URL, LOGIN_URL } from '../../../routes';
 
 interface NavbarProps {
   isCollapsed: boolean;
@@ -15,13 +15,13 @@ export default function Navbar({ isCollapsed }: NavbarProps) {
     >
       <ul className="Header__nav-list">
         <li>
-          <Link to={MAP}>Carte</Link>
+          <Link to={MAP_URL}>Carte</Link>
         </li>
         <li>
-          <Link to={BLOG}>Blog</Link>
+          <Link to={BLOG_URL}>Blog</Link>
         </li>
         <li>
-          <Link to={LOGIN}>Compte</Link>
+          <Link to={LOGIN_URL}>Compte</Link>
         </li>
       </ul>
     </nav>

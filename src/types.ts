@@ -24,7 +24,7 @@ export interface Location {
 }
 
 export interface GqlLocation extends Location {
-  id: number;
+  id: string;
 }
 export interface Artist {
   name: string;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { LOGIN } from '../../routes';
+import { CONTACT_URL } from '../../routes';
 
 import Prismic from '@prismicio/client';
 import { useClient } from '../../contexts/ClientProvider/ClientProvider';
@@ -46,31 +46,34 @@ export default function Home() {
   if (!docData) return <div className="Home"></div>;
 
   return (
-    <main className="Home">
-      <h1 className="Home__title">{RichText.asText(docData.title)}</h1>
+    <main className="flex flex-col text-center flex-1">
+      <h1 className="text-2xl py-8">{RichText.asText(docData.title)}</h1>
 
-      <div className="Home__hero">
-        <h3 className="Home__hero-catch-phrase">
+      <div className="bg-gray-100 py-8 px-2">
+        <h3 className="text-md font-medium italic">
           {RichText.asText(docData.catch_phrase)}
         </h3>
-        <p className="Home__hero-message">
+        <p className="text-sm leading-4 mt-6 font-thin">
           {RichText.asText(docData.signup_message)}
         </p>
         <button
-          className="Home__hero-button btn btn--transparent"
+          className="mt-6 font-thin text-sm hover:bg-gray-200 border border-gray-500 rounded px-4 py-1"
           onClick={() => {
-            history.push(LOGIN);
+            history.push(CONTACT_URL);
           }}
         >
-          Inscription
+          Participer
         </button>
       </div>
-      <div className="Home__text">
-        <h3 className="Home__text-title">
+      <div className="mt-12 px-2">
+        <div className="font-thin text-lg">
           {RichText.render(docData.text_title)}
-        </h3>
+        </div>
         {docData.text_content.map((p: any, n: number) => (
-          <p className="Home__text-content" key={`text_content-${n}`}>
+          <p
+            className="mt-8 font-light text-justify text-sm leading-relaxed"
+            key={`text_content-${n}`}
+          >
             {p.text}
           </p>
         ))}

@@ -1,4 +1,5 @@
-export const HOME = '/';
-export const MAP = '/map';
-export const LOGIN = '/login';
-export const BLOG = '/blog';
+export const HOME_URL = '/';
+export const MAP_URL = '/map';
+export const LOGIN_URL = '/login';
+export const BLOG_URL = '/blog';
+export const CONTACT_URL = '/contact';

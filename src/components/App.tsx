@@ -7,16 +7,14 @@ import ClientProvider from '../contexts/ClientProvider/ClientProvider';
 import { ApolloProvider } from '@apollo/client';
 import getApolloClient from '../utils/getApolloClient';
 
-import { BLOG, HOME, LOGIN, MAP } from '../routes';
+import { CONTACT_URL, HOME_URL, MAP_URL } from '../routes';
 
-import { HeaderWithIntersectionObserver } from './Header/Header';
 import Home from './Home/Home';
-import Login from './Login/Login';
 import Map from './Map/Map';
-import Blog from './Blog/Blog';
 
-import '../styles/style.scss';
-import Article from './Article/Article';
+import Nav from './Nav/Nav';
+import ContactRoute from './Routes/ContactRoute';
+import Footer from './Footer/Footer';
 
 export default function App() {
   return (
@@ -24,15 +22,14 @@ export default function App() {
       <UserProvider>
         <ClientProvider>
           <ApolloProvider client={getApolloClient()}>
-            <div className="App">
-              <HeaderWithIntersectionObserver />
+            <div className="parent min-h-screen flex flex-col justify-between">
+              <Nav />
               <Switch>
-                <Route exact path={HOME} component={Home} />
-                <Route path={MAP} component={Map} />
-                <Route exact path={BLOG} component={Blog} />
-                <Route path={LOGIN} component={Login} />
-                <Route path={`${BLOG}/:id`} component={Article} />
+                <Route exact path={HOME_URL} component={Home} />
+                <Route path={MAP_URL} component={Map} />
+                <Route path={CONTACT_URL} component={ContactRoute} />
               </Switch>
+              <Footer />
             </div>
           </ApolloProvider>
         </ClientProvider>

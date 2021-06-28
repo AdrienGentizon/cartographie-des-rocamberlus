@@ -1,5 +1,5 @@
 import React from 'react';
-import { HOME, MAP } from '../../../routes';
+import { HOME_URL, MAP_URL } from '../../../routes';
 import SignOutButton from '../SignOutButton/SignOutButton';
 import AnonymousSignInButton from './AnonymousSignInButton/AnonymousSignInButton';
 import DashboardLink from './DashboardLink/DashboardLink';
@@ -14,8 +14,8 @@ export default function Dev() {
       <InvalidUserSignInButton />
       <p>or sign out</p>
       <SignOutButton />
-      <DashboardLink to={HOME} name="Private Dashboard" />
-      <DashboardLink to={MAP} name="Public Map" />
+      <DashboardLink to={HOME_URL} name="Private Dashboard" />
+      <DashboardLink to={MAP_URL} name="Public Map" />
     </div>
   );
 }

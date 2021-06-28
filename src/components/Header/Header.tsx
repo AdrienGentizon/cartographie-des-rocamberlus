@@ -1,6 +1,6 @@
 import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { HOME } from '../../routes';
+import { HOME_URL } from '../../routes';
 import BurgerButton from './BurgerButton/BurgerButton';
 import Navbar from './Navbar/Navbar';
 
@@ -18,7 +18,7 @@ export default function Header({ isOnTop }: HeaderProps) {
   if (isOnTop || !isCollapsed)
     return (
       <header className="Header Header--is-on-top">
-        <Link to={HOME} className="link link--no-decoration">
+        <Link to={HOME_URL} className="link link--no-decoration">
           <h2 className="Header__logo">Carte Brute</h2>
         </Link>
         <Navbar isCollapsed={isCollapsed} />
@@ -28,7 +28,7 @@ export default function Header({ isOnTop }: HeaderProps) {
 
   return (
     <header className="Header">
-      <Link to={HOME} className="link link--no-decoration">
+      <Link to={HOME_URL} className="link link--no-decoration">
         <h2 className="Header__logo">Carte Brute</h2>
       </Link>
       <Navbar isCollapsed={isCollapsed} />

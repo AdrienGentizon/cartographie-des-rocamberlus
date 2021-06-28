@@ -10,7 +10,7 @@ import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 
 import { GpsCoordinates } from '../queries/types';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
-import { GqlLocation } from '../types';
+import { ArtistLocationArticleDocument, GqlLocation } from '../types';
 
 const FRANCE_COORDINATES: GpsCoordinates = {
   gps_longitude: 2.3632841,
@@ -63,6 +63,7 @@ function generateMarkersFromLocations(
         id: location.id,
         name: location.name,
         description: location.description,
+        locationObj: location,
       })
   );
 }
@@ -80,40 +81,69 @@ function getMarkerStyle(vectorSource: VectorSource<Geometry>): VectorLayer {
   });
 }
 
+function getLocationWithArticleStyle(
+  vectorSource: VectorSource<Geometry>
+): VectorLayer {
+  return new VectorLayer({
+    source: vectorSource,
+    style: new Style({
+      image: new CircleStyle({
+        radius: 8,
+        fill: new Fill({ color: 'hsla(126, 100%, 50%, 0.5)' }),
+        stroke: new Stroke({ color: 'hsl(126, 100%, 50%)', width: 1 }),
+      }),
+    }),
+  });
+}
+
 function addMapClickEventListener(
   map: Map,
-  infoHandler: {
-    infoRef: React.RefObject<HTMLDivElement>;
-    setInfo: React.Dispatch<React.SetStateAction<string>>;
-  }
+  onSelectedLocation: (location: GqlLocation) => void
 ) {
-  const { infoRef, setInfo } = infoHandler;
   const clickHandler = (event: MapBrowserEvent<UIEvent>) => {
     const pixel = event.pixel;
     const feature = map.forEachFeatureAtPixel(pixel, (feature) => {
       return feature;
     });
-    if (feature && infoRef.current) {
-      infoRef.current.style.left = `${pixel[0]}px`;
-      infoRef.current.style.top = `${pixel[1]}px`;
-      infoRef.current.style.display = 'block';
-      const info = `#${feature.get('id')}: ${feature.get('name')}`;
-      setInfo(info);
+    if (feature) {
+      // const info = `#${feature.get('id')}: ${feature.get('name')}`;
+      onSelectedLocation(feature.get('locationObj'));
     }
-    if (!feature && infoRef.current) infoRef.current.style.display = 'none';
   };
 
   map.on('click', clickHandler);
 }
 
-function spawnLocationsOnMap(map: Map, locations: GqlLocation[]) {
-  const markers = generateMarkersFromLocations(locations);
+function spawnLocationsOnMap(
+  map: Map,
+  locations: GqlLocation[],
+  artistLocationArticles: ArtistLocationArticleDocument[]
+) {
+  const locationsWithoutArticle = locations.filter((location) =>
+    artistLocationArticles.find(
+      (article) => article.data.id_location === +location.id
+    )
+      ? undefined
+      : location
+  );
+  const locationsWithArticle = locations.filter((location) =>
+    artistLocationArticles.find(
+      (article) => article.data.id_location === +location.id
+    )
+      ? location
+      : undefined
+  );
+  const markers = generateMarkersFromLocations(locationsWithoutArticle);
+  const articles = generateMarkersFromLocations(locationsWithArticle);
 
-  const vectorSource = new VectorSource({ features: markers });
+  const markersVectorSource = new VectorSource({ features: markers });
+  const markerVectorLayer = getMarkerStyle(markersVectorSource);
 
-  const markerVectorLayer = getMarkerStyle(vectorSource);
+  const articlesVectorSource = new VectorSource({ features: articles });
+  const articlesVectorLayer = getLocationWithArticleStyle(articlesVectorSource);
 
   map.addLayer(markerVectorLayer);
+  map.addLayer(articlesVectorLayer);
 }
 
 let map: Map | undefined = undefined;
@@ -121,15 +151,14 @@ let map: Map | undefined = undefined;
 export default function createMap({
   mapRef,
   locations,
-  infoHandler,
+  onSelectedLocation,
+  artistLocationArticles,
   center,
 }: {
   mapRef: React.RefObject<HTMLDivElement>;
   locations: GqlLocation[];
-  infoHandler: {
-    infoRef: React.RefObject<HTMLDivElement>;
-    setInfo: React.Dispatch<React.SetStateAction<string>>;
-  };
+  onSelectedLocation: (location: GqlLocation) => void;
+  artistLocationArticles: ArtistLocationArticleDocument[];
   center?: GqlLocation;
 }) {
   if (!mapRef.current) return;
@@ -149,8 +178,8 @@ export default function createMap({
     });
   }
 
-  spawnLocationsOnMap(map, locations);
-  addMapClickEventListener(map, infoHandler);
+  spawnLocationsOnMap(map, locations, artistLocationArticles);
+  addMapClickEventListener(map, onSelectedLocation);
 
   return map;
 }
