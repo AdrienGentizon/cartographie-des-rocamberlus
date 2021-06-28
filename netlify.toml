@@ -1,8 +1,8 @@
-[[redirects]]
-  from = "https://api.cartebrute.art"
-  to = "http://157.230.110.237/graphql"
-  status = 200
-  force = true
+# [[redirects]]
+#   from = "https://api.cartebrute.art"
+#   to = "http://157.230.110.237/graphql"
+#   status = 200
+#   force = true
   
 [[redirects]]
  from = "/*"
