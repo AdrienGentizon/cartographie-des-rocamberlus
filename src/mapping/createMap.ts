@@ -96,6 +96,21 @@ function getLocationWithArticleStyle(
   });
 }
 
+function getSelectedLocationStyle(
+  vectorSource: VectorSource<Geometry>
+): VectorLayer {
+  return new VectorLayer({
+    source: vectorSource,
+    style: new Style({
+      image: new CircleStyle({
+        radius: 8,
+        fill: new Fill({ color: 'hsla(58, 100%, 50%, 0.5)' }),
+        stroke: new Stroke({ color: 'hsl(58, 100%, 50%)', width: 1 }),
+      }),
+    }),
+  });
+}
+
 function addMapClickEventListener(
   map: Map,
   onSelectedLocation: (location: GqlLocation) => void
@@ -117,7 +132,8 @@ function addMapClickEventListener(
 function spawnLocationsOnMap(
   map: Map,
   locations: GqlLocation[],
-  artistLocationArticles: ArtistLocationArticleDocument[]
+  artistLocationArticles: ArtistLocationArticleDocument[],
+  selectedLocation?: GqlLocation
 ) {
   const locationsWithoutArticle = locations.filter((location) =>
     artistLocationArticles.find(
@@ -144,6 +160,17 @@ function spawnLocationsOnMap(
 
   map.addLayer(markerVectorLayer);
   map.addLayer(articlesVectorLayer);
+
+  if (selectedLocation) {
+    const selected = generateMarkersFromLocations([selectedLocation]);
+    const selectedLocationVectorSource = new VectorSource({
+      features: selected,
+    });
+    const selectedLocationVectorLayer = getSelectedLocationStyle(
+      selectedLocationVectorSource
+    );
+    map.addLayer(selectedLocationVectorLayer);
+  }
 }
 
 let map: Map | undefined = undefined;
@@ -153,20 +180,20 @@ export default function createMap({
   locations,
   onSelectedLocation,
   artistLocationArticles,
-  center,
+  mapCenter,
 }: {
   mapRef: React.RefObject<HTMLDivElement>;
   locations: GqlLocation[];
   onSelectedLocation: (location: GqlLocation) => void;
   artistLocationArticles: ArtistLocationArticleDocument[];
-  center?: GqlLocation;
+  mapCenter?: GqlLocation;
 }) {
   if (!mapRef.current) return;
 
-  if (!center) {
+  if (!mapCenter) {
     map = initMap(mapRef.current.id);
   } else {
-    const { address } = center;
+    const { address } = mapCenter;
     const aim = {
       gps_longitude: address.gps_longitude,
       gps_latitude: address.gps_latitude,
@@ -178,7 +205,7 @@ export default function createMap({
     });
   }
 
-  spawnLocationsOnMap(map, locations, artistLocationArticles);
+  spawnLocationsOnMap(map, locations, artistLocationArticles, mapCenter);
   addMapClickEventListener(map, onSelectedLocation);
 
   return map;

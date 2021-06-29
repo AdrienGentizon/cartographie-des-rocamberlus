@@ -9,11 +9,10 @@ import getApolloClient from '../utils/getApolloClient';
 
 import { CONTACT_URL, HOME_URL, MAP_URL } from '../routes';
 
-import Home from './Home/Home';
-import Map from './Map/Map';
-
 import Nav from './Nav/Nav';
+import Home from './Home/Home';
 import ContactRoute from './Routes/ContactRoute';
+import MapRoute from './Routes/MapRoute';
 import Footer from './Footer/Footer';
 
 export default function App() {
@@ -26,7 +25,7 @@ export default function App() {
               <Nav />
               <Switch>
                 <Route exact path={HOME_URL} component={Home} />
-                <Route path={MAP_URL} component={Map} />
+                <Route path={MAP_URL} component={MapRoute} />
                 <Route path={CONTACT_URL} component={ContactRoute} />
               </Switch>
               <Footer />
