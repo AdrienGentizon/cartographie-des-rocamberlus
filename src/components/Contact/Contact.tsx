@@ -1,4 +1,5 @@
 import React, { MouseEvent, ChangeEvent, useState } from 'react';
+import InputsError from './InputsError/InputsError';
 
 interface Inputs {
   contact_name: string;
@@ -17,6 +18,10 @@ export default function Contact() {
     message: '',
   });
 
+  const [inputsError, setInputsError] = useState(false);
+  // const [submissionError, setSubmissionError] = useState(false);
+  // const [submissionSuccess, setSubmissionSuccess] = useState(false);
+
   const onInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -24,6 +29,15 @@ export default function Contact() {
   };
 
   const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const checkInputsValidity = (inputs: Inputs): boolean => {
+      return Object.values(inputs).reduce(
+        (prev, curr) => (prev && curr.length ? true : false),
+        true
+      );
+    };
+
     const encode = (inputs: FormFetchBody) => {
       return Object.keys(inputs)
         .map(
@@ -34,8 +48,12 @@ export default function Contact() {
         )
         .join('&');
     };
+
+    setInputsError(false);
+
+    if (!checkInputsValidity(inputs)) return setInputsError(true);
+
     try {
-      event.preventDefault();
       const data = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -92,6 +110,7 @@ export default function Contact() {
       >
         Envoyer
       </button>
+      {inputsError && <InputsError setInputsError={setInputsError} />}
     </form>
   );
 }
