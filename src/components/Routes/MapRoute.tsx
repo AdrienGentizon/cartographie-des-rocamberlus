@@ -17,9 +17,9 @@ export default function MapRoute() {
 
   return (
     <main className="flex flex-col text-center flex-1">
-      <h3 className="py-8 text-xl font-thin">
+      <h1 className="py-8 text-xl font-thin">
         Environnements et jardins singuliers
-      </h3>
+      </h1>
       {data && data.locations && <Map locations={data.locations.locations} />}
     </main>
   );
