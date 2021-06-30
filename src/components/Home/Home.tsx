@@ -47,9 +47,9 @@ export default function Home() {
 
   return (
     <main className="flex flex-col text-center flex-1">
-      <h1 className="text-2xl py-8">{RichText.asText(docData.title)}</h1>
+      <h1 className="text-xl py-8">{RichText.asText(docData.title)}</h1>
 
-      <div className="bg-gray-100 py-8 px-2">
+      <div className="bg-gray-100 py-8 px-2 border-t border-b border-gray-200">
         <h3 className="text-md font-medium italic">
           {RichText.asText(docData.catch_phrase)}
         </h3>
@@ -57,12 +57,13 @@ export default function Home() {
           {RichText.asText(docData.signup_message)}
         </p>
         <button
-          className="mt-6 font-thin text-sm hover:bg-gray-200 border border-gray-500 rounded px-4 py-1"
+          className="py-2 tracking-wide border border-gray-300 rounded
+          bg-gray-100 text-gray-600 font-normal text-xs uppercase px-6 mt-8"
           onClick={() => {
             history.push(CONTACT_URL);
           }}
         >
-          Participer
+          Contribuer
         </button>
       </div>
       <div className="mt-12 px-2">

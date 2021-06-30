@@ -71,3 +71,13 @@ export interface ArtistLocationArticleDocument {
     pictures: Array<{ picture: { alt: string; url: 'string' } }>;
   };
 }
+
+export interface Inputs {
+  contact_name: string;
+  contact_email: string;
+  message: string;
+}
+
+export interface ContributionFormFetchBody extends Inputs {
+  'form-name': 'contribution';
+}

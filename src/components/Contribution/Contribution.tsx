@@ -1,17 +1,11 @@
 import React, { MouseEvent, ChangeEvent, useState } from 'react';
+import postContribution from '../../queries/postContribution';
+import { Inputs } from '../../types';
 import InputsError from './InputsError/InputsError';
+import SubmissionError from './SubmissionError/SubmissionError';
+import SubmissionSuccess from './SubmissionSuccess/SubmissionSuccess';
 
-interface Inputs {
-  contact_name: string;
-  contact_email: string;
-  message: string;
-}
-
-interface FormFetchBody extends Inputs {
-  'form-name': 'contact';
-}
-
-export default function Contact() {
+export default function Contribution() {
   const [inputs, setInputs] = useState<Inputs>({
     contact_name: '',
     contact_email: '',
@@ -19,8 +13,8 @@ export default function Contact() {
   });
 
   const [inputsError, setInputsError] = useState(false);
-  // const [submissionError, setSubmissionError] = useState(false);
-  // const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const [submissionError, setSubmissionError] = useState(false);
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
 
   const onInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -38,44 +32,31 @@ export default function Contact() {
       );
     };
 
-    const encode = (inputs: FormFetchBody) => {
-      return Object.keys(inputs)
-        .map(
-          (key) =>
-            encodeURIComponent(key) +
-            '=' +
-            encodeURIComponent(inputs[key as keyof Inputs])
-        )
-        .join('&');
-    };
-
     setInputsError(false);
+    setSubmissionError(false);
+    setSubmissionSuccess(false);
 
     if (!checkInputsValidity(inputs)) return setInputsError(true);
 
-    try {
-      const data = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({ 'form-name': 'contact', ...inputs }),
-      });
-      console.log(data);
-    } catch (error) {
-      console.error(error.message);
-    }
+    const { response, error } = await postContribution(inputs);
+    if (error) return setSubmissionError(true);
+    if (response) return setSubmissionSuccess(true);
   };
 
   return (
     <form
-      name="contact"
+      name="contribution"
       method="post"
-      className="p-2 bg-gray-100 text-sm"
+      className="p-2 bg-gray-100 text-sm border-t border-b border-gray-200"
       onSubmit={onSubmit}
     >
-      <input type="hidden" name="form-name" value="contact" />
+      <h2 className="py-2 text-lg font-thin mb-4">
+        Envoyez votre contribution
+      </h2>
+      <input type="hidden" name="form-name" value="contribution" />
       <fieldset className="flex flex-col gap-2">
         <label htmlFor="contact_name" className="block text-left font-thin">
-          Nom
+          Nom du contributeur
         </label>
         <input
           type="text"
@@ -111,6 +92,12 @@ export default function Contact() {
         Envoyer
       </button>
       {inputsError && <InputsError setInputsError={setInputsError} />}
+      {submissionError && (
+        <SubmissionError setSubmissionError={setSubmissionError} />
+      )}
+      {submissionSuccess && (
+        <SubmissionSuccess setSubmissionSuccess={setSubmissionError} />
+      )}
     </form>
   );
 }
