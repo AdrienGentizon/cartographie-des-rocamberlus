@@ -1,8 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import UserProvider from "../contexts/UserProvider/UserProvider";
-
 import { ApolloProvider } from "@apollo/client";
 import getApolloClient from "../utils/getApolloClient";
 
@@ -18,20 +16,18 @@ import ArticlePage from "../pages/ArticlePage/ArticlePage";
 export default function App() {
   return (
     <BrowserRouter>
-      <UserProvider>
-        <ApolloProvider client={getApolloClient()}>
-          <div className="parent min-h-screen flex flex-col lg:max-w-2xl mx-auto">
-            <Nav />
-            <Switch>
-              <Route exact path={HOME_URL} component={HomePage} />
-              <Route path={MAP_URL} component={MapPage} />
-              <Route path={CONTACT_URL} component={ContactPage} />
-              <Route path="/article/:id" component={ArticlePage} />
-            </Switch>
-            <Footer />
-          </div>
-        </ApolloProvider>
-      </UserProvider>
+      <ApolloProvider client={getApolloClient()}>
+        <div className="parent min-h-screen flex flex-col lg:max-w-2xl mx-auto">
+          <Nav />
+          <Switch>
+            <Route exact path={HOME_URL} component={HomePage} />
+            <Route path={MAP_URL} component={MapPage} />
+            <Route path={CONTACT_URL} component={ContactPage} />
+            <Route path="/article/:id" component={ArticlePage} />
+          </Switch>
+          <Footer />
+        </div>
+      </ApolloProvider>
     </BrowserRouter>
   );
 }
