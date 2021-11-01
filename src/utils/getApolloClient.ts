@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 import {
   ApolloClient,
@@ -6,32 +6,27 @@ import {
   InMemoryCache,
   createHttpLink,
   from,
-} from '@apollo/client';
+} from "@apollo/client";
 
-import { onError } from '@apollo/client/link/error';
-import { setContext } from '@apollo/client/link/context';
+import { onError } from "@apollo/client/link/error";
+import getEnv from "./getEnv";
 
 dotenv.config();
 
 let client: ApolloClient<NormalizedCacheObject> | undefined = undefined;
 
-function getEnvVar(
-  key: string,
-  defaultValue = '',
-  shouldThrowIfNotPresent = false
-) {
-  if (!process.env[key] && shouldThrowIfNotPresent)
-    throw new Error(`${key} must be present in your environment.`);
-  return process.env[key] || defaultValue;
-}
-
 export default function getApolloClient(): ApolloClient<NormalizedCacheObject> {
   if (!client) {
     const httpLink = createHttpLink({
-      uri: getEnvVar('REACT_APP_APOLLO_SERVER_URI'),
-      credentials: 'omit',
+      uri: `${getEnv().REACT_APP_CONTENTFUL_GRAPHQL_ENDPOINT}/${
+        getEnv().REACT_APP_CONTENTFUL_SPACE_ID
+      }`,
+      headers: {
+        authorization: `Bearer ${getEnv().REACT_APP_CONTENTFUL_API_KEY}`,
+        "Content-Language": "en-us",
+      },
       fetchOptions: {
-        mode: 'cors',
+        credentials: "same-origin",
       },
     });
 
@@ -46,21 +41,8 @@ export default function getApolloClient(): ApolloClient<NormalizedCacheObject> {
       if (networkError) console.log(`[Network error]: ${networkError}`);
     });
 
-    const authLink = setContext((_, { headers }) => {
-      // const token = localStorage.getItem(getUserCredentialsLocalStorageKey());
-
-      return {
-        headers: {
-          ...headers,
-          'Access-Control-Allow-Origin': '*',
-          // authorization: token ? `Bearer ${token}` : '',
-        },
-      };
-    });
-
     client = new ApolloClient({
-      // link: authLink.concat(httpLink),
-      link: from([errorLink, authLink.concat(httpLink)]),
+      link: from([errorLink, httpLink]),
       cache: new InMemoryCache({}),
     });
   }
