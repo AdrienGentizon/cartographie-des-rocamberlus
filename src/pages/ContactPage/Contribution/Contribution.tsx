@@ -1,15 +1,15 @@
-import React, { MouseEvent, ChangeEvent, useState } from 'react';
-import postContribution from '../../queries/postContribution';
-import { Inputs } from '../../types';
-import InputsError from './InputsError/InputsError';
-import SubmissionError from './SubmissionError/SubmissionError';
-import SubmissionSuccess from './SubmissionSuccess/SubmissionSuccess';
+import React, { MouseEvent, ChangeEvent, useState } from "react";
+import postContribution from "../../../queries/postContribution";
+import { Inputs } from "../../../types";
+import InputsError from "./InputsError/InputsError";
+import SubmissionError from "./SubmissionError/SubmissionError";
+import SubmissionSuccess from "./SubmissionSuccess/SubmissionSuccess";
 
 export default function Contribution() {
   const [inputs, setInputs] = useState<Inputs>({
-    contact_name: '',
-    contact_email: '',
-    message: '',
+    contact_name: "",
+    contact_email: "",
+    message: "",
   });
 
   const [inputsError, setInputsError] = useState(false);

@@ -1,4 +1,4 @@
-import Contribution from "../../components/Contribution/Contribution";
+import Contribution from "./Contribution/Contribution";
 
 export default function ContactPage() {
   return (
