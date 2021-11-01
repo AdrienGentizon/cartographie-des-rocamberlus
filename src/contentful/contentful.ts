@@ -11,5 +11,6 @@ export default function getContentfulClient() {
       accessToken: getEnv().REACT_APP_CONTENTFUL_API_KEY,
     });
   }
+
   return client;
 }
