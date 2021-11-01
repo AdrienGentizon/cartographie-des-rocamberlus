@@ -1,16 +1,20 @@
-import Map from 'ol/Map';
-import View from 'ol/View';
-import XYZ from 'ol/source/XYZ';
-import * as olProj from 'ol/proj';
-import Feature from 'ol/Feature';
-import { Geometry, Point } from 'ol/geom';
-import VectorSource from 'ol/source/Vector';
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
-import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
+import Map from "ol/Map";
+import View from "ol/View";
+import XYZ from "ol/source/XYZ";
+import * as olProj from "ol/proj";
+import Feature from "ol/Feature";
+import { Geometry, Point } from "ol/geom";
+import VectorSource from "ol/source/Vector";
+import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
+import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style";
 
-import { GpsCoordinates } from '../queries/types';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
-import { ArtistLocationArticleDocument, GqlLocation } from '../types';
+import { GpsCoordinates } from "../queries/types";
+import MapBrowserEvent from "ol/MapBrowserEvent";
+import {
+  ArtistLocationArticleDocument,
+  ContentfulLocation,
+  GqlLocation,
+} from "../types";
 
 const FRANCE_COORDINATES: GpsCoordinates = {
   gps_longitude: 2.3632841,
@@ -25,14 +29,14 @@ interface CreateMapOptions {
 function initMap(mapId: string, options?: CreateMapOptions) {
   const _options: CreateMapOptions = options
     ? { ...options }
-    : { center: FRANCE_COORDINATES, zoom: 6.25 };
+    : { center: FRANCE_COORDINATES, zoom: 5 };
 
   const map = new Map({
     target: mapId,
     layers: [
       new TileLayer({
         source: new XYZ({
-          url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          url: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         }),
       }),
     ],
@@ -49,63 +53,41 @@ function initMap(mapId: string, options?: CreateMapOptions) {
 }
 
 function generateMarkersFromLocations(
-  locations: GqlLocation[]
+  locations: ContentfulLocation[]
 ): Feature<Geometry>[] {
-  return locations.map(
-    (location) =>
-      new Feature({
-        geometry: new Point(
-          olProj.fromLonLat([
-            location.address.gps_longitude,
-            location.address.gps_latitude,
-          ])
-        ),
-        id: location.id,
-        name: location.name,
-        description: location.description,
-        locationObj: location,
-      })
-  );
+  return locations
+    .filter(
+      (location) =>
+        location.locationGpsCoordinates.lon &&
+        location.locationGpsCoordinates.lat
+    )
+    .map(
+      (location) =>
+        new Feature({
+          geometry: new Point(
+            olProj.fromLonLat([
+              location.locationGpsCoordinates.lon!,
+              location.locationGpsCoordinates.lat!,
+            ])
+          ),
+          id: location.sys.id,
+          name: location.locationName,
+          description: location.locationDescription,
+          locationObj: location,
+        })
+    );
 }
 
-function getMarkerStyle(vectorSource: VectorSource<Geometry>): VectorLayer {
-  return new VectorLayer({
-    source: vectorSource,
-    style: new Style({
-      image: new CircleStyle({
-        radius: 8,
-        fill: new Fill({ color: 'hsla(343, 100%, 50%, 0.5)' }),
-        stroke: new Stroke({ color: 'hsl(343, 100%, 50%)', width: 1 }),
-      }),
-    }),
-  });
-}
-
-function getLocationWithArticleStyle(
+function getMarkerStyle(
   vectorSource: VectorSource<Geometry>
-): VectorLayer {
+): VectorLayer<any> {
   return new VectorLayer({
     source: vectorSource,
     style: new Style({
       image: new CircleStyle({
         radius: 8,
-        fill: new Fill({ color: 'hsla(126, 100%, 50%, 0.5)' }),
-        stroke: new Stroke({ color: 'hsl(126, 100%, 50%)', width: 1 }),
-      }),
-    }),
-  });
-}
-
-function getSelectedLocationStyle(
-  vectorSource: VectorSource<Geometry>
-): VectorLayer {
-  return new VectorLayer({
-    source: vectorSource,
-    style: new Style({
-      image: new CircleStyle({
-        radius: 8,
-        fill: new Fill({ color: 'hsla(58, 100%, 50%, 0.5)' }),
-        stroke: new Stroke({ color: 'hsl(58, 100%, 50%)', width: 1 }),
+        fill: new Fill({ color: "hsla(343, 100%, 50%, 0.5)" }),
+        stroke: new Stroke({ color: "hsl(343, 100%, 50%)", width: 1 }),
       }),
     }),
   });
@@ -113,7 +95,7 @@ function getSelectedLocationStyle(
 
 function addMapClickEventListener(
   map: Map,
-  onSelectedLocation: (location: GqlLocation) => void
+  onSelectedLocation: (location: ContentfulLocation) => void
 ) {
   const clickHandler = (event: MapBrowserEvent<UIEvent>) => {
     const pixel = event.pixel;
@@ -122,55 +104,25 @@ function addMapClickEventListener(
     });
     if (feature) {
       // const info = `#${feature.get('id')}: ${feature.get('name')}`;
-      onSelectedLocation(feature.get('locationObj'));
+      onSelectedLocation(feature.get("locationObj"));
     }
   };
 
-  map.on('click', clickHandler);
+  map.on("click", clickHandler);
 }
 
 function spawnLocationsOnMap(
   map: Map,
-  locations: GqlLocation[],
-  artistLocationArticles: ArtistLocationArticleDocument[],
+  locations: ContentfulLocation[],
+  artistLocationArticles?: ArtistLocationArticleDocument[],
   selectedLocation?: GqlLocation
 ) {
-  const locationsWithoutArticle = locations.filter((location) =>
-    artistLocationArticles.find(
-      (article) => article.data.id_location === +location.id
-    )
-      ? undefined
-      : location
-  );
-  const locationsWithArticle = locations.filter((location) =>
-    artistLocationArticles.find(
-      (article) => article.data.id_location === +location.id
-    )
-      ? location
-      : undefined
-  );
-  const markers = generateMarkersFromLocations(locationsWithoutArticle);
-  const articles = generateMarkersFromLocations(locationsWithArticle);
+  const markers = generateMarkersFromLocations(locations);
 
   const markersVectorSource = new VectorSource({ features: markers });
   const markerVectorLayer = getMarkerStyle(markersVectorSource);
 
-  const articlesVectorSource = new VectorSource({ features: articles });
-  const articlesVectorLayer = getLocationWithArticleStyle(articlesVectorSource);
-
   map.addLayer(markerVectorLayer);
-  map.addLayer(articlesVectorLayer);
-
-  if (selectedLocation) {
-    const selected = generateMarkersFromLocations([selectedLocation]);
-    const selectedLocationVectorSource = new VectorSource({
-      features: selected,
-    });
-    const selectedLocationVectorLayer = getSelectedLocationStyle(
-      selectedLocationVectorSource
-    );
-    map.addLayer(selectedLocationVectorLayer);
-  }
 }
 
 let map: Map | undefined = undefined;
@@ -183,9 +135,9 @@ export default function createMap({
   mapCenter,
 }: {
   mapRef: React.RefObject<HTMLDivElement>;
-  locations: GqlLocation[];
-  onSelectedLocation: (location: GqlLocation) => void;
-  artistLocationArticles: ArtistLocationArticleDocument[];
+  locations: ContentfulLocation[];
+  onSelectedLocation: (location: ContentfulLocation) => void;
+  artistLocationArticles?: ArtistLocationArticleDocument[];
   mapCenter?: GqlLocation;
 }) {
   if (!mapRef.current) return;

@@ -1,79 +1,33 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from "react";
+import { useHistory } from "react-router-dom";
+import MapBuilder from "../../components/Map/MapBuilder/MapBuilder";
+import { ContentfulLocation } from "../../types";
 
-import { ArtistLocationArticleDocument, GqlLocation } from '../../types';
-
-import ArtistLocationArticle from './ArtistLocationArticle/ArtistLocationArticle';
-import SelectedLocation from './SelectedLocation/SelectedLocation';
-import MapBuilder from './MapBuilder/MapBuilder';
-import SearchBox from './SearchBox/SearchBox';
-import useGetBlogArticles from '../../queries/useGetBlogArticles';
-
-interface MapProps {
-  locations: GqlLocation[];
-  center?: GqlLocation;
+interface PropsType {
+  locations: ContentfulLocation[];
 }
 
-export default function Map({ locations }: MapProps) {
+export default function Map({ locations }: PropsType) {
+  const history = useHistory();
+
   const mapRef = useRef<HTMLDivElement>(null);
 
-  const [selectedLocation, setSelectedLocation] = useState<
-    GqlLocation | undefined
-  >(undefined);
-
-  const [selectedArticle, setSelectedArticle] = useState<
-    ArtistLocationArticleDocument | undefined
-  >(undefined);
-
-  const [mapCenter, setMapCenter] = useState<GqlLocation | undefined>(
-    undefined
-  );
-
-  const { data: artistLocationArticles } = useGetBlogArticles();
-
-  const onSelectedLocation = (location: GqlLocation) => {
-    setSelectedLocation(location);
-    setMapCenter(location);
-    if (!artistLocationArticles) return;
-    if (
-      !artistLocationArticles.find(
-        (article) => article.data.id_location === +location.id
-      )
-    )
-      return setSelectedArticle(undefined);
-    setSelectedArticle(
-      artistLocationArticles.find(
-        (article) => article.data.id_location === +location.id
-      )
-    );
+  const onSelectedLocation = (location: ContentfulLocation) => {
+    history.push(`/article/${location.sys.id}`);
   };
-
   return (
-    <div className="">
-      <SearchBox onSelectedLocation={onSelectedLocation} />
-      <div id="map" className="w-full h-96" ref={mapRef}>
-        {mapRef && artistLocationArticles && (
-          <MapBuilder
-            mapRef={mapRef}
-            locations={locations}
-            onSelectedLocation={onSelectedLocation}
-            artistLocationArticles={artistLocationArticles}
-            mapCenter={mapCenter}
-          />
-        )}
-      </div>
-      {selectedLocation && <SelectedLocation location={selectedLocation} />}
-      {!selectedLocation && (
-        <div className="pt-2 text-sm italic text-gray-500">
-          <p>Veuillez clicker sur une position de la carte.</p>
-          <p>Les positions vertes contiennent un article.</p>
-        </div>
+    <div
+      id="map"
+      className="absolute w-screen top-0 left-0 h-screen z-0"
+      ref={mapRef}
+    >
+      {mapRef && (
+        <MapBuilder
+          mapRef={mapRef}
+          locations={locations}
+          onSelectedLocation={onSelectedLocation}
+        />
       )}
-      {selectedLocation && !selectedArticle && (
-        <div className="pt-2 text-sm italic text-gray-500">
-          <p>Nous n'avons pas d'article sur ce site pour le moment</p>
-        </div>
-      )}
-      {selectedArticle && <ArtistLocationArticle article={selectedArticle} />}
     </div>
   );
 }
