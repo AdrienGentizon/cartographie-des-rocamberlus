@@ -1,4 +1,4 @@
-import { RichTextBlock } from 'prismic-reactjs';
+import { RichTextBlock } from "prismic-reactjs";
 
 export interface PostalAddress {
   country: string;
@@ -68,7 +68,7 @@ export interface ArtistLocationArticleDocument {
     id_artist: number;
     visited: string;
     text: RichTextBlock[];
-    pictures: Array<{ picture: { alt: string; url: 'string' } }>;
+    pictures: Array<{ picture: { alt: string; url: "string" } }>;
   };
 }
 
@@ -79,5 +79,40 @@ export interface Inputs {
 }
 
 export interface ContributionFormFetchBody extends Inputs {
-  'form-name': 'contribution';
+  "form-name": "contribution";
+}
+
+export interface ContentfulSys {
+  id: string;
+  __typename: "Sys";
+}
+
+export interface ContentfulAsset {
+  title: string;
+  description: string;
+  contentType: string;
+  fileName: string;
+  size: string;
+  url: string;
+  width: string;
+  height: string;
+}
+
+export interface ContentfulLocation {
+  sys: ContentfulSys;
+  locationName: string;
+  locationDescription: string;
+  locationCategory: string;
+  locationCountry: string;
+  locationZipcode: string;
+  locationCityName: string;
+  locationStreetName: string;
+  locationGpsCoordinates: {
+    lat?: number;
+    lon?: number;
+  };
+  showFullAddress: boolean;
+  visitDate: string;
+  locationPicture: ContentfulAsset;
+  __typename: "Article";
 }
