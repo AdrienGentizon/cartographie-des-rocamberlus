@@ -34,7 +34,7 @@ export default function Nav() {
 
   return (
     <>
-      <Menu as="nav" className="sticky top-0 flex flex-col z-50">
+      <Menu as="nav" className="sticky lg:relative top-0 flex flex-col z-50">
         {({ open }) => (
           <>
             <div

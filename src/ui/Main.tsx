@@ -8,7 +8,7 @@ interface PropsType {
 export default function Main({ children, fullWidth }: PropsType) {
   return (
     <main
-      className={`flex flex-col text-center mx-auto mb-auto max-w-2xl w-full min-h-full ${
+      className={`flex flex-col text-center mx-auto mb-auto w-full min-h-full ${
         fullWidth ? "" : "px-2"
       }`}
     >

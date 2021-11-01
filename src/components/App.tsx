@@ -23,7 +23,7 @@ export default function App() {
         <ClientProvider>
           <ApolloProvider client={getApolloClient()}>
             {/* <div className="parent min-h-screen flex flex-col justify-between"> */}
-            <div className="parent min-h-screen flex flex-col">
+            <div className="parent min-h-screen flex flex-col lg:max-w-2xl mx-auto">
               <Nav />
               <Switch>
                 <Route exact path={HOME_URL} component={HomePage} />
