@@ -8,21 +8,19 @@ import VectorSource from "ol/source/Vector";
 import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style";
 
-import { GpsCoordinates } from "../queries/types";
 import MapBrowserEvent from "ol/MapBrowserEvent";
-import {
-  ArtistLocationArticleDocument,
-  ContentfulLocation,
-  GqlLocation,
-} from "../types";
+import { ContentfulLocation, GqlLocation } from "../types";
 
-const FRANCE_COORDINATES: GpsCoordinates = {
+const FRANCE_COORDINATES = {
   gps_longitude: 2.3632841,
   gps_latitude: 47.0780911,
 }; // Bourges gps coordinates
 
 interface CreateMapOptions {
-  center: GpsCoordinates;
+  center: {
+    gps_longitude: number;
+    gps_latitude: number;
+  };
   zoom: number;
 }
 
@@ -114,7 +112,6 @@ function addMapClickEventListener(
 function spawnLocationsOnMap(
   map: Map,
   locations: ContentfulLocation[],
-  artistLocationArticles?: ArtistLocationArticleDocument[],
   selectedLocation?: GqlLocation
 ) {
   const markers = generateMarkersFromLocations(locations);
@@ -131,13 +128,11 @@ export default function createMap({
   mapRef,
   locations,
   onSelectedLocation,
-  artistLocationArticles,
   mapCenter,
 }: {
   mapRef: React.RefObject<HTMLDivElement>;
   locations: ContentfulLocation[];
   onSelectedLocation: (location: ContentfulLocation) => void;
-  artistLocationArticles?: ArtistLocationArticleDocument[];
   mapCenter?: GqlLocation;
 }) {
   if (!mapRef.current) return;
@@ -157,7 +152,7 @@ export default function createMap({
     });
   }
 
-  spawnLocationsOnMap(map, locations, artistLocationArticles, mapCenter);
+  spawnLocationsOnMap(map, locations, mapCenter);
   addMapClickEventListener(map, onSelectedLocation);
 
   return map;

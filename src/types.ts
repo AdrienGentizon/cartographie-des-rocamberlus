@@ -1,5 +1,3 @@
-import { RichTextBlock } from "prismic-reactjs";
-
 export interface PostalAddress {
   country: string;
   city: string;
@@ -55,21 +53,6 @@ export interface Pagination {
   previous?: number;
   current: number;
   next?: number;
-}
-
-export interface ArtistLocationArticleDocument {
-  id: string;
-  uid: string;
-  slugs: string[];
-  tags: string[];
-  data: {
-    title: RichTextBlock[];
-    id_location: number;
-    id_artist: number;
-    visited: string;
-    text: RichTextBlock[];
-    pictures: Array<{ picture: { alt: string; url: "string" } }>;
-  };
 }
 
 export interface Inputs {
