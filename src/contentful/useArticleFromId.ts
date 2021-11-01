@@ -1,5 +1,6 @@
 import { gql, QueryResult, useQuery } from "@apollo/client";
 import { PictureFragment } from "./ContentfulFragments";
+import { Document } from "@contentful/rich-text-types";
 
 const ArticleFragment = gql`
   ${PictureFragment}
@@ -38,6 +39,7 @@ export default function useArticleFromId(id?: string): QueryResult<{
   article: {
     sys: { id: string };
     title: string;
+    articleText: { json: Document; __typename: "ArticleArticleText" };
     __typename: "Article";
   };
 }> {
