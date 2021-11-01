@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
-import { Menu, Transition } from '@headlessui/react';
-import { MenuButton } from './MenuButton/MenuButton.';
-import { CONTACT_URL, MAP_URL } from '../../routes';
-import NavTitle from './NavTitle/NavTitle';
-import MenuItem from './MenuItem/MenuItem';
-import { useState } from 'react';
+import { Menu, Transition } from "@headlessui/react";
+import { MenuButton } from "./MenuButton/MenuButton.";
+import { CONTACT_URL, MAP_URL } from "../../routes";
+import NavTitle from "./NavTitle/NavTitle";
+import MenuItem from "./MenuItem/MenuItem";
+import { useState } from "react";
 
 export default function Nav() {
   const [isOnTop, setIsOnTop] = useState(false);
@@ -19,7 +19,7 @@ export default function Nav() {
   useEffect(() => {
     const intersectionObserverOptions = {
       root: null,
-      rootMargin: '0px',
+      rootMargin: "0px",
       threshold: 1.0,
     };
 
@@ -34,14 +34,15 @@ export default function Nav() {
 
   return (
     <>
-      <Menu as="nav" className="sticky top-0 flex flex-col">
+      <Menu as="nav" className="sticky top-0 flex flex-col z-50">
         {({ open }) => (
           <>
             <div
               className={`
-              flex items-center justify-between w-full bg-white px-2
-              transition duration-300 ease-in-out
-            ${isOnTop ? 'shadow-sm border-b border-gray-200' : ''}`}
+              flex items-center justify-between w-full px-2
+              transition duration-100 ease-in-out
+            ${isOnTop ? "shadow-sm border-b bg-white" : ""}
+            ${open ? "bg-white bg-opacity-60" : ""}`}
             >
               <NavTitle />
               <MenuButton />
@@ -57,8 +58,8 @@ export default function Nav() {
             >
               <Menu.Items
                 as="ul"
-                className="bg-white px-2 flex flex-col w-full text-gray-600
-                text-md gap-1 py-2 shadow-sm border-b border-gray-200"
+                className="px-2 flex flex-col w-full text-gray-600
+                text-md gap-1 py-2 shadow-sm border-b border-gray-200 bg-white bg-opacity-60"
               >
                 <MenuItem url={MAP_URL} title="Carte" />
                 <MenuItem url={CONTACT_URL} title="Contact" />
