@@ -3,9 +3,7 @@ import React from "react";
 import Map from "../../components/Map/Map";
 
 import useLocations from "../../contentful/useLocations";
-import { P } from "../../ui";
-
-import Main from "../../ui/Main";
+import { Main, P } from "../../ui";
 
 export default function MapPage() {
   const { loading, error, data } = useLocations();

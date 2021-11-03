@@ -4,8 +4,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { BLOCKS } from "@contentful/rich-text-types";
 
 import useHomePage from "../../contentful/useHomePage";
-import { H1, H2, P } from "../../ui";
-import Main from "../../ui/Main";
+import { H1, H2, Main, P } from "../../ui";
 
 export default function HomePage() {
   const { loading, error, data } = useHomePage();
@@ -18,8 +17,19 @@ export default function HomePage() {
     },
   };
 
-  if (loading) return <h1>loading</h1>;
-  if (error) return <h1>error</h1>;
+  if (loading)
+    return (
+      <Main>
+        <P>Loading...</P>;
+      </Main>
+    );
+
+  if (error)
+    return (
+      <Main>
+        <P>Error!</P>;
+      </Main>
+    );
   if (data)
     return (
       <Main>

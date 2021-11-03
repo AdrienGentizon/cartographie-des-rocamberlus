@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useArticleFromId from "../../contentful/useArticleFromId";
-import { H1, P } from "../../ui";
-import Main from "../../ui/Main";
+import { H1, P, Main, Asset } from "../../ui";
+
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 
@@ -38,6 +38,13 @@ export default function ArticlePage() {
       <Main>
         <H1>{data.article.title}</H1>
         {documentToReactComponents(data.article.articleText.json, options)}
+        <ul className="flex flex-col mx-auto gap-4 ">
+          {data.article.articleText.json.content
+            .filter((i) => i.nodeType === "embedded-asset-block")
+            .map((asset, i) => (
+              <Asset key={`asset-${i}`} id={asset.data.target.sys.id} />
+            ))}
+        </ul>
       </Main>
     );
   return <></>;
