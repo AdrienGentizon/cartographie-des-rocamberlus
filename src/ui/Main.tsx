@@ -5,7 +5,7 @@ interface PropsType {
   fullWidth?: boolean;
 }
 
-export default function Main({ children, fullWidth }: PropsType) {
+export function Main({ children, fullWidth }: PropsType) {
   return (
     <main
       className={`flex flex-col text-center mx-auto mb-auto w-full min-h-full ${
