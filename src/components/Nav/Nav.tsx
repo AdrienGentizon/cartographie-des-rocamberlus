@@ -42,7 +42,7 @@ export default function Nav() {
               flex items-center justify-between w-full px-2
               transition duration-100 ease-in-out
             ${isOnTop ? "shadow-sm border-b bg-white" : ""}
-            ${open ? "bg-white bg-opacity-60" : ""}`}
+            ${open ? "bg-white" : ""}`}
             >
               <NavTitle />
               <MenuButton />
@@ -59,7 +59,7 @@ export default function Nav() {
               <Menu.Items
                 as="ul"
                 className="px-2 flex flex-col w-full text-gray-600
-                text-md gap-1 py-2 shadow-sm border-b border-gray-200 bg-white bg-opacity-60"
+                text-md gap-1 py-2 shadow-sm border-b border-gray-200 bg-white"
               >
                 <MenuItem url={MAP_URL} title="Carte" />
                 <MenuItem url={CONTACT_URL} title="Contact" />

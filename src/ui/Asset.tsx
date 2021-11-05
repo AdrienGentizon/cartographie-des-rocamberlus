@@ -10,6 +10,6 @@ export function Asset({ id }: PropsType) {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error!</p>;
-  if (data) return <img src={data.asset.url} alt="" />;
+  if (data) return <img src={data.asset.url} alt="" className="my-4" />;
   return <></>;
 }

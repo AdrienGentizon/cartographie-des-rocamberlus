@@ -16,6 +16,10 @@ export default function ArticlePage() {
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
         <P align="justify">{children}</P>
       ),
+      [BLOCKS.EMBEDDED_ASSET]: (node: any, children: any) => {
+        const id = node.data.target.sys.id;
+        return <Asset id={id} />;
+      },
     },
   };
 
@@ -38,13 +42,6 @@ export default function ArticlePage() {
       <Main>
         <H1>{data.article.title}</H1>
         {documentToReactComponents(data.article.articleText.json, options)}
-        <ul className="flex flex-col mx-auto gap-4 ">
-          {data.article.articleText.json.content
-            .filter((i) => i.nodeType === "embedded-asset-block")
-            .map((asset, i) => (
-              <Asset key={`asset-${i}`} id={asset.data.target.sys.id} />
-            ))}
-        </ul>
       </Main>
     );
   return <></>;
