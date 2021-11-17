@@ -15,7 +15,7 @@ export function H2({ children }: PropsType) {
 export function P({ children, align }: PropsType) {
   return (
     <p
-      className={`text-sm text-left py-2 font-light lg:font-light leading-relaxed ${
+      className={`text-sm text-left py-4 font-light lg:font-light leading-loose ${
         align ? `text-${align}` : ""
       }`}
     >
