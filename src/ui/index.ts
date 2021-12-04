@@ -1,3 +1,3 @@
-export * from "./Typography";
-export * from "./Main";
-export * from "./Asset";
+export * from "./Typography"
+export * from "../components/Main/Main"
+export * from "./Asset"

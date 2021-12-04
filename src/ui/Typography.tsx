@@ -1,25 +1,23 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from "react"
 
 interface PropsType {
-  children: ReactNode;
-  align?: "left" | "justify";
+  children: ReactNode
+  className?: string
 }
 export function H1({ children }: PropsType) {
-  return <h1 className="text-3xl p-4 uppercase font-thin">{children}</h1>;
+  return <h1 className="text-3xl mt-4 py-8 uppercase font-thin">{children}</h1>
 }
 
 export function H2({ children }: PropsType) {
-  return <h2 className="text-xl p-6 font-thin italic">{children}</h2>;
+  return <h2 className="text-xl p-6 font-thin italic">{children}</h2>
 }
 
-export function P({ children, align }: PropsType) {
+export function P({ children, className }: PropsType) {
   return (
     <p
-      className={`text-sm text-left py-4 font-light lg:font-light leading-loose ${
-        align ? `text-${align}` : ""
-      }`}
+      className={`text-sm py-2 font-light lg:font-light leading-loose ${className}`}
     >
       {children}
     </p>
-  );
+  )
 }
