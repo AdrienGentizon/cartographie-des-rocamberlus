@@ -20,7 +20,7 @@ export default function HomePage() {
   if (loading)
     return (
       <Main>
-        <P>Loading...</P>;
+        <P>Loading...</P>
       </Main>
     )
 
@@ -34,8 +34,13 @@ export default function HomePage() {
     return (
       <Main>
         <H1>{data.homePage.title}</H1>
-        <H2>{data.homePage.mainTextTitle}</H2>
-        {documentToReactComponents(data.homePage.mainText.json, options)}
+        <section className="mb-8 px-4">
+          <div className="py-4">
+            <H2>{data.homePage.mainTextTitle}</H2>
+          </div>
+
+          {documentToReactComponents(data.homePage.mainText.json, options)}
+        </section>
       </Main>
     )
   return <></>

@@ -14,7 +14,9 @@ export default function ArticlePage() {
   const options = {
     renderNode: {
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
-        <P className="text-justify">{children}</P>
+        <P className="text-justify" withSeparator>
+          {children}
+        </P>
       ),
       [BLOCKS.EMBEDDED_ASSET]: (node: any, children: any) => {
         const id = node.data.target.sys.id
@@ -26,21 +28,21 @@ export default function ArticlePage() {
   if (loading)
     return (
       <Main>
-        <P>Loading...</P>;
+        <P>Loading...</P>
       </Main>
     )
 
   if (error)
     return (
       <Main>
-        <P>Error!</P>;
+        <P>Error!</P>
       </Main>
     )
 
   if (data)
     return (
       <Main>
-        <article className="flex flex-col gap-8">
+        <article className="flex flex-col gap-8 lg:px-2">
           <H1>{data.article.title}</H1>
           {documentToReactComponents(data.article.articleText.json, options)}
         </article>
