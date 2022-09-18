@@ -6,7 +6,6 @@ import getApolloClient from "../utils/getApolloClient"
 
 import { CONTACT_URL, HOME_URL, MAP_URL } from "../routes"
 
-import Nav from "./Nav/Nav"
 import HomePage from "../pages/HomePage/HomePage"
 import ContactPage from "../pages/ContactPage/ContactPage"
 import Footer from "./Footer/Footer"
@@ -15,6 +14,7 @@ import ArticlePage from "../pages/ArticlePage/ArticlePage"
 import Page404 from "../pages/ErrorPages/Page404"
 import Body from "./Body/Body"
 import Container from "./Container/Container"
+import Header from "./Header/Header"
 
 export default function App() {
   return (
@@ -22,7 +22,7 @@ export default function App() {
       <ApolloProvider client={getApolloClient()}>
         <Body>
           <Container>
-            <Nav />
+            <Header />
             <Switch>
               <Route exact path={HOME_URL} component={HomePage} />
               <Route path={MAP_URL} component={MapPage} />
