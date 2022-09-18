@@ -6,7 +6,17 @@ interface PropsType {
   className?: string
 }
 export function H1({ children }: PropsType) {
-  return <h1 className="text-4xl uppercase font-thin">{children}</h1>
+  return (
+    <h1
+      className={`
+  text-3xl
+  uppercase font-thin
+  lg:text-4xl
+  `}
+    >
+      {children}
+    </h1>
+  )
 }
 
 export function H2({ children }: PropsType) {
