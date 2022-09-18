@@ -4,7 +4,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { BLOCKS } from "@contentful/rich-text-types"
 
 import useHomePage from "../../contentful/useHomePage"
-import { H1, H2, Main, P } from "../../ui"
+import { H3, Main, P } from "../../ui"
 
 export default function HomePage() {
   const { loading, error, data } = useHomePage()
@@ -12,7 +12,9 @@ export default function HomePage() {
   const options = {
     renderNode: {
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
-        <P className="text-justify">{children}</P>
+        <P className="text-justify" withSeparator>
+          {children}
+        </P>
       ),
     },
   }
@@ -33,13 +35,13 @@ export default function HomePage() {
   if (data)
     return (
       <Main>
-        <H1>{data.homePage.title}</H1>
-        <section className="mb-8 px-4">
-          <div className="py-4">
-            <H2>{data.homePage.mainTextTitle}</H2>
+        <section className="pb-8 px-4">
+          <div className="py-8">
+            <H3>{data.homePage.mainTextTitle}</H3>
           </div>
-
-          {documentToReactComponents(data.homePage.mainText.json, options)}
+          <div>
+            {documentToReactComponents(data.homePage.mainText.json, options)}
+          </div>
         </section>
       </Main>
     )
