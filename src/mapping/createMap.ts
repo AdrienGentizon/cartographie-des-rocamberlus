@@ -1,40 +1,47 @@
-import Map from "ol/Map";
-import View from "ol/View";
-import XYZ from "ol/source/XYZ";
-import * as olProj from "ol/proj";
-import Feature from "ol/Feature";
-import { Geometry, Point } from "ol/geom";
-import VectorSource from "ol/source/Vector";
-import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
-import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style";
+import Map from "ol/Map"
+import View from "ol/View"
+import XYZ from "ol/source/XYZ"
+import * as olProj from "ol/proj"
+import Feature from "ol/Feature"
+import { Geometry, Point } from "ol/geom"
+import VectorSource from "ol/source/Vector"
+import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer"
+import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style"
 
-import MapBrowserEvent from "ol/MapBrowserEvent";
-import { ContentfulLocation, GqlLocation } from "../types";
+import MapBrowserEvent from "ol/MapBrowserEvent"
+import { ContentfulLocation, GqlLocation } from "../types"
 
 const FRANCE_COORDINATES = {
   gps_longitude: 2.3632841,
   gps_latitude: 47.0780911,
-}; // Bourges gps coordinates
+} // Bourges gps coordinates
 
 interface CreateMapOptions {
   center: {
-    gps_longitude: number;
-    gps_latitude: number;
-  };
-  zoom: number;
+    gps_longitude: number
+    gps_latitude: number
+  }
+  zoom: number
 }
 
 function initMap(mapId: string, options?: CreateMapOptions) {
   const _options: CreateMapOptions = options
     ? { ...options }
-    : { center: FRANCE_COORDINATES, zoom: 5 };
+    : { center: FRANCE_COORDINATES, zoom: 5 }
+
+  const urls = {
+    toner: "https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
+    tonerBackground:
+      "https://stamen-tiles.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png",
+    base: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  }
 
   const map = new Map({
     target: mapId,
     layers: [
       new TileLayer({
         source: new XYZ({
-          url: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          url: urls.tonerBackground,
         }),
       }),
     ],
@@ -45,9 +52,9 @@ function initMap(mapId: string, options?: CreateMapOptions) {
       ]),
       zoom: _options.zoom,
     }),
-  });
+  })
 
-  return map;
+  return map
 }
 
 function generateMarkersFromLocations(
@@ -73,7 +80,7 @@ function generateMarkersFromLocations(
           description: location.locationDescription,
           locationObj: location,
         })
-    );
+    )
 }
 
 function getMarkerStyle(
@@ -88,7 +95,7 @@ function getMarkerStyle(
         stroke: new Stroke({ color: "hsl(343, 100%, 50%)", width: 1 }),
       }),
     }),
-  });
+  })
 }
 
 function addMapClickEventListener(
@@ -96,17 +103,17 @@ function addMapClickEventListener(
   onSelectedLocation: (location: ContentfulLocation) => void
 ) {
   const clickHandler = (event: MapBrowserEvent<UIEvent>) => {
-    const pixel = event.pixel;
+    const pixel = event.pixel
     const feature = map.forEachFeatureAtPixel(pixel, (feature) => {
-      return feature;
-    });
+      return feature
+    })
     if (feature) {
       // const info = `#${feature.get('id')}: ${feature.get('name')}`;
-      onSelectedLocation(feature.get("locationObj"));
+      onSelectedLocation(feature.get("locationObj"))
     }
-  };
+  }
 
-  map.on("click", clickHandler);
+  map.on("click", clickHandler)
 }
 
 function spawnLocationsOnMap(
@@ -114,15 +121,15 @@ function spawnLocationsOnMap(
   locations: ContentfulLocation[],
   selectedLocation?: GqlLocation
 ) {
-  const markers = generateMarkersFromLocations(locations);
+  const markers = generateMarkersFromLocations(locations)
 
-  const markersVectorSource = new VectorSource({ features: markers });
-  const markerVectorLayer = getMarkerStyle(markersVectorSource);
+  const markersVectorSource = new VectorSource({ features: markers })
+  const markerVectorLayer = getMarkerStyle(markersVectorSource)
 
-  map.addLayer(markerVectorLayer);
+  map.addLayer(markerVectorLayer)
 }
 
-let map: Map | undefined = undefined;
+let map: Map | undefined = undefined
 
 export default function createMap({
   mapRef,
@@ -130,30 +137,30 @@ export default function createMap({
   onSelectedLocation,
   mapCenter,
 }: {
-  mapRef: React.RefObject<HTMLDivElement>;
-  locations: ContentfulLocation[];
-  onSelectedLocation: (location: ContentfulLocation) => void;
-  mapCenter?: GqlLocation;
+  mapRef: React.RefObject<HTMLDivElement>
+  locations: ContentfulLocation[]
+  onSelectedLocation: (location: ContentfulLocation) => void
+  mapCenter?: GqlLocation
 }) {
-  if (!mapRef.current) return;
+  if (!mapRef.current) return
 
   if (!mapCenter) {
-    map = initMap(mapRef.current.id);
+    map = initMap(mapRef.current.id)
   } else {
-    const { address } = mapCenter;
+    const { address } = mapCenter
     const aim = {
       gps_longitude: address.gps_longitude,
       gps_latitude: address.gps_latitude,
-    };
+    }
 
     map = initMap(mapRef.current.id, {
       center: aim,
       zoom: 6.25,
-    });
+    })
   }
 
-  spawnLocationsOnMap(map, locations, mapCenter);
-  addMapClickEventListener(map, onSelectedLocation);
+  spawnLocationsOnMap(map, locations, mapCenter)
+  addMapClickEventListener(map, onSelectedLocation)
 
-  return map;
+  return map
 }
