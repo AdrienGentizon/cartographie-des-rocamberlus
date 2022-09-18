@@ -25,9 +25,17 @@ interface CreateMapOptions {
 }
 
 function initMap(mapId: string, options?: CreateMapOptions) {
+  const { clientHeight, clientWidth } = document.documentElement
+  const baseLength =
+    clientHeight > clientWidth ? clientWidth * 0.1 : clientHeight
+  const baseZoom = 6.5
+  const baseHeight = 976
+  const zoom =
+    baseZoom - (Math.log10(baseHeight / baseLength) * baseZoom) / baseZoom
+
   const _options: CreateMapOptions = options
     ? { ...options }
-    : { center: FRANCE_COORDINATES, zoom: 5 }
+    : { center: FRANCE_COORDINATES, zoom }
 
   const urls = {
     toner: "https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
