@@ -6,22 +6,32 @@ interface PropsType {
   className?: string
 }
 export function H1({ children }: PropsType) {
-  return <h1 className="text-4xl mt-4 py-8 uppercase font-thin">{children}</h1>
+  return <h1 className="text-4xl uppercase font-thin">{children}</h1>
 }
 
 export function H2({ children }: PropsType) {
-  return <h2 className="text-xl p-6 font-thin italic">{children}</h2>
+  return <h2 className="text-2xl uppercase font-bold">{children}</h2>
+}
+
+export function H3({ children }: PropsType) {
+  return <h3 className="text-xl font-thin italic">{children}</h3>
 }
 
 export function P({ children, withSeparator, className }: PropsType) {
   return (
     <>
       <p
-        className={`text-sm lg:text-base lg:leading-loose lg:font-extralight py-2 font-light leading-loose ${className}`}
+        className={`
+        text-sm lg:text-base
+        lg:leading-loose lg:font-extralight
+        font-light leading-loose
+        py-4
+        ${className}
+        `}
       >
         {children}
       </p>
-      {withSeparator && <div className="py-2 mx-auto" />}
+      {withSeparator && <div className="py-2 mx-auto border-b-2 w-2" />}
     </>
   )
 }
