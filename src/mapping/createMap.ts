@@ -1,15 +1,15 @@
-import Map from "ol/Map"
-import View from "ol/View"
-import XYZ from "ol/source/XYZ"
-import * as olProj from "ol/proj"
-import Feature from "ol/Feature"
-import { Geometry, Point } from "ol/geom"
-import VectorSource from "ol/source/Vector"
-import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer"
-import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style"
+import Map from 'ol/Map'
+import View from 'ol/View'
+import XYZ from 'ol/source/XYZ'
+import * as olProj from 'ol/proj'
+import Feature from 'ol/Feature'
+import { Geometry, Point } from 'ol/geom'
+import VectorSource from 'ol/source/Vector'
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
+import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style'
 
-import MapBrowserEvent from "ol/MapBrowserEvent"
-import { ContentfulLocation, GqlLocation } from "../types"
+import MapBrowserEvent from 'ol/MapBrowserEvent'
+import { ContentfulLocation, GqlLocation } from '../types'
 
 const FRANCE_COORDINATES = {
   gps_longitude: 2.3632841,
@@ -28,8 +28,10 @@ function initMap(mapId: string, options?: CreateMapOptions) {
   const { clientHeight, clientWidth } = document.documentElement
   const baseLength =
     clientHeight > clientWidth ? clientWidth * 0.1 : clientHeight
-  const baseZoom = 6.5
-  const baseHeight = 976
+  const baseZoom = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    ? 6.1
+    : 5.8
+  const baseHeight = window.innerHeight
   const zoom =
     baseZoom - (Math.log10(baseHeight / baseLength) * baseZoom) / baseZoom
 
@@ -38,10 +40,10 @@ function initMap(mapId: string, options?: CreateMapOptions) {
     : { center: FRANCE_COORDINATES, zoom }
 
   const urls = {
-    toner: "https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
+    toner: 'https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
     tonerBackground:
-      "https://stamen-tiles.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png",
-    base: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      'https://stamen-tiles.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png',
+    base: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   }
 
   const map = new Map({
@@ -99,8 +101,8 @@ function getMarkerStyle(
     style: new Style({
       image: new CircleStyle({
         radius: 8,
-        fill: new Fill({ color: "hsla(343, 100%, 50%, 0.5)" }),
-        stroke: new Stroke({ color: "hsl(343, 100%, 50%)", width: 1 }),
+        fill: new Fill({ color: 'hsla(343, 100%, 50%, 0.5)' }),
+        stroke: new Stroke({ color: 'hsl(343, 100%, 50%)', width: 1 }),
       }),
     }),
   })
@@ -117,11 +119,11 @@ function addMapClickEventListener(
     })
     if (feature) {
       // const info = `#${feature.get('id')}: ${feature.get('name')}`;
-      onSelectedLocation(feature.get("locationObj"))
+      onSelectedLocation(feature.get('locationObj'))
     }
   }
 
-  map.on("click", clickHandler)
+  map.on('click', clickHandler)
 }
 
 function spawnLocationsOnMap(
