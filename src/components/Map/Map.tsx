@@ -1,7 +1,7 @@
-import React, { useRef } from "react"
-import { useHistory } from "react-router-dom"
-import MapBuilder from "../../components/Map/MapBuilder/MapBuilder"
-import { ContentfulLocation } from "../../types"
+import React, { useRef } from 'react'
+import { useHistory } from 'react-router-dom'
+import MapBuilder from '../../components/Map/MapBuilder/MapBuilder'
+import { ContentfulLocation } from '../../types'
 
 interface PropsType {
   locations: ContentfulLocation[]
@@ -18,7 +18,7 @@ export default function Map({ locations }: PropsType) {
   return (
     <div
       id="map"
-      className="absolute w-screen top-0 left-0 h-screen z-0"
+      className="absolute w-full max-w-2xl h-2/3 border-4 border-black rounded-lg mt-4 bg-black"
       ref={mapRef}
     >
       {mapRef && (
