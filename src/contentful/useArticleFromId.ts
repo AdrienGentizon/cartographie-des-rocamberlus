@@ -1,6 +1,6 @@
-import { gql, QueryResult, useQuery } from "@apollo/client";
-import { PictureFragment } from "./ContentfulFragments";
-import { Document } from "@contentful/rich-text-types";
+import { gql, QueryResult, useQuery } from '@apollo/client'
+import { PictureFragment } from './ContentfulFragments'
+import { Document } from '@contentful/rich-text-types'
 
 const ArticleFragment = gql`
   ${PictureFragment}
@@ -24,7 +24,7 @@ const ArticleFragment = gql`
     articleAuthor
     articleUrlSource
   }
-`;
+`
 
 const GET_ARTICLE_FORM_ID_QUERY = gql`
   ${ArticleFragment}
@@ -33,15 +33,19 @@ const GET_ARTICLE_FORM_ID_QUERY = gql`
       ...ArticleFragment
     }
   }
-`;
+`
 
 export default function useArticleFromId(id?: string): QueryResult<{
   article: {
-    sys: { id: string };
-    title: string;
-    articleText: { json: Document; __typename: "ArticleArticleText" };
-    __typename: "Article";
-  };
+    sys: { id: string }
+    title: string
+    articleText: { json: Document; __typename: 'ArticleArticleText' }
+    artistPicture: {
+      __typenam: 'Asset'
+      url: string
+    }
+    __typename: 'Article'
+  }
 }> {
-  return useQuery(GET_ARTICLE_FORM_ID_QUERY, { variables: { id } });
+  return useQuery(GET_ARTICLE_FORM_ID_QUERY, { variables: { id } })
 }
