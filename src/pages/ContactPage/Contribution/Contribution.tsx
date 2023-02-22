@@ -1,53 +1,53 @@
-import React, { MouseEvent, ChangeEvent, useState } from "react";
-import postContribution from "../../../queries/postContribution";
-import { Inputs } from "../../../types";
-import InputsError from "./InputsError/InputsError";
-import SubmissionError from "./SubmissionError/SubmissionError";
-import SubmissionSuccess from "./SubmissionSuccess/SubmissionSuccess";
+import React, { MouseEvent, ChangeEvent, useState } from 'react'
+import postContribution from '../../../queries/postContribution'
+import { Inputs } from '../../../types'
+import InputsError from './InputsError/InputsError'
+import SubmissionError from './SubmissionError/SubmissionError'
+import SubmissionSuccess from './SubmissionSuccess/SubmissionSuccess'
 
 export default function Contribution() {
   const [inputs, setInputs] = useState<Inputs>({
-    contact_name: "",
-    contact_email: "",
-    message: "",
-  });
+    contact_name: '',
+    contact_email: '',
+    message: '',
+  })
 
-  const [inputsError, setInputsError] = useState(false);
-  const [submissionError, setSubmissionError] = useState(false);
-  const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const [inputsError, setInputsError] = useState(false)
+  const [submissionError, setSubmissionError] = useState(false)
+  const [submissionSuccess, setSubmissionSuccess] = useState(false)
 
   const onInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setInputs({ ...inputs, [event.target.name]: event.target.value });
-  };
+    setInputs({ ...inputs, [event.target.name]: event.target.value })
+  }
 
   const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
 
     const checkInputsValidity = (inputs: Inputs): boolean => {
       return Object.values(inputs).reduce(
         (prev, curr) => (prev && curr.length ? true : false),
         true
-      );
-    };
+      )
+    }
 
-    setInputsError(false);
-    setSubmissionError(false);
-    setSubmissionSuccess(false);
+    setInputsError(false)
+    setSubmissionError(false)
+    setSubmissionSuccess(false)
 
-    if (!checkInputsValidity(inputs)) return setInputsError(true);
+    if (!checkInputsValidity(inputs)) return setInputsError(true)
 
-    const { response, error } = await postContribution(inputs);
-    if (error) return setSubmissionError(true);
-    if (response) return setSubmissionSuccess(true);
-  };
+    const { response, error } = await postContribution(inputs)
+    if (error) return setSubmissionError(true)
+    if (response) return setSubmissionSuccess(true)
+  }
 
   return (
     <form
       name="contribution"
       method="post"
-      className="p-2 bg-gray-100 text-sm border-t border-b border-gray-200"
+      className="lg:p-16 p-2 pt-8 text-sm"
       onSubmit={onSubmit}
     >
       <h2 className="py-2 text-lg font-thin mb-4">
@@ -99,5 +99,5 @@ export default function Contribution() {
         <SubmissionSuccess setSubmissionSuccess={setSubmissionError} />
       )}
     </form>
-  );
+  )
 }
