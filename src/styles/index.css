@@ -16,3 +16,8 @@
 .ol-control {
   display: none;
 }
+
+.ol-layer > canvas {
+  box-sizing: border-box !important;
+  border-radius: 0.5rem !important;
+}
