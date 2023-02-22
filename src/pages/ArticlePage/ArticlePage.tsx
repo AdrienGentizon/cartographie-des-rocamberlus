@@ -9,7 +9,7 @@ import { BLOCKS } from '@contentful/rich-text-types'
 export default function ArticlePage() {
   const { id } = useParams<{ id?: string }>()
 
-  const { loading, error, data } = useArticleFromId(id)
+  const { loading, error, data } = useArticleFromId(id ?? '')
 
   const options = {
     renderNode: {

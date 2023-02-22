@@ -1,5 +1,4 @@
-import { gql, QueryResult, useQuery } from "@apollo/client";
-import { Document } from "@contentful/rich-text-types";
+import { gql, useQuery } from '@apollo/client'
 
 const HomePageFramgent = gql`
   fragment HomePageFragment on HomePage {
@@ -9,7 +8,7 @@ const HomePageFramgent = gql`
       json
     }
   }
-`;
+`
 
 const GET_HOME_PAGE_QUERY = gql`
   ${HomePageFramgent}
@@ -18,17 +17,8 @@ const GET_HOME_PAGE_QUERY = gql`
       ...HomePageFragment
     }
   }
-`;
+`
 
-export default function useHomePage(): QueryResult<{
-  homePage: {
-    title: string;
-    mainTextTitle: string;
-    mainText: {
-      json: Document;
-    };
-    __typename: "HomePage";
-  };
-}> {
-  return useQuery(GET_HOME_PAGE_QUERY);
+export default function useHomePage() {
+  return useQuery(GET_HOME_PAGE_QUERY)
 }

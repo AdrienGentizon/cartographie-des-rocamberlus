@@ -1,6 +1,5 @@
-import { gql, QueryResult, useQuery } from "@apollo/client";
-import { ContentfulLocation } from "../types";
-import { PictureFragment } from "./ContentfulFragments";
+import { gql, useQuery } from '@apollo/client'
+import { PictureFragment } from './ContentfulFragments'
 
 const LocationFragment = gql`
   ${PictureFragment}
@@ -25,7 +24,7 @@ const LocationFragment = gql`
       ...PictureFragment
     }
   }
-`;
+`
 
 const GET_LOCATIONS_QUERY = gql`
   ${LocationFragment}
@@ -36,13 +35,8 @@ const GET_LOCATIONS_QUERY = gql`
       }
     }
   }
-`;
+`
 
-export default function useLocations(): QueryResult<{
-  articleCollection: {
-    items: ContentfulLocation[];
-    __typename: "ArticleCollection";
-  };
-}> {
-  return useQuery(GET_LOCATIONS_QUERY);
+export default function useLocations() {
+  return useQuery(GET_LOCATIONS_QUERY)
 }
