@@ -1,10 +1,10 @@
-import React from "react"
-import { useParams } from "react-router-dom"
-import useArticleFromId from "../../contentful/useArticleFromId"
-import { H2, P, Main, Asset } from "../../ui"
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import useArticleFromId from '../../contentful/useArticleFromId'
+import { H2, P, Main, Asset } from '../../ui'
 
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
-import { BLOCKS } from "@contentful/rich-text-types"
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { BLOCKS } from '@contentful/rich-text-types'
 
 export default function ArticlePage() {
   const { id } = useParams<{ id?: string }>()
@@ -19,11 +19,11 @@ export default function ArticlePage() {
             <P className="text-justify">{children}</P>
           )
           if (children.length && children.length > 0) {
-            if (children === "") return
+            if (children === '') return
 
             const content = children
-              .map((c: string) => c.replaceAll("\n", ""))
-              .filter((c: string) => c !== "")
+              .map((c: string) => c.replaceAll('\n', ''))
+              .filter((c: string) => c !== '')
             if (content.length === 0) return
 
             return <Element>{content}</Element>
@@ -67,6 +67,15 @@ export default function ArticlePage() {
           >
             <H2>{data.article.title}</H2>
           </div>
+          {data.article.artistPicture && (
+            <div>
+              <img
+                className="max-w-xs"
+                alt="artist profile"
+                src={data.article.artistPicture.url}
+              />
+            </div>
+          )}
           {documentToReactComponents(data.article.articleText.json, options)}
         </article>
       </Main>
