@@ -1,8 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
-import { PictureFragment } from './ContentfulFragments'
 
 const LocationFragment = gql`
-  ${PictureFragment}
   fragment LocationFragment on Article {
     sys {
       id
@@ -21,7 +19,10 @@ const LocationFragment = gql`
     showFullAddress
     visitDate
     locationPicture {
-      ...PictureFragment
+      sys {
+        id
+      }
+      url
     }
   }
 `

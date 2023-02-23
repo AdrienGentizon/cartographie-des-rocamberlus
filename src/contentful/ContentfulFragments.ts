@@ -1,17 +1,4 @@
-import { gql } from "@apollo/client";
-
-export const PictureFragment = gql`
-  fragment PictureFragment on Asset {
-    title
-    description
-    contentType
-    fileName
-    size
-    url
-    width
-    height
-  }
-`;
+import { gql } from '@apollo/client'
 
 export const SysFragment = gql`
   fragment SysFragment on Sys {
@@ -22,4 +9,4 @@ export const SysFragment = gql`
     firstPublishedAt
     publishedVersion
   }
-`;
+`

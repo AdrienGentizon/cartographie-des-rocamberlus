@@ -1,12 +1,14 @@
 import { ApolloError, gql, useQuery } from '@apollo/client'
-import { PictureFragment } from './ContentfulFragments'
+import { RichTextContent } from 'contentful'
 
 const ArticleFragment = gql`
-  ${PictureFragment}
   fragment ArticleFragment on Article {
     title
     coverPicture {
-      ...PictureFragment
+      sys {
+        id
+      }
+      url
     }
     artistName
     artistPseudo
@@ -35,26 +37,25 @@ const GET_ARTICLE_FORM_ID_QUERY = gql`
 `
 
 export default function useArticleFromId(id: string): {
-  article:
-    | {
-        articleAuthor: string | null
-        articleText: {
-          json: {
-            content: any
-          }
-        } | null
-        articleUrlSource: string | null
-        artistBirthDate: string | null
-        artistDescription: string | null
-        artistName: string | null
-        artistPicture: { url: string } | null
-        artistPseudo: string | null
-        coverPicture: string | null
-        title: string | null
+  article?: {
+    articleAuthor?: string | null
+    articleText?: {
+      json: {
+        content: RichTextContent[]
       }
-    | undefined
+    } | null
+    articleUrlSource?: string | null
+    artistBirthDate?: string | null
+    artistDescription: string | null
+    artistName?: string | null
+    artistPicture?: { url: string } | null
+    artistPseudo?: string | null
+    coverPicture?: string | null
+    title?: string | null
+  }
+
   loading: boolean
-  error: ApolloError | undefined
+  error?: ApolloError
 } {
   const { data, loading, error } = useQuery(GET_ARTICLE_FORM_ID_QUERY, {
     variables: {

@@ -1,4 +1,5 @@
-import { gql, useQuery } from '@apollo/client'
+import { ApolloError, gql, useQuery } from '@apollo/client'
+import { RichTextContent } from 'contentful'
 
 const HomePageFramgent = gql`
   fragment HomePageFragment on HomePage {
@@ -19,6 +20,20 @@ const GET_HOME_PAGE_QUERY = gql`
   }
 `
 
-export default function useHomePage() {
-  return useQuery(GET_HOME_PAGE_QUERY)
+interface HomePageType {
+  title?: string | null
+  mainTextTitle?: string | null
+  mainText?: { json: RichTextContent } | null
+}
+
+export default function useHomePage(): {
+  homePage?: HomePageType
+  loading: boolean
+  error?: ApolloError
+} {
+  const { data, loading, error } = useQuery<{ homePage?: HomePageType }>(
+    GET_HOME_PAGE_QUERY
+  )
+
+  return { homePage: data?.homePage, loading, error }
 }
