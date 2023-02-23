@@ -1,11 +1,12 @@
 import React from 'react'
+import Layout from '../../components/Layout/Layout'
 
 import Map from '../../components/Map/Map'
 
 import useLocations from '../../contentful/useLocations'
 import { Main } from '../../ui'
 
-export default function MapPage() {
+function MapPage() {
   const { loading, error, data } = useLocations()
 
   if (loading)
@@ -29,4 +30,12 @@ export default function MapPage() {
       </Main>
     )
   return <Main></Main>
+}
+
+export default function Wrapper() {
+  return (
+    <Layout>
+      <MapPage />
+    </Layout>
+  )
 }

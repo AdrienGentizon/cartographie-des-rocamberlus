@@ -1,4 +1,5 @@
 import React from 'react'
+import Layout from '../../components/Layout/Layout'
 
 import useHomePage from '../../contentful/useHomePage'
 import { H3, Main } from '../../ui'
@@ -7,7 +8,7 @@ function Separator() {
   return <div className="py-2 mx-auto border-b-2 w-2" />
 }
 
-export default function HomePage() {
+function HomePage() {
   const { loading, error, homePage } = useHomePage()
 
   const getArticleContent = (
@@ -62,6 +63,7 @@ export default function HomePage() {
         <div>
           {' '}
           {homeContent.map(({ tag, value }, n) => {
+            console.log(tag, value)
             if (tag === 'p') {
               return (
                 <React.Fragment key={`home-p-${n}`}>
@@ -78,5 +80,13 @@ export default function HomePage() {
         </div>
       </section>
     </Main>
+  )
+}
+
+export default function Wrapper() {
+  return (
+    <Layout>
+      <HomePage />
+    </Layout>
   )
 }
