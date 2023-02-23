@@ -3,13 +3,13 @@ import useHomePage from '../../../contentful/useHomePage'
 import { H1 } from '../../../ui'
 
 export default function Title() {
-  const { data } = useHomePage()
+  const { homePage } = useHomePage()
 
-  if (!data) return <></>
+  if (!homePage) return <></>
 
   return (
     <div className="text-center pt-4 pb-2">
-      <H1>{data.homePage.title}</H1>
+      <H1>{homePage.title}</H1>
     </div>
   )
 }

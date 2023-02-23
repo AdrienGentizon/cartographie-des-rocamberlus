@@ -1,7 +1,8 @@
+import { RichTextContent } from 'contentful'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import useArticleFromId from '../../contentful/useArticleFromId'
-import { H2, P, Main, Asset, Img } from '../../ui'
+import { H2, Main, Asset, Img } from '../../ui'
 
 export default function ArticlePage() {
   const { id } = useParams<{ id?: string }>()
@@ -11,14 +12,14 @@ export default function ArticlePage() {
   let firstParagraph = true
 
   const getArticleContent = (
-    items: any[],
+    items: RichTextContent[],
     values: {
       tag: 'img' | 'p'
       value: string
     }[] = []
   ) => {
     for (const item of items) {
-      if (item.nodeType === 'embedded-asset-block')
+      if (item.nodeType === 'embedded-asset-block' && item.data.target)
         values.push({ tag: 'img', value: item.data.target.sys.id })
       if (item.nodeType === 'text' && item.value) {
         if (item.value === '') continue
@@ -40,14 +41,14 @@ export default function ArticlePage() {
   if (loading)
     return (
       <Main>
-        <P>Loading...</P>
+        <p>Loading...</p>
       </Main>
     )
 
   if (error || !article)
     return (
       <Main>
-        <P>Error!</P>
+        <p>Error!</p>
       </Main>
     )
 
@@ -74,7 +75,7 @@ export default function ArticlePage() {
                     <Img
                       className="lg:max-w-xs lg:float-left lg:mr-8 "
                       alt="artist profile"
-                      src={article.artistPicture.url}
+                      src={`${article.artistPicture.url}?w=400`}
                     />
                   )}
                   <p className="text-sm lg:text-base lg:font-extralight font-light  pb-4  text-justify">

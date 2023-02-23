@@ -44,12 +44,10 @@ interface PropsType {
 }
 
 export function Asset({ id, alt }: PropsType) {
-  const { loading, error, data } = useImageFromId(id)
+  const { loading, error, image } = useImageFromId(id)
 
   if (error) console.error(error.message)
   if (error) return <></>
-  if (!data) return <></>
-  return (
-    <Img src={data.asset.url} alt={alt} className="my-3" loading={loading} />
-  )
+  if (!image) return <></>
+  return <Img src={image.url} alt={alt} className="my-3" loading={loading} />
 }

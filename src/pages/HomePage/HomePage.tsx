@@ -1,22 +1,39 @@
 import React from 'react'
 
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { BLOCKS } from '@contentful/rich-text-types'
-
 import useHomePage from '../../contentful/useHomePage'
-import { H3, Main, P } from '../../ui'
+import { H3, Main } from '../../ui'
+
+function Separator() {
+  return <div className="py-2 mx-auto border-b-2 w-2" />
+}
 
 export default function HomePage() {
-  const { loading, error, data } = useHomePage()
-  const options = {
-    renderNode: {
-      [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
-        <P className="text-justify" withSeparator>
-          {children}
-        </P>
-      ),
-    },
+  const { loading, error, homePage } = useHomePage()
+
+  const getArticleContent = (
+    items: any[],
+    values: {
+      tag: 'img' | 'p'
+      value: string
+    }[] = []
+  ) => {
+    for (const item of items) {
+      if (item.nodeType === 'embedded-asset-block')
+        values.push({ tag: 'img', value: item.data.target.sys.id })
+      if (item.nodeType === 'text' && item.value) {
+        if (item.value === '') continue
+        values.push({
+          tag: 'p',
+          value: item.value.replaceAll('\n', ''),
+        })
+      }
+      if (item.content) {
+        getArticleContent(item.content, values)
+      }
+    }
+    return values
   }
+  const homeContent = getArticleContent(homePage?.mainText?.json.content ?? [])
 
   if (loading)
     return (
@@ -29,25 +46,37 @@ export default function HomePage() {
       </Main>
     )
 
-  if (error)
+  if (error || !homePage)
     return (
       <Main>
-        <P>Error!</P>;
+        <p>Error!</p>;
       </Main>
     )
-  if (data)
-    return (
-      <Main>
-        <section className="pb-8 px-4">
-          <div className="py-8">
-            <H3>{data.homePage.mainTextTitle}</H3>
-          </div>
+  return (
+    <Main>
+      <section className="pb-8 px-4">
+        <div className="py-8">
+          <H3>{homePage.mainTextTitle}</H3>
+        </div>
 
-          <div>
-            {documentToReactComponents(data.homePage.mainText.json, options)}
-          </div>
-        </section>
-      </Main>
-    )
-  return <></>
+        <div>
+          {' '}
+          {homeContent.map(({ tag, value }, n) => {
+            if (tag === 'p') {
+              return (
+                <React.Fragment key={`home-p-${n}`}>
+                  <p className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify">
+                    {value}
+                  </p>
+                  {n < homeContent.length - 1 && <Separator />}
+                </React.Fragment>
+              )
+            }
+
+            return <></>
+          })}
+        </div>
+      </section>
+    </Main>
+  )
 }
