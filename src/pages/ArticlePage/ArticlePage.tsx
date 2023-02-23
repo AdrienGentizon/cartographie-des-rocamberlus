@@ -69,19 +69,18 @@ export default function ArticlePage() {
             if (firstParagraph) {
               firstParagraph = false
               return (
-                <p
-                  className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify"
-                  key={`p-${n}`}
-                >
+                <div key={`p-${n}`}>
                   {article.artistPicture && (
                     <Img
-                      className="lg:max-w-xs lg:float-left lg:mr-8 mb-4"
+                      className="lg:max-w-xs lg:float-left lg:mr-8 "
                       alt="artist profile"
                       src={article.artistPicture.url}
                     />
                   )}
-                  {value}
-                </p>
+                  <p className="text-sm lg:text-base lg:font-extralight font-light  pb-4  text-justify">
+                    {value}
+                  </p>
+                </div>
               )
             }
             return (
