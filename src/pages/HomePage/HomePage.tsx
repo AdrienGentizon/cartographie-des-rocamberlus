@@ -1,14 +1,13 @@
-import React from "react"
+import React from 'react'
 
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
-import { BLOCKS } from "@contentful/rich-text-types"
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { BLOCKS } from '@contentful/rich-text-types'
 
-import useHomePage from "../../contentful/useHomePage"
-import { H3, Main, P } from "../../ui"
+import useHomePage from '../../contentful/useHomePage'
+import { H3, Main, P } from '../../ui'
 
 export default function HomePage() {
   const { loading, error, data } = useHomePage()
-
   const options = {
     renderNode: {
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => (
@@ -22,7 +21,11 @@ export default function HomePage() {
   if (loading)
     return (
       <Main>
-        <P>Loading...</P>
+        <div className="w-full h-96">
+          <div className="flex justify-center items-center h-full">
+            <span className="block loader" />
+          </div>
+        </div>
       </Main>
     )
 
@@ -39,6 +42,7 @@ export default function HomePage() {
           <div className="py-8">
             <H3>{data.homePage.mainTextTitle}</H3>
           </div>
+
           <div>
             {documentToReactComponents(data.homePage.mainText.json, options)}
           </div>
