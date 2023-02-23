@@ -49,7 +49,7 @@ export default function Container({ children }: PropsType) {
             return (
               <img
                 key={`flower-${n}`}
-                className="absolute w-8"
+                className="hidden lg:block absolute w-8"
                 style={{
                   top,
                   left,
