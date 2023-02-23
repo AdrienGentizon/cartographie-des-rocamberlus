@@ -1,3 +1,5 @@
+import { RichTextContent } from 'contentful'
+
 export interface PostalAddress {
   country: string
   city: string
@@ -103,4 +105,11 @@ export interface ContentfulLocation {
 export interface ArtistsHookType {
   artistName: string
   articleId: string
+}
+
+export interface HomePageType {
+  title?: string | null
+  mainTextTitle?: string | null
+  mainText?: { json: RichTextContent } | null
+  mainTitlePicture?: { url: string } | null
 }
