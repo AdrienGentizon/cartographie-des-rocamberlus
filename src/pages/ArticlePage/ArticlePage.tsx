@@ -70,12 +70,12 @@ export default function ArticlePage() {
               firstParagraph = false
               return (
                 <p
-                  className="text-xl lg:text-base lg:font-extralight font-light py-4 text-justify"
+                  className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify"
                   key={`p-${n}`}
                 >
                   {article.artistPicture && (
                     <Img
-                      className="max-w-xs float-left mr-4 mb-4"
+                      className="lg:max-w-xs lg:float-left lg:mr-8 mb-4"
                       alt="artist profile"
                       src={article.artistPicture.url}
                     />
