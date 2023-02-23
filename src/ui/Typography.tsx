@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react"
+import React, { ReactNode } from 'react'
 
 interface PropsType {
   children: ReactNode
@@ -25,23 +25,4 @@ export function H2({ children }: PropsType) {
 
 export function H3({ children }: PropsType) {
   return <h3 className="text-xl font-thin italic">{children}</h3>
-}
-
-export function P({ children, withSeparator, className }: PropsType) {
-  return (
-    <>
-      <p
-        className={`
-        text-sm lg:text-base
-        lg:leading-loose lg:font-extralight
-        font-light leading-loose
-        py-4
-        ${className}
-        `}
-      >
-        {children}
-      </p>
-      {withSeparator && <div className="py-2 mx-auto border-b-2 w-2" />}
-    </>
-  )
 }

@@ -1,9 +1,9 @@
-import React from "react"
+import React from 'react'
 
-import Map from "../../components/Map/Map"
+import Map from '../../components/Map/Map'
 
-import useLocations from "../../contentful/useLocations"
-import { Main, P } from "../../ui"
+import useLocations from '../../contentful/useLocations'
+import { Main } from '../../ui'
 
 export default function MapPage() {
   const { loading, error, data } = useLocations()
@@ -11,14 +11,14 @@ export default function MapPage() {
   if (loading)
     return (
       <Main>
-        <P>Loading...</P>
+        <p>Loading...</p>
       </Main>
     )
 
   if (error)
     return (
       <Main>
-        <P>Error!</P>;
+        <p>Error!</p>;
       </Main>
     )
 
