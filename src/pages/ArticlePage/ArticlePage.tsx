@@ -1,45 +1,41 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import useArticleFromId from '../../contentful/useArticleFromId'
-import { H2, P, Main, Asset } from '../../ui'
-
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { BLOCKS } from '@contentful/rich-text-types'
+import { H2, P, Main, Asset, Img } from '../../ui'
 
 export default function ArticlePage() {
   const { id } = useParams<{ id?: string }>()
 
-  const { loading, error, data } = useArticleFromId(id ?? '')
+  const { loading, error, article } = useArticleFromId(id ?? '')
 
-  const options = {
-    renderNode: {
-      [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
-        try {
-          const Element = ({ children }: any) => (
-            <P className="text-justify">{children}</P>
-          )
-          if (children.length && children.length > 0) {
-            if (children === '') return
+  let firstParagraph = true
 
-            const content = children
-              .map((c: string) => c.replaceAll('\n', ''))
-              .filter((c: string) => c !== '')
-            if (content.length === 0) return
-
-            return <Element>{content}</Element>
-          }
-
-          return <Element>{children}</Element>
-        } catch (error) {
-          console.error(`error while decoding contentfull article: ${id}`)
-        }
-      },
-      [BLOCKS.EMBEDDED_ASSET]: (node: any, children: any) => {
-        const id = node.data.target.sys.id
-        return <Asset id={id} />
-      },
-    },
+  const getArticleContent = (
+    items: any[],
+    values: {
+      tag: 'img' | 'p'
+      value: string
+    }[] = []
+  ) => {
+    for (const item of items) {
+      if (item.nodeType === 'embedded-asset-block')
+        values.push({ tag: 'img', value: item.data.target.sys.id })
+      if (item.nodeType === 'text' && item.value) {
+        if (item.value === '') continue
+        values.push({
+          tag: 'p',
+          value: item.value.replaceAll('\n', ''),
+        })
+      }
+      if (item.content) {
+        getArticleContent(item.content, values)
+      }
+    }
+    return values
   }
+  const articleContent = getArticleContent(
+    article?.articleText?.json.content ?? []
+  )
 
   if (loading)
     return (
@@ -48,37 +44,58 @@ export default function ArticlePage() {
       </Main>
     )
 
-  if (error)
+  if (error || !article)
     return (
       <Main>
         <P>Error!</P>
       </Main>
     )
 
-  if (data)
-    return (
-      <Main>
-        <article className="flex flex-col gap-8 lg:px-2">
-          <div
-            className={`
+  return (
+    <Main>
+      <article className="flex flex-col lg:px-2">
+        <div
+          className={`
           flex justify-center
           pt-8 pb-4
           `}
-          >
-            <H2>{data.article.title}</H2>
-          </div>
-          {data.article.artistPicture && (
-            <div>
-              <img
-                className="max-w-xs"
-                alt="artist profile"
-                src={data.article.artistPicture.url}
-              />
-            </div>
-          )}
-          {documentToReactComponents(data.article.articleText.json, options)}
-        </article>
-      </Main>
-    )
-  return <></>
+        >
+          <H2>{article.title}</H2>
+        </div>
+
+        {/* {documentToReactComponents(data.article.articleText.json, options)} */}
+        {articleContent.map(({ tag, value }, n) => {
+          if (tag === 'p') {
+            if (firstParagraph) {
+              firstParagraph = false
+              return (
+                <p
+                  className="text-xl lg:text-base lg:font-extralight font-light py-4 text-justify"
+                  key={`p-${n}`}
+                >
+                  {article.artistPicture && (
+                    <Img
+                      className="max-w-xs float-left mr-4 mb-4"
+                      alt="artist profile"
+                      src={article.artistPicture.url}
+                    />
+                  )}
+                  {value}
+                </p>
+              )
+            }
+            return (
+              <p
+                className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify"
+                key={`p-${n}`}
+              >
+                {value}
+              </p>
+            )
+          }
+          return <Asset key={`p-${n}`} id={value} />
+        })}
+      </article>
+    </Main>
+  )
 }
