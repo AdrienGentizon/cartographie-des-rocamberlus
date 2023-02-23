@@ -1,34 +1,30 @@
-import dotenv from "dotenv";
-
 import {
   ApolloClient,
   NormalizedCacheObject,
   InMemoryCache,
   createHttpLink,
   from,
-} from "@apollo/client";
+} from '@apollo/client'
 
-import { onError } from "@apollo/client/link/error";
-import getEnv from "./getEnv";
+import { onError } from '@apollo/client/link/error'
 
-dotenv.config();
-
-let client: ApolloClient<NormalizedCacheObject> | undefined = undefined;
+let client: ApolloClient<NormalizedCacheObject> | undefined = undefined
 
 export default function getApolloClient(): ApolloClient<NormalizedCacheObject> {
   if (!client) {
+    console.log(import.meta.env.VITE_CONTENTFUL_GRAPHQL_ENDPOINT)
     const httpLink = createHttpLink({
-      uri: `${getEnv().REACT_APP_CONTENTFUL_GRAPHQL_ENDPOINT}/${
-        getEnv().REACT_APP_CONTENTFUL_SPACE_ID
+      uri: `${import.meta.env.VITE_CONTENTFUL_GRAPHQL_ENDPOINT}/${
+        import.meta.env.VITE_CONTENTFUL_SPACE_ID
       }`,
       headers: {
-        authorization: `Bearer ${getEnv().REACT_APP_CONTENTFUL_API_KEY}`,
-        "Content-Language": "en-us",
+        authorization: `Bearer ${import.meta.env.VITE_CONTENTFUL_API_KEY}`,
+        'Content-Language': 'en-us',
       },
       fetchOptions: {
-        credentials: "same-origin",
+        credentials: 'same-origin',
       },
-    });
+    })
 
     const errorLink = onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors)
@@ -36,15 +32,15 @@ export default function getApolloClient(): ApolloClient<NormalizedCacheObject> {
           console.log(
             `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
           )
-        );
+        )
 
-      if (networkError) console.log(`[Network error]: ${networkError}`);
-    });
+      if (networkError) console.log(`[Network error]: ${networkError}`)
+    })
 
     client = new ApolloClient({
       link: from([errorLink, httpLink]),
       cache: new InMemoryCache({}),
-    });
+    })
   }
-  return client;
+  return client
 }

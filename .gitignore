@@ -26,3 +26,6 @@ yarn-error.log*
 #backups
 /_backups
 *.zip
+
+#external files
+/_assets
