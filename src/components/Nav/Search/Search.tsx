@@ -34,11 +34,11 @@ export default function Search({ artists }: PropsType) {
   const [open, setOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const closeDialog = (articleId?: string) => {
+  const closeDialog = (articleId?: string, leaveInput = false) => {
     if (articleId) history.push(`/article/${articleId}`)
     setOpen(false)
     setResults([])
-    if (inputRef.current) inputRef.current.value = ''
+    if (!leaveInput && inputRef.current) inputRef.current.value = ''
   }
 
   return (
@@ -50,8 +50,11 @@ export default function Search({ artists }: PropsType) {
           const results = artists.filter(({ artistName }) =>
             artistName.toLowerCase().includes(e.target.value.toLowerCase())
           )
+          results.sort(({ artistName: a }, { artistName: b }) =>
+            a.toUpperCase().localeCompare(b.toUpperCase())
+          )
           if (results.length === 0 || e.target.value === '')
-            return closeDialog()
+            return closeDialog(undefined, true)
           setOpen(true)
           setResults(results)
         }}
