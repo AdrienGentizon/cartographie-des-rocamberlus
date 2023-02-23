@@ -42,7 +42,7 @@ export default function Container({ children }: PropsType) {
   }, [containerHeight, flower, grass, history.location.pathname])
   return (
     <>
-      <div className="border w-screen absolute">
+      <div className="w-screen absolute">
         {flower &&
           grass &&
           particles.map(({ top, left }, n: number) => {
@@ -62,7 +62,7 @@ export default function Container({ children }: PropsType) {
       </div>
       <div
         ref={setContainerRef}
-        className="relative bg-white min-h-screen h-full flex flex-col lg:max-w-2xl mx-auto border"
+        className="relative bg-white min-h-screen h-full flex flex-col lg:max-w-3xl mx-auto shadow"
       >
         {children}
       </div>
