@@ -3,6 +3,11 @@
 #   to = "http://157.230.110.237/graphql"
 #   status = 200
 #   force = true
+
+[build]
+  command = "vite build"
+  functions = "netlify/functions"
+  publish = "dist"
   
 [[redirects]]
  from = "/*"
