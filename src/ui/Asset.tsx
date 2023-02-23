@@ -17,12 +17,20 @@ export function Img({
 
   return (
     <>
-      {isLoading && <span className="flex mx-auto my-2 loader" />}
+      {isLoading && (
+        <div
+          className={`border-2 border-gray-100 bg-gray-50 p-1 rounded ${className}`}
+        >
+          <div className="flex justify-center bg-white  mx-auto  h-20 max-h-20 p-4 w-20 min-w-full">
+            <span className=" block loader" />
+          </div>
+        </div>
+      )}
       <img
         src={src}
         alt={alt}
         className={`${
-          isLoading ? 'invisible' : ''
+          isLoading ? 'invisible h-0' : ''
         } border-2 border-gray-100 bg-gray-50 p-1 rounded ${className}`}
         onLoad={() => setImageLoading(false)}
       />
