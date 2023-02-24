@@ -1,10 +1,11 @@
 import { RichTextContent } from 'contentful'
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import Layout from '../../components/Layout/Layout'
 import useArticleFromId from '../../contentful/useArticleFromId'
 import { H2, Main, Asset, Img } from '../../ui'
 
-export default function ArticlePage() {
+function ArticlePage() {
   const { id } = useParams<{ id?: string }>()
 
   const { loading, error, article } = useArticleFromId(id ?? '')
@@ -97,5 +98,13 @@ export default function ArticlePage() {
         })}
       </article>
     </Main>
+  )
+}
+
+export default function Wrapper() {
+  return (
+    <Layout>
+      <ArticlePage />
+    </Layout>
   )
 }

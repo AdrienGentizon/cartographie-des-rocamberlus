@@ -1,11 +1,22 @@
 import React from 'react'
+import Layout from '../../components/Layout/Layout'
 import { H3, Main } from '../../ui'
 
-export default function Page404() {
+function Page404() {
   return (
     <Main>
-      <H3>Page inexistante</H3>
-      <p className="text-center">Cette adresse n'existe pas sur ce site.</p>
+      <div className="h-96 flex flex-col gap-2 items-center  justify-center">
+        <H3>Page inexistante</H3>
+        <p className="text-center">Cette adresse n'existe pas sur ce site.</p>
+      </div>
     </Main>
+  )
+}
+
+export default function Wrapper() {
+  return (
+    <Layout>
+      <Page404 />
+    </Layout>
   )
 }
