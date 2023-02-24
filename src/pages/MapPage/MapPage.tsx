@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../../components/Layout/Layout'
 
-import Map from '../../components/Map/Map'
+import Map from './Map/Map'
 
 import useLocations from '../../contentful/useLocations'
 import { Main } from '../../ui'
@@ -25,7 +25,7 @@ function MapPage() {
 
   if (data)
     return (
-      <Main fullWidth>
+      <Main>
         <Map locations={data.articleCollection.items} />
       </Main>
     )
