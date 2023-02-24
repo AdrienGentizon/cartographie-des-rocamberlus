@@ -26,7 +26,7 @@ export default function Container({ children }: PropsType) {
       <BackGroundRandom containerHeight={containerHeight} />
       <div
         ref={setContainerRef}
-        className="relative bg-white min-h-screen h-full flex flex-col lg:max-w-3xl mx-auto shadow"
+        className="relative bg-white min-h-screen h-full flex flex-col lg:max-w-3xl mx-auto shadow-xl"
       >
         {children}
       </div>

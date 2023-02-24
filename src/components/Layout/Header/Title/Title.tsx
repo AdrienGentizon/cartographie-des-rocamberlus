@@ -1,6 +1,6 @@
 import React from 'react'
-import useHomePage from '../../../contentful/useHomePage'
-import { H1 } from '../../../ui'
+import useHomePage from '../../../../contentful/useHomePage'
+import { H1 } from '../../../../ui'
 
 function Image({ url }: { url: string }) {
   return <img className="py-8" src={url} alt="site title" />

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import useImageFromId from '../../../contentful/useAssetFromId'
+import useImageFromId from '../../../../contentful/useAssetFromId'
 
 const FLOWER_ID = '4AS9TKfECMPrNfmBPpplES'
 const GRASS_ID = '5nX6KH1GrITrptF6pIMUz5'
