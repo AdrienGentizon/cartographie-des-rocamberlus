@@ -1,16 +1,13 @@
-import React, { ReactNode } from "react"
+import React, { HTMLAttributes } from 'react'
 
-interface PropsType {
-  children?: ReactNode
-  fullWidth?: boolean
-}
-
-export function Main({ children, fullWidth }: PropsType) {
+export function Main({
+  children,
+  ...props
+}: React.PropsWithChildren<HTMLAttributes<HTMLElement>>) {
   return (
     <main
-      className={`flex flex-col text-center mx-auto mb-auto w-full min-h-full ${
-        fullWidth ? "" : "px-4 lg:px-8"
-      }`}
+      className="flex flex-col text-center mx-auto mb-auto w-full min-h-full px-4 lg:px-8"
+      {...props}
     >
       {children}
     </main>
