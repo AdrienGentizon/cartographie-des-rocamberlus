@@ -1,43 +1,50 @@
-import { RichTextContent } from 'contentful'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
 import useArticleFromId from '../../contentful/useArticleFromId'
 import { H2, Main, Asset, Img } from '../../ui'
 
+import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+
 function ArticlePage() {
   const { id } = useParams<{ id?: string }>()
 
   const { loading, error, article } = useArticleFromId(id ?? '')
 
-  let firstParagraph = true
-
-  const getArticleContent = (
-    items: RichTextContent[],
-    values: {
-      tag: 'img' | 'p'
-      value: string
-    }[] = []
-  ) => {
-    for (const item of items) {
-      if (item.nodeType === 'embedded-asset-block' && item.data.target)
-        values.push({ tag: 'img', value: item.data.target.sys.id })
-      if (item.nodeType === 'text' && item.value) {
-        if (item.value === '') continue
-        values.push({
-          tag: 'p',
-          value: item.value.replaceAll('\n', ''),
-        })
-      }
-      if (item.content) {
-        getArticleContent(item.content, values)
-      }
-    }
-    return values
+  const renderOptions = {
+    renderNode: {
+      [MARKS.BOLD]: (node: any, children: any) => <strong>{children}</strong>,
+      [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
+        return (
+          <p className="text-sm lg:text-base lg:font-extralight font-light  py-2  text-justify">
+            {children}
+          </p>
+        )
+      },
+      [BLOCKS.UL_LIST]: (node: any, children: any) => (
+        <ul className="flex flex-col gap-0">{children}</ul>
+      ),
+      [BLOCKS.LIST_ITEM]: (node: any, children: any) => {
+        if (children.props) children.props.isListItem = true
+        return <li>{children}</li>
+      },
+      [INLINES.HYPERLINK]: (node: any, children: any) => (
+        <a
+          className="underline cursor-pointer"
+          target="_blank"
+          href={node.data.uri}
+          rel="noreferrer"
+        >
+          {children}
+        </a>
+      ),
+      [BLOCKS.EMBEDDED_ASSET]: (node: any, children: any) => {
+        if (!node.data.target.sys.id) return <></>
+        return <Asset id={node.data.target.sys.id} />
+      },
+    },
   }
-  const articleContent = getArticleContent(
-    article?.articleText?.json.content ?? []
-  )
 
   if (loading)
     return (
@@ -46,7 +53,7 @@ function ArticlePage() {
       </Main>
     )
 
-  if (error || !article)
+  if (error || !article?.articleText?.json)
     return (
       <Main>
         <p>Error!</p>
@@ -64,38 +71,16 @@ function ArticlePage() {
         >
           <H2>{article.title}</H2>
         </div>
-
-        {/* {documentToReactComponents(data.article.articleText.json, options)} */}
-        {articleContent.map(({ tag, value }, n) => {
-          if (tag === 'p') {
-            if (firstParagraph) {
-              firstParagraph = false
-              return (
-                <div key={`p-${n}`}>
-                  {article.artistPicture && (
-                    <Img
-                      className="lg:max-w-xs lg:float-left lg:mr-8 "
-                      alt="artist profile"
-                      src={`${article.artistPicture.url}?w=400`}
-                    />
-                  )}
-                  <p className="text-sm lg:text-base lg:font-extralight font-light  pb-4  text-justify">
-                    {value}
-                  </p>
-                </div>
-              )
-            }
-            return (
-              <p
-                className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify"
-                key={`p-${n}`}
-              >
-                {value}
-              </p>
-            )
-          }
-          return <Asset key={`p-${n}`} id={value} />
-        })}
+        <div>
+          {article.artistPicture && (
+            <Img
+              className="lg:max-w-xs lg:float-left lg:mr-8 "
+              alt="artist profile"
+              src={`${article.artistPicture.url}?w=400`}
+            />
+          )}
+          {documentToReactComponents(article.articleText.json, renderOptions)}
+        </div>
       </article>
     </Main>
   )
