@@ -63,7 +63,6 @@ function HomePage() {
         <div>
           {' '}
           {homeContent.map(({ tag, value }, n) => {
-            console.log(tag, value)
             if (tag === 'p') {
               return (
                 <React.Fragment key={`home-p-${n}`}>
