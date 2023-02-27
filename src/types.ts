@@ -85,6 +85,7 @@ export interface ContentfulAsset {
 
 export interface ContentfulLocation {
   sys: ContentfulSys
+  title: string | null
   locationName: string
   locationDescription: string
   locationCategory: string
@@ -112,4 +113,5 @@ export interface HomePageType {
   mainTextTitle?: string | null
   mainText?: { json: RichTextContent } | null
   mainTitlePicture?: { url: string } | null
+  subTitlePicture?: { url: string } | null
 }

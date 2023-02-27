@@ -1,10 +1,8 @@
-import { gql, useQuery } from '@apollo/client'
+import { ApolloError, gql, useQuery } from '@apollo/client'
+import { ContentfulLocation } from '../types'
 
 const LocationFragment = gql`
   fragment LocationFragment on Article {
-    sys {
-      id
-    }
     locationName
     locationDescription
     locationCategory
@@ -32,12 +30,21 @@ const GET_LOCATIONS_QUERY = gql`
   query {
     articleCollection {
       items {
+        sys {
+          id
+        }
+        title
         ...LocationFragment
       }
     }
   }
 `
 
-export default function useLocations() {
-  return useQuery(GET_LOCATIONS_QUERY)
+export default function useLocations(): {
+  locations: ContentfulLocation[]
+  loading: boolean
+  error: ApolloError | undefined
+} {
+  const { data, loading, error } = useQuery(GET_LOCATIONS_QUERY)
+  return { locations: data?.articleCollection?.items ?? [], loading, error }
 }

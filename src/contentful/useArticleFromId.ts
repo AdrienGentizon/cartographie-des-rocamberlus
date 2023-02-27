@@ -1,5 +1,4 @@
 import { ApolloError, gql, useQuery } from '@apollo/client'
-import { RichTextContent } from 'contentful'
 
 const ArticleFragment = gql`
   fragment ArticleFragment on Article {
@@ -40,10 +39,8 @@ export default function useArticleFromId(id: string): {
   article?: {
     articleAuthor?: string | null
     articleText?: {
-      json: {
-        content: RichTextContent[]
-      }
-    } | null
+      json: any | null
+    }
     articleUrlSource?: string | null
     artistBirthDate?: string | null
     artistDescription: string | null

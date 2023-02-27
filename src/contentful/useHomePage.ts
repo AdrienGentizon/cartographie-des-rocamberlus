@@ -11,6 +11,9 @@ const HomePageFramgent = gql`
     mainTitlePicture {
       url
     }
+    subTitlePicture {
+      url
+    }
   }
 `
 
