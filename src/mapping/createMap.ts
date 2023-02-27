@@ -110,7 +110,8 @@ function getMarkerStyle(
 
 function addMapClickEventListener(
   map: Map,
-  onSelectedLocation: (location: ContentfulLocation) => void
+  onSelectedLocation: (location: ContentfulLocation) => void,
+  onHoveringLocation: (location?: ContentfulLocation) => void
 ) {
   const clickHandler = (event: MapBrowserEvent<UIEvent>) => {
     const pixel = event.pixel
@@ -123,7 +124,19 @@ function addMapClickEventListener(
     }
   }
 
+  const hoverHandler = (event: MapBrowserEvent<UIEvent>) => {
+    const pixel = event.pixel
+    const feature = map.forEachFeatureAtPixel(pixel, (feature) => {
+      return feature
+    })
+    if (feature) {
+      return onHoveringLocation(feature.get('locationObj'))
+    }
+    onHoveringLocation(undefined)
+  }
+
   map.on('click', clickHandler)
+  map.on('pointermove', hoverHandler)
 }
 
 function spawnLocationsOnMap(
@@ -145,11 +158,13 @@ export default function createMap({
   mapRef,
   locations,
   onSelectedLocation,
+  onHoveringLocation,
   mapCenter,
 }: {
   mapRef: React.RefObject<HTMLDivElement>
   locations: ContentfulLocation[]
   onSelectedLocation: (location: ContentfulLocation) => void
+  onHoveringLocation: (location?: ContentfulLocation) => void
   mapCenter?: GqlLocation
 }) {
   if (!mapRef.current) return
@@ -170,7 +185,7 @@ export default function createMap({
   }
 
   spawnLocationsOnMap(map, locations, mapCenter)
-  addMapClickEventListener(map, onSelectedLocation)
+  addMapClickEventListener(map, onSelectedLocation, onHoveringLocation)
 
   return map
 }

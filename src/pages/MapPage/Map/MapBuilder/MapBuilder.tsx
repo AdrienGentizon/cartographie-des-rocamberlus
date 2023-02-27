@@ -7,6 +7,7 @@ interface MapBuilderProps {
   mapRef: React.RefObject<HTMLDivElement>
   locations: ContentfulLocation[]
   onSelectedLocation: (location: ContentfulLocation) => void
+  onHoveringLocation: (location?: ContentfulLocation) => void
   mapCenter?: GqlLocation
 }
 
@@ -14,6 +15,7 @@ export default function MapBuilder({
   mapRef,
   locations,
   onSelectedLocation,
+  onHoveringLocation,
   mapCenter,
 }: MapBuilderProps) {
   useEffect(() => {
@@ -25,6 +27,7 @@ export default function MapBuilder({
           location.locationGpsCoordinates?.lat
       ),
       onSelectedLocation,
+      onHoveringLocation,
       mapCenter,
     })
     return () => map?.dispose()

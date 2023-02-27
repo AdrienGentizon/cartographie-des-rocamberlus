@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import MapBuilder from './MapBuilder/MapBuilder'
 import { ContentfulLocation } from '../../../types'
@@ -15,6 +15,9 @@ export default function Map({ locations }: PropsType) {
   const onSelectedLocation = (location: ContentfulLocation) => {
     history.push(`/article/${location.sys.id}`)
   }
+  const [hoveredLocation, setHoveredLocation] = useState<
+    ContentfulLocation | undefined
+  >(undefined)
   return (
     <div
       id="map"
@@ -26,8 +29,22 @@ export default function Map({ locations }: PropsType) {
           mapRef={mapRef}
           locations={locations}
           onSelectedLocation={onSelectedLocation}
+          onHoveringLocation={setHoveredLocation}
         />
       )}
+
+      <dialog
+        className={`absolute p-2 top-0 z-40 rounded shadow-xl mt-4 ${
+          hoveredLocation ? 'visible opacity-100' : 'invisible opacity-0'
+        }
+        transition-opacity duration-300 ease-in-out
+        `}
+        open
+      >
+        {hoveredLocation && (
+          <p className="font-thin">{hoveredLocation.title}</p>
+        )}
+      </dialog>
     </div>
   )
 }

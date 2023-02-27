@@ -7,7 +7,7 @@ import useLocations from '../../contentful/useLocations'
 import { Main } from '../../ui'
 
 function MapPage() {
-  const { loading, error, data } = useLocations()
+  const { loading, error, locations } = useLocations()
 
   if (loading)
     return (
@@ -23,10 +23,10 @@ function MapPage() {
       </Main>
     )
 
-  if (data)
+  if (locations.length > 0)
     return (
       <Main>
-        <Map locations={data.articleCollection.items} />
+        <Map locations={locations} />
       </Main>
     )
   return <Main></Main>
