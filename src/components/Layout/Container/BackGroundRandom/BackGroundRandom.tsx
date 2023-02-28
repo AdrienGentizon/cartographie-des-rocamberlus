@@ -7,11 +7,12 @@ const STATUE_ID = '4ImM2j4tL1z5Yg7yuiz7SR'
 const DEER_ID = '2WlIf3SOvzVVg9NraIuDfd'
 const ELEFANT_ID = '63SBdGZHOxTTFg4bheOY24'
 const SKULL_ID = '1gOCGnkUJB0OJtP3rHBeOQ'
-const PARTICLE_DENSITY = 8
+const GRID_ROW_HEIGHT = 300
 
 interface PropsType {
   containerHeight: number
 }
+
 export default function BackGroundRandom({ containerHeight }: PropsType) {
   const {
     image: mill,
@@ -74,12 +75,20 @@ export default function BackGroundRandom({ containerHeight }: PropsType) {
   useEffect(() => {
     const particles: { top: number; left?: number; right?: number }[] = []
     if (containerHeight > 0) {
-      const ratio = Math.floor(containerHeight / window.innerHeight)
-      for (let n = 0; n < PARTICLE_DENSITY * ratio; n++) {
+      for (
+        let n = 0;
+        n < containerHeight - (GRID_ROW_HEIGHT - 96);
+        n += GRID_ROW_HEIGHT
+      ) {
         particles.push({
-          top: 100 * Math.random(),
-          left: Boolean(n % 2) ? undefined : 256 * Math.random() - 48,
-          right: Boolean(n % 2) ? 256 * Math.random() - 48 : undefined,
+          top: 150 * Math.random(),
+          left: 256 * Math.random() - 48,
+          right: undefined,
+        })
+        particles.push({
+          top: 150 * Math.random(),
+          left: undefined,
+          right: 256 * Math.random() - 48,
         })
       }
       setParticles(particles)
@@ -93,7 +102,7 @@ export default function BackGroundRandom({ containerHeight }: PropsType) {
           <div
             key={`particle-${n}`}
             style={{
-              height: 300,
+              height: GRID_ROW_HEIGHT,
               width: '100%',
             }}
             className="hidden lg:block relative"
