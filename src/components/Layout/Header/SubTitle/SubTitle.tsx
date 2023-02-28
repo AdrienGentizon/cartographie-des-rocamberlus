@@ -2,7 +2,7 @@ import React from 'react'
 import useHomePage from '../../../../contentful/useHomePage'
 
 function Image({ url }: { url: string }) {
-  return <img className="w-96 mx-auto" src={url} alt="site title" />
+  return <img className="px-4 lg:px-24 mx-auto" src={url} alt="site title" />
 }
 
 export default function SubTitle() {

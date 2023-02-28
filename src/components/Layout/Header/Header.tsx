@@ -5,7 +5,7 @@ import Title from './Title/Title'
 
 export default function Header() {
   return (
-    <header className="flex flex-col justify-center px-2 lg:px-12 relative">
+    <header className="flex flex-col justify-center px-2 lg:px-10 lg:pt-2 relative">
       <Title />
       <SubTitle />
       <Nav />

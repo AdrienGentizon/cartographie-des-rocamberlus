@@ -78,3 +78,42 @@ main.main-with-map {
     height: 566px;
   }
 }
+
+.nav-link {
+  background-repeat: no-repeat;
+  background-position: center;
+  height: inherit;
+  width: inherit;
+}
+
+.nav-link.nav-link-Accueil {
+  background-image: var(--nav-link-Accueil);
+}
+.nav-link.nav-link-Accueil:hover,
+.nav-link.nav-link-Accueil.nav-link--active {
+  background-image: var(--nav-link-Accueil--hover);
+}
+
+.nav-link.nav-link-Carte {
+  background-image: var(--nav-link-Carte);
+}
+.nav-link.nav-link-Carte:hover,
+.nav-link.nav-link-Carte.nav-link--active {
+  background-image: var(--nav-link-Carte--hover);
+}
+
+.nav-link.nav-link-Contact {
+  background-image: var(--nav-link-Contact);
+}
+.nav-link.nav-link-Contact:hover,
+.nav-link.nav-link-Contact.nav-link--active {
+  background-image: var(--nav-link-Contact--hover);
+}
+
+.preload {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+  scale: 0;
+}

@@ -1,23 +1,51 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { NavLink } from 'react-router-dom'
 
-interface MenuItemProps {
+type MenuItemProps = React.PropsWithChildren<{
   url: string
   title: string
-}
+  idleBgSrc?: string
+  hoverBgSrc?: string
+}>
 
-export default function MenuItem({ url, title }: MenuItemProps) {
+export default function MenuItem({
+  url,
+  idleBgSrc,
+  hoverBgSrc,
+  title,
+}: MenuItemProps) {
+  const className = `nav-link nav-link-${title} block transition-opacity ease-in-out bg-contain bg-repeat-none`
+
+  useEffect(() => {
+    if (idleBgSrc && hoverBgSrc) {
+      document.body.style.setProperty(
+        `--nav-link-${title}`,
+        `url(${idleBgSrc})`
+      )
+      document.body.style.setProperty(
+        `--nav-link-${title}--hover`,
+        `url(${hoverBgSrc})`
+      )
+    }
+  }, [idleBgSrc, hoverBgSrc, title])
+
   return (
-    <li className="flex">
-      <NavLink
-        exact
-        activeClassName="border-gray-400 border-b"
-        className="pt-2 pb-1 px-4 border-b-2 border-transparent hover:border-gray-600 hover:text-gray-600 transition-all ease-in-out duration-500"
-        to={url}
-      >
-        {title}
-      </NavLink>
-    </li>
+    <>
+      <li className=" h-5 w-20 lg:h-10 lg:w-32">
+        <NavLink
+          exact
+          activeClassName={`nav-link nav-link-${title} nav-link--active`}
+          className={className}
+          to={url}
+        >
+          {(!idleBgSrc || !hoverBgSrc) && <>{title}</>}
+        </NavLink>
+      </li>
+      <ul className="preload">
+        <li className={`nav-link nav-link-${title}`} />
+        <li className={`nav-link nav-link-${title} nav-link--active`} />
+      </ul>
+    </>
   )
 }

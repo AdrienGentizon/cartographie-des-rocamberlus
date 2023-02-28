@@ -3,7 +3,7 @@ import useHomePage from '../../../../contentful/useHomePage'
 import { H1 } from '../../../../ui'
 
 function Image({ url }: { url: string }) {
-  return <img className="py-8" src={url} alt="site title" />
+  return <img src={url} alt="site title" />
 }
 
 export default function Title() {
@@ -15,7 +15,7 @@ export default function Title() {
 
   if (homePage.title)
     return (
-      <div className="text-center pt-4 pb-2">
+      <div className="text-center pt-2">
         <H1>{homePage.title}</H1>
       </div>
     )
