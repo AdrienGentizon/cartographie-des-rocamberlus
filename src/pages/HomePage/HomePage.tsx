@@ -5,7 +5,7 @@ import useHomePage from '../../contentful/useHomePage'
 import { H3 } from '../../ui'
 
 function Separator() {
-  return <div className="py-2 mx-auto border-b-2 w-2" />
+  return <div className="mx-auto border-b border-gray-500 w-2" />
 }
 
 function HomePage() {
