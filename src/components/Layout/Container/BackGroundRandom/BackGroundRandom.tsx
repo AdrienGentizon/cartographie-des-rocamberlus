@@ -67,9 +67,9 @@ export default function BackGroundRandom({ containerHeight }: PropsType) {
     if (alea < 0.2) return statue?.url ?? ''
     if (alea < 0.4) return deer?.url ?? ''
     if (alea < 0.6) return elefant?.url ?? ''
-    if (alea < 0.8) return skull?.url ?? ''
+    if (alea < 0.8) return well?.url ?? ''
     if (alea < 0.9) return mill?.url ?? ''
-    return well?.url ?? ''
+    return skull?.url ?? ''
   }
 
   useEffect(() => {
@@ -112,6 +112,10 @@ export default function BackGroundRandom({ containerHeight }: PropsType) {
                 top,
                 left,
                 right,
+                rotate: `${
+                  (Math.random() > 0.5 ? 1 : -1) * 4 * Math.random()
+                }deg`,
+                transform: Math.random() > 0.5 ? `rotateY(180deg)` : undefined,
               }}
               className="absolute"
               alt="particle"
