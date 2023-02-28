@@ -1,8 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import useArtists from '../../contentful/useArtists'
+import useArtists from '../../../../contentful/useArtists'
 
-import { CONTACT_URL, HOME_URL, MAP_URL } from '../../routes'
+import { CONTACT_URL, HOME_URL, MAP_URL } from '../../../../routes'
 import MenuItem from './MenuItem/MenuItem'
 import Search from './Search/Search'
 

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { ArtistsHookType } from '../../../types'
+import { ArtistsHookType } from '../../../../../types'
 
 function Icon() {
   return (

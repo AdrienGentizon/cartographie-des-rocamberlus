@@ -1,5 +1,5 @@
 import React from 'react'
-import Nav from '../../Nav/Nav'
+import Nav from './Nav/Nav'
 import SubTitle from './SubTitle/SubTitle'
 import Title from './Title/Title'
 
