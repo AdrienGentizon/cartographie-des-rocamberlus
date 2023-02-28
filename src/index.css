@@ -2,17 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@media screen and (max-width: 599px) {
-  html {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  html::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 body {
   max-width: 100%;
   overflow-x: hidden;
@@ -72,4 +61,20 @@ body {
 article ul li p {
   padding: 0 1rem !important;
   font-style: italic;
+}
+
+#map {
+  height: 300px;
+}
+main.main-with-map {
+  height: 316px;
+}
+
+@media (min-width: 640px) {
+  #map {
+    height: 550px;
+  }
+  main.main-with-map {
+    height: 566px;
+  }
 }

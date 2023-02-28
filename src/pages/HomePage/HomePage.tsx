@@ -2,7 +2,7 @@ import React from 'react'
 import Layout from '../../components/Layout/Layout'
 
 import useHomePage from '../../contentful/useHomePage'
-import { H3, Main } from '../../ui'
+import { H3 } from '../../ui'
 
 function Separator() {
   return <div className="py-2 mx-auto border-b-2 w-2" />
@@ -38,47 +38,39 @@ function HomePage() {
 
   if (loading)
     return (
-      <Main>
-        <div className="w-full h-96">
-          <div className="flex justify-center items-center h-full">
-            <span className="block loader" />
-          </div>
+      <div className="w-full h-96">
+        <div className="flex justify-center items-center h-full">
+          <span className="block loader" />
         </div>
-      </Main>
+      </div>
     )
 
-  if (error || !homePage)
-    return (
-      <Main>
-        <p>Error!</p>;
-      </Main>
-    )
+  if (error || !homePage) return <p>Error!</p>
+
   return (
-    <Main>
-      <section className="pb-8 px-4">
-        <div className="py-8">
-          <H3>{homePage.mainTextTitle}</H3>
-        </div>
+    <section className="pb-8 px-4">
+      <div className="py-8">
+        <H3>{homePage.mainTextTitle}</H3>
+      </div>
 
-        <div>
-          {' '}
-          {homeContent.map(({ tag, value }, n) => {
-            if (tag === 'p') {
-              return (
-                <React.Fragment key={`home-p-${n}`}>
-                  <p className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify">
-                    {value}
-                  </p>
-                  {n < homeContent.length - 1 && <Separator />}
-                </React.Fragment>
-              )
-            }
+      <div>
+        {' '}
+        {homeContent.map(({ tag, value }, n) => {
+          if (tag === 'p') {
+            return (
+              <React.Fragment key={`home-p-${n}`}>
+                <p className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify">
+                  {value}
+                </p>
+                {n < homeContent.length - 1 && <Separator />}
+              </React.Fragment>
+            )
+          }
 
-            return <></>
-          })}
-        </div>
-      </section>
-    </Main>
+          return <></>
+        })}
+      </div>
+    </section>
   )
 }
 

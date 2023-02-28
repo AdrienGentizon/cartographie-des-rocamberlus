@@ -21,7 +21,7 @@ export default function Map({ locations }: PropsType) {
   return (
     <div
       id="map"
-      className="absolute w-full max-w-2xl h-2/3 border-4 border-black rounded-lg mt-4 bg-black"
+      className="absolute w-full max-w-2xl border-4 border-black rounded-lg mt-4 bg-black"
       ref={mapRef}
     >
       {mapRef && (

@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
 import useArticleFromId from '../../contentful/useArticleFromId'
-import { H2, Main, Asset, Img } from '../../ui'
+import { H2, Asset, Img } from '../../ui'
 
 import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
@@ -46,43 +46,31 @@ function ArticlePage() {
     },
   }
 
-  if (loading)
-    return (
-      <Main>
-        <p>Loading...</p>
-      </Main>
-    )
+  if (loading) return <p>Loading...</p>
 
-  if (error || !article?.articleText?.json)
-    return (
-      <Main>
-        <p>Error!</p>
-      </Main>
-    )
+  if (error || !article?.articleText?.json) return <p>Error!</p>
 
   return (
-    <Main>
-      <article className="flex flex-col lg:px-2">
-        <div
-          className={`
+    <article className="flex flex-col px-2">
+      <div
+        className={`
           flex justify-center
           pt-8 pb-4
           `}
-        >
-          <H2>{article.title}</H2>
-        </div>
-        <div>
-          {article.artistPicture && (
-            <Img
-              className="lg:max-w-xs lg:float-left lg:mr-8 "
-              alt="artist profile"
-              src={`${article.artistPicture.url}?w=400`}
-            />
-          )}
-          {documentToReactComponents(article.articleText.json, renderOptions)}
-        </div>
-      </article>
-    </Main>
+      >
+        <H2>{article.title}</H2>
+      </div>
+      <div>
+        {article.artistPicture && (
+          <Img
+            className="lg:max-w-xs lg:float-left lg:mr-8 mb-4 "
+            alt="artist profile"
+            src={`${article.artistPicture.url}?w=400`}
+          />
+        )}
+        {documentToReactComponents(article.articleText.json, renderOptions)}
+      </div>
+    </article>
   )
 }
 
