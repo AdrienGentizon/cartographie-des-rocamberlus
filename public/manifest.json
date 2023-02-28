@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Cartographie des rocamberlus",
+  "name": "La cartographie des rocamberlus (territoires de l'imaginaire)",
   "icons": [
     {
       "src": "favicon.ico",
