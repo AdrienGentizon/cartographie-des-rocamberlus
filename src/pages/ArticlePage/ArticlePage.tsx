@@ -55,7 +55,7 @@ function ArticlePage() {
       <div
         className={`
           flex justify-center
-          pt-8 pb-4
+          py-6
           `}
       >
         <H2>{article.title}</H2>
