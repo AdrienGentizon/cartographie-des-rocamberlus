@@ -8,7 +8,15 @@ import useLocations from '../../contentful/useLocations'
 function MapPage() {
   const { loading, error, locations } = useLocations()
 
-  if (loading) return <p>Loading...</p>
+  if (loading)
+    return (
+      <div
+        id="map"
+        className="flex w-full justify-center h-2/3 items-center border-4 mt-4 rounded-lg border-black"
+      >
+        <div className="loader" />
+      </div>
+    )
 
   if (error) return <p>Error!</p>
 
