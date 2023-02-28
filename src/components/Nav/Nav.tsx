@@ -18,7 +18,7 @@ export default function Nav() {
         <MenuItem url={CONTACT_URL} title="Contact" />
       </ul>
       {!history.location.pathname.startsWith('/map') && (
-        <div className="px-32">
+        <div className="lg:px-32">
           <Search artists={artists} />
         </div>
       )}
