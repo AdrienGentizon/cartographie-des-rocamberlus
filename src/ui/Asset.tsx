@@ -49,5 +49,12 @@ export function Asset({ id, alt }: PropsType) {
   if (error) console.error(error.message)
   if (error) return <></>
   if (!image) return <></>
-  return <Img src={image.url} alt={alt} className="my-3" loading={loading} />
+  return (
+    <Img
+      src={image.url}
+      alt={alt}
+      className="my-3 mx-auto min-w-full"
+      loading={loading}
+    />
+  )
 }
