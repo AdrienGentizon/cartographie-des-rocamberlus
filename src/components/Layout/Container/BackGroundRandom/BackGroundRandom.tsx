@@ -77,7 +77,7 @@ export default function BackGroundRandom({ containerHeight }: PropsType) {
       const ratio = Math.floor(containerHeight / window.innerHeight)
       for (let n = 0; n < PARTICLE_DENSITY * ratio; n++) {
         particles.push({
-          top: 192 * Math.random() - 96,
+          top: 100 * Math.random(),
           left: Boolean(n % 2) ? undefined : 256 * Math.random() - 48,
           right: Boolean(n % 2) ? 256 * Math.random() - 48 : undefined,
         })
