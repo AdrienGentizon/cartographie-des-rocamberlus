@@ -44,9 +44,9 @@ export default function BackGroundRandom({ containerHeight }: PropsType) {
     error: errorSkull,
   } = useImageFromId(SKULL_ID)
 
-  const [particles, setParticles] = useState<{ top: number; left: number }[]>(
-    []
-  )
+  const [particles, setParticles] = useState<
+    { top: number; left?: number; right?: number }[]
+  >([])
   const loading =
     loadingMill ||
     loadingWell ||
@@ -72,13 +72,14 @@ export default function BackGroundRandom({ containerHeight }: PropsType) {
   }
 
   useEffect(() => {
-    const particles: { top: number; left: number }[] = []
+    const particles: { top: number; left?: number; right?: number }[] = []
     if (containerHeight > 0) {
       const ratio = Math.floor(containerHeight / window.innerHeight)
       for (let n = 0; n < PARTICLE_DENSITY * ratio; n++) {
         particles.push({
-          top: ratio * (window.innerHeight - 192) * Math.random(),
-          left: (window.innerWidth - 192) * Math.random(),
+          top: 192 * Math.random() - 96,
+          left: Boolean(n % 2) ? undefined : 256 * Math.random() - 48,
+          right: Boolean(n % 2) ? 256 * Math.random() - 48 : undefined,
         })
       }
       setParticles(particles)
@@ -86,19 +87,28 @@ export default function BackGroundRandom({ containerHeight }: PropsType) {
   }, [containerHeight, well, mill, statue, deer])
   if (loading || error) return <></>
   return (
-    <div className="w-screen absolute">
-      {particles.map(({ top, left }, n: number) => {
+    <div className="w-screen absolute grid grid-cols-2 gap-x-80">
+      {particles.map(({ top, left, right }, n: number) => {
         return (
-          <img
-            key={`flower-${n}`}
-            className="hidden lg:block absolute"
+          <div
+            key={`particle-${n}`}
             style={{
-              top,
-              left,
+              height: 300,
+              width: '100%',
             }}
-            alt="flower"
-            src={getRandomSource()}
-          />
+            className="hidden lg:block relative"
+          >
+            <img
+              style={{
+                top,
+                left,
+                right,
+              }}
+              className="absolute"
+              alt="particle"
+              src={getRandomSource()}
+            />
+          </div>
         )
       })}
     </div>
