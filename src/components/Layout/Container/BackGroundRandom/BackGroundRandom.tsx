@@ -7,7 +7,8 @@ const STATUE_ID = '4ImM2j4tL1z5Yg7yuiz7SR'
 const DEER_ID = '2WlIf3SOvzVVg9NraIuDfd'
 const ELEFANT_ID = '63SBdGZHOxTTFg4bheOY24'
 const SKULL_ID = '1gOCGnkUJB0OJtP3rHBeOQ'
-const GRID_ROW_HEIGHT = 300
+const TRUELLE_ID = '65APH11IpPHVkyQD1WsuXc'
+const GRID_ROW_HEIGHT = 280
 
 interface PropsType {
   containerHeight: number
@@ -44,6 +45,11 @@ export default function BackGroundRandom({ containerHeight }: PropsType) {
     loading: loadingSkull,
     error: errorSkull,
   } = useImageFromId(SKULL_ID)
+  const {
+    image: truelle,
+    loading: loadingTruelle,
+    error: errorTruelle,
+  } = useImageFromId(TRUELLE_ID)
 
   const [particles, setParticles] = useState<
     { top: number; left?: number; right?: number }[]
@@ -54,19 +60,22 @@ export default function BackGroundRandom({ containerHeight }: PropsType) {
     loadingStatue ||
     loadingDeer ||
     loadingElefant ||
-    loadingSkull
+    loadingSkull ||
+    loadingTruelle
   const error =
     errorMill ||
     errorWell ||
     errorStatue ||
     errorDeer ||
     errorElefant ||
-    errorSkull
+    errorSkull ||
+    errorTruelle
   const getRandomSource = () => {
     const alea = Math.random()
-    if (alea < 0.2) return statue?.url ?? ''
-    if (alea < 0.4) return deer?.url ?? ''
-    if (alea < 0.6) return elefant?.url ?? ''
+    if (alea < 0.4) return truelle?.url ?? ''
+    if (alea < 0.5) return statue?.url ?? ''
+    if (alea < 0.6) return deer?.url ?? ''
+    if (alea < 0.7) return elefant?.url ?? ''
     if (alea < 0.8) return well?.url ?? ''
     if (alea < 0.9) return mill?.url ?? ''
     return skull?.url ?? ''
