@@ -27,8 +27,6 @@ export default function Nav() {
   const { image: accueilHover, loading: loadingAccueilHover } =
     useImageFromId(ACCUEIL_HOVER_ID)
 
-  console.log(carteHover)
-
   if (
     loadingContact ||
     loadingCarte ||
