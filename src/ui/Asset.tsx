@@ -5,10 +5,12 @@ export function Img({
   src,
   alt = '',
   className = '',
+  description,
   loading = false,
 }: {
   src: string
   alt?: string
+  description?: string
   className?: string
   loading?: boolean
 }) {
@@ -33,31 +35,38 @@ export function Img({
     )
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        width: 'fit-content',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 8,
-        borderImageOutset: 0,
-        borderImageSource: 'url(/picture-frame.png)',
-        borderImageSlice: 16,
-        borderImageRepeat: 'round',
-        borderImageWidth: 1.5,
-      }}
-      className={className}
-    >
-      <img
-        src={src}
-        alt={alt}
+    <div>
+      <div
         style={{
-          boxShadow: 'inset 0 0 10px white',
-          borderRadius: 6,
-          padding: 2,
+          display: 'flex',
+          width: 'fit-content',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderWidth: 8,
+          borderImageOutset: 0,
+          borderImageSource: 'url(/picture-frame.png)',
+          borderImageSlice: 16,
+          borderImageRepeat: 'round',
+          borderImageWidth: 1.5,
         }}
-        onLoad={() => setImageLoading(false)}
-      />
+        className={className}
+      >
+        <img
+          src={src}
+          alt={alt}
+          style={{
+            boxShadow: 'inset 0 0 10px white',
+            borderRadius: 6,
+            padding: 2,
+          }}
+          onLoad={() => setImageLoading(false)}
+        />
+      </div>
+      {description && (
+        <p className="text-sm">
+          <em>{description}</em>
+        </p>
+      )}
     </div>
   )
 }
@@ -70,12 +79,15 @@ interface PropsType {
 export function Asset({ id, alt }: PropsType) {
   const { loading, error, image } = useImageFromId(id)
 
+  console.log(image?.description)
+
   if (error) return <></>
   if (!image) return <></>
   return (
     <Img
       src={image.url}
       alt={alt}
+      description={image.description}
       className="my-3 mx-auto "
       loading={loading}
     />
