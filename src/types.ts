@@ -115,3 +115,18 @@ export interface HomePageType {
   mainTitlePicture?: { url: string } | null
   subTitlePicture?: { url: string } | null
 }
+
+export interface Article {
+  articleAuthor?: string | null
+  articleText?: {
+    json: any | null
+  } | null
+  articleUrlSource?: string | null
+  artistBirthDate?: string | null
+  artistDescription: string | null
+  artistName?: string | null
+  artistPicture?: { url: string } | null
+  artistPseudo?: string | null
+  coverPicture?: string | null
+  title?: string | null
+}
