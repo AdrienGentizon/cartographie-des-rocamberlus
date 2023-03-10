@@ -48,7 +48,7 @@ export default function Wrapper({ children }: React.PropsWithChildren<{}>) {
     })
     return () => {
       window.removeEventListener('assetloaded', () => {
-        console.log('unmount')
+        //
       })
     }
   }, [])

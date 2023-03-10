@@ -29,12 +29,12 @@ export default function getApolloClient(): ApolloClient<NormalizedCacheObject> {
     const errorLink = onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors)
         graphQLErrors.forEach(({ message, locations, path }) =>
-          console.log(
+          console.error(
             `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
           )
         )
 
-      if (networkError) console.log(`[Network error]: ${networkError}`)
+      if (networkError) console.error(`[Network error]: ${networkError}`)
     })
 
     client = new ApolloClient({
