@@ -33,7 +33,7 @@ export default function Container({
       />
       <div
         ref={setContainerRef}
-        className="relative bg-white min-h-screen h-full flex flex-col lg:max-w-3xl mx-auto shadow-xl"
+        className="bg-white min-h-screen h-full flex flex-col lg:max-w-3xl mx-auto shadow-xl"
       >
         {children}
       </div>

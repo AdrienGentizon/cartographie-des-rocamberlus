@@ -24,7 +24,7 @@ export function BackGroundRandom({ containerHeight, imageUrls }: PropsType) {
 
   return (
     <div
-      className="w-screen absolute"
+      className="w-screen absolute -z-10"
       style={{
         display: 'grid',
         gridTemplateColumns: `repeat( auto-fill, minmax(${CELL_SIZE}px, 1fr) )`,
