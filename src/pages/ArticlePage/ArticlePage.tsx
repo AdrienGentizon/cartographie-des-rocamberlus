@@ -6,6 +6,11 @@ import { H2, Asset, Img } from '../../ui'
 
 import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import YoutubeVideoEmbedder from '../../components/YoutubeVideoEmbedder/YoutubeVideoEmbedder'
+
+function isHyperlinkNode(node: any): node is { data: { uri: string } } {
+  return (node as { data: { uri: string } }).data?.uri !== undefined
+}
 
 function ArticlePage() {
   const { id } = useParams<{ id?: string }>()
@@ -29,16 +34,26 @@ function ArticlePage() {
         if (children.props) children.props.isListItem = true
         return <li>{children}</li>
       },
-      [INLINES.HYPERLINK]: (node: any, children: any) => (
-        <a
-          className="underline cursor-pointer"
-          target="_blank"
-          href={node.data.uri}
-          rel="noreferrer"
-        >
-          {children}
-        </a>
-      ),
+      [INLINES.HYPERLINK]: (node: any, children: any) => {
+        if (!isHyperlinkNode(node)) return <></>
+        if (node.data.uri.includes('youtu.be')) {
+          return (
+            <div className="flex justify-center w-full py-2">
+              <YoutubeVideoEmbedder url={node.data.uri} />
+            </div>
+          )
+        }
+        return (
+          <a
+            className="underline cursor-pointer"
+            target="_blank"
+            href={node.data.uri}
+            rel="noreferrer"
+          >
+            {children}
+          </a>
+        )
+      },
       [BLOCKS.EMBEDDED_ASSET]: (node: any, children: any) => {
         if (!node.data.target.sys.id) return <></>
         return <Asset id={node.data.target.sys.id} />
