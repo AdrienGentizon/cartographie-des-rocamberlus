@@ -12,7 +12,6 @@ let client: ApolloClient<NormalizedCacheObject> | undefined = undefined
 
 export default function getApolloClient(): ApolloClient<NormalizedCacheObject> {
   if (!client) {
-    console.log(import.meta.env.VITE_CONTENTFUL_GRAPHQL_ENDPOINT)
     const httpLink = createHttpLink({
       uri: `${import.meta.env.VITE_CONTENTFUL_GRAPHQL_ENDPOINT}/${
         import.meta.env.VITE_CONTENTFUL_SPACE_ID
