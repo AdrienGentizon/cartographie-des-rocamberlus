@@ -20,12 +20,12 @@ const getImageFromIdQuery = (options?: { width?: number }) => gql`
 
 interface AssetType {
   contentType: string
-  description: string
+  description: string | null
   fileName: string
   height: number
   width: number
   size: number
-  title: string
+  title: string | null
   url: string
 }
 
@@ -41,5 +41,9 @@ export default function useImageFromId(id: string): {
     }
   )
 
-  return { image: data?.asset, error, loading }
+  return {
+    image: data?.asset,
+    error,
+    loading,
+  }
 }

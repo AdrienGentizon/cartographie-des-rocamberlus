@@ -108,11 +108,22 @@ function ArticlePage() {
       </div>
       <div>
         {article.artistPicture && (
-          <Img
-            className="lg:max-w-xs lg:float-left lg:mr-8 mb-4 "
-            alt="artist profile"
-            src={`${article.artistPicture.url}?w=400`}
-          />
+          <div className="lg:max-w-xs lg:float-left lg:mr-8 mb-4">
+            <Img
+              alt="artist profile"
+              src={`${article.artistPicture.url}?w=400`}
+            />
+            {(article.artistPicture?.description ||
+              article.artistPicture?.title) && (
+              <p className="font-thin text-xs">
+                {article.artistPicture?.description
+                  ? article.artistPicture.description
+                  : article.artistPicture?.title
+                  ? article.artistPicture.title
+                  : ''}
+              </p>
+            )}
+          </div>
         )}
         {documentToReactComponents(article.articleText.json, renderOptions)}
       </div>

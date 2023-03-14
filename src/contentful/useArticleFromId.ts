@@ -18,6 +18,8 @@ const ArticleFragment = gql`
     artistDescription
     artistPicture {
       url
+      title
+      description
     }
     articleText {
       json

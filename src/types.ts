@@ -125,7 +125,11 @@ export interface Article {
   artistBirthDate?: string | null
   artistDescription: string | null
   artistName?: string | null
-  artistPicture?: { url: string } | null
+  artistPicture?: {
+    url: string
+    description?: string | null
+    title?: string | null
+  } | null
   artistPseudo?: string | null
   coverPicture?: string | null
   title?: string | null

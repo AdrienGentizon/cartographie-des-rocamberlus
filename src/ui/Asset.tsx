@@ -10,7 +10,7 @@ export function Img({
 }: {
   src: string
   alt?: string
-  description?: string
+  description?: string | null
   className?: string
   loading?: boolean
 }) {
@@ -79,13 +79,20 @@ interface PropsType {
 export function Asset({ id, alt }: PropsType) {
   const { loading, error, image } = useImageFromId(id)
 
+  const getDescription = () => {
+    if (image?.description && image?.description !== '')
+      return image.description
+    if (image?.title && image?.title !== '') return image.title
+    return undefined
+  }
+
   if (error) return <></>
   if (!image) return <></>
   return (
     <Img
       src={image.url}
       alt={alt}
-      description={image.description}
+      description={getDescription()}
       className="my-3 mx-auto "
       loading={loading}
     />
