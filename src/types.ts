@@ -133,4 +133,9 @@ export interface Article {
   artistPseudo?: string | null
   coverPicture?: string | null
   title?: string | null
+  locationName?: string | null
+  locationCityName?: string | null
+  locationZipcode?: string | null
+  locationGpsCoordinates?: { lat: number; lon: number } | null
+  showFullAddress?: boolean | null
 }

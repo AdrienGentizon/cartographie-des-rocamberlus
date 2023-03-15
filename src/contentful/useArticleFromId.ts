@@ -26,6 +26,11 @@ const ArticleFragment = gql`
     }
     articleAuthor
     articleUrlSource
+    locationName
+    locationGpsCoordinates {
+      lat
+      lon
+    }
   }
 `
 
