@@ -58,6 +58,7 @@ export function Img({
             boxShadow: 'inset 0 0 10px white',
             borderRadius: 6,
             padding: 2,
+            maxHeight: 480,
           }}
           onLoad={() => setImageLoading(false)}
         />
@@ -93,7 +94,7 @@ export function Asset({ id, alt }: PropsType) {
       src={image.url}
       alt={alt}
       description={getDescription()}
-      className="my-3 mx-auto "
+      className="my-3 mx-auto"
       loading={loading}
     />
   )
