@@ -1,8 +1,10 @@
 import React from 'react'
 import Layout from '../../components/Layout/Layout'
+import useImageFromId from '../../contentful/useAssetFromId'
 
 import useHomePage from '../../contentful/useHomePage'
 import { H3 } from '../../ui'
+import { ASSETS } from '../../utils/getAssetFromName'
 
 function Separator() {
   return <div className="mx-auto border-b border-gray-500 w-2" />
@@ -10,6 +12,7 @@ function Separator() {
 
 function HomePage() {
   const { loading, error, homePage } = useHomePage()
+  const { image: truelle } = useImageFromId(ASSETS.truelle)
 
   const getArticleContent = (
     items: any[],
@@ -52,9 +55,14 @@ function HomePage() {
       <div className="py-8">
         <H3>{homePage.mainTextTitle}</H3>
       </div>
-
+      {truelle && (
+        <img
+          className="max-h-40 mx-auto"
+          alt="dessin de truelle"
+          src={truelle.url}
+        />
+      )}
       <div>
-        {' '}
         {homeContent.map(({ tag, value }, n) => {
           if (tag === 'p') {
             return (
