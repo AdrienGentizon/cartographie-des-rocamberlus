@@ -22,7 +22,7 @@ function ArticlePage() {
       [MARKS.BOLD]: (node: any, children: any) => <strong>{children}</strong>,
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
         return (
-          <p className="text-sm lg:text-base lg:font-extralight font-light  pb-3  text-justify">
+          <p className="text-sm lg:text-base lg:font-extralight font-light  pb-3  text-justify whitespace-pre-wrap">
             {children}
           </p>
         )
