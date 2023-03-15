@@ -3,7 +3,7 @@ import useDebounce from '../../../../hooks/useDebounce'
 
 const CELL_SIZE = 96
 const ITEM_DENSITY = 0.8
-const ITEM_ROTATION = 20
+const ITEM_ROTATION = 0
 
 type PropsType = {
   containerHeight: number
@@ -62,7 +62,7 @@ export function BackGroundRandom({ containerHeight, imageUrls }: PropsType) {
               style={{
                 maxHeight: CELL_SIZE,
                 marginInline: 'auto',
-                scale: `${Math.max(0.5, Math.random())}`,
+                // scale: `${Math.max(0.5, Math.random())}`,
                 rotate: `${ITEM_ROTATION * (-1 * Math.random() + 0.5)}deg`,
                 transform: Math.random() > 0.5 ? `rotateY(180deg)` : undefined,
                 animation: 'fade-in ease-in-out 300ms',
