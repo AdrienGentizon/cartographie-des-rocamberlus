@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Layout from '../../components/Layout/Layout'
 import useArticleFromId from '../../contentful/useArticleFromId'
@@ -8,14 +8,14 @@ import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import YoutubeVideoEmbedder from '../../components/YoutubeVideoEmbedder/YoutubeVideoEmbedder'
 
-type Address = {
-  municipality: string | null
-  city: string | null
-  village: string | null
-  road: string | null
-  houseNumber: string | null
-  postcode: string | null
-}
+// type Address = {
+//   municipality: string | null
+//   city: string | null
+//   village: string | null
+//   road: string | null
+//   houseNumber: string | null
+//   postcode: string | null
+// }
 
 function isHyperlinkNode(node: any): node is { data: { uri: string } } {
   return (node as { data: { uri: string } }).data?.uri !== undefined
@@ -25,7 +25,8 @@ function ArticlePage() {
   const { id } = useParams<{ id?: string }>()
 
   const { loading, error, article, draft } = useArticleFromId(id ?? '')
-  const [address, setAddress] = useState<Address | undefined>(undefined)
+  // const [address, setAddress] = useState<Address | undefined>(undefined)
+  const locationName = article?.locationName ? article?.locationName : undefined
 
   const renderOptions = {
     renderNode: {
@@ -71,56 +72,56 @@ function ArticlePage() {
     },
   }
 
-  const getTagValue = (xml: Document, tag: string) => {
-    try {
-      return xml.getElementsByTagName(tag)[0].childNodes[0].nodeValue
-    } catch (error) {
-      return null
-    }
-  }
+  // const getTagValue = (xml: Document, tag: string) => {
+  //   try {
+  //     return xml.getElementsByTagName(tag)[0].childNodes[0].nodeValue
+  //   } catch (error) {
+  //     return null
+  //   }
+  // }
 
-  const getAddressString = ({
-    road,
-    village,
-    municipality,
-    postcode,
-    houseNumber,
-  }: Address) => {
-    const number = houseNumber ? houseNumber + ' ' : ''
-    const street = road ? road + ', ' : ''
-    const city = village
-      ? village + ' - '
-      : municipality
-      ? municipality + ' - '
-      : ''
-    const zipcode = postcode ? postcode : ''
-    return `${number}${street}${city}${zipcode}`
-  }
+  // const getAddressString = ({
+  //   road,
+  //   village,
+  //   municipality,
+  //   postcode,
+  //   houseNumber,
+  // }: Address) => {
+  //   const number = houseNumber ? houseNumber + ' ' : ''
+  //   const street = road ? road + ', ' : ''
+  //   const city = village
+  //     ? village + ' - '
+  //     : municipality
+  //     ? municipality + ' - '
+  //     : ''
+  //   const zipcode = postcode ? postcode : ''
+  //   return `${number}${street}${city}${zipcode}`
+  // }
 
-  useEffect(() => {
-    if (article?.showFullAddress === false) return
-    if (article?.locationGpsCoordinates) {
-      const url = `https://nominatim.openstreetmap.org/reverse?lat=${article?.locationGpsCoordinates.lat}&lon=${article?.locationGpsCoordinates.lon}`
-      fetch(url, {
-        method: 'GET',
-      })
-        .then((data) => data.text())
-        .then((data) => {
-          const parser = new DOMParser()
-          const xml = parser.parseFromString(data, 'text/xml')
-          const address = {
-            municipality: getTagValue(xml, 'municipality'),
-            city: getTagValue(xml, 'city'),
-            village: getTagValue(xml, 'village'),
-            road: getTagValue(xml, 'road'),
-            houseNumber: getTagValue(xml, 'house_number'),
-            postcode: getTagValue(xml, 'postcode'),
-          }
-          setAddress(address)
-        })
-        .catch((err) => console.error(err))
-    }
-  }, [article])
+  // useEffect(() => {
+  //   if (article?.showFullAddress === false) return
+  //   if (article?.locationGpsCoordinates) {
+  //     const url = `https://nominatim.openstreetmap.org/reverse?lat=${article?.locationGpsCoordinates.lat}&lon=${article?.locationGpsCoordinates.lon}`
+  //     fetch(url, {
+  //       method: 'GET',
+  //     })
+  //       .then((data) => data.text())
+  //       .then((data) => {
+  //         const parser = new DOMParser()
+  //         const xml = parser.parseFromString(data, 'text/xml')
+  //         const address = {
+  //           municipality: getTagValue(xml, 'municipality'),
+  //           city: getTagValue(xml, 'city'),
+  //           village: getTagValue(xml, 'village'),
+  //           road: getTagValue(xml, 'road'),
+  //           houseNumber: getTagValue(xml, 'house_number'),
+  //           postcode: getTagValue(xml, 'postcode'),
+  //         }
+  //         setAddress(address)
+  //       })
+  //       .catch((err) => console.error(err))
+  //   }
+  // }, [article])
 
   if (loading) return <p>Loading...</p>
 
@@ -161,9 +162,7 @@ function ArticlePage() {
     <article className="flex flex-col px-2">
       <div className="flex justify-center py-6 flex-col">
         <H2>{article.title}</H2>
-        {address && (
-          <p className="font-thin text-sm">{getAddressString(address)}</p>
-        )}
+        {locationName && <p className="font-thin text-sm">{locationName}</p>}
       </div>
       <div>
         {article.artistPicture && (
