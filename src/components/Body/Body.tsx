@@ -5,5 +5,15 @@ interface PropsType {
 }
 
 export default function Body({ children }: PropsType) {
-  return <div className="overflow-x-hidden max-w-full w-screen">{children}</div>
+  return (
+    <div
+      style={{
+        overflowX: 'hidden',
+        maxWidth: '100%',
+        width: '100vw',
+      }}
+    >
+      {children}
+    </div>
+  )
 }
