@@ -2,6 +2,7 @@ import React, { HTMLAttributes } from 'react'
 
 export default function H3({
   children,
+  style,
   ...props
 }: HTMLAttributes<HTMLHeadingElement>) {
   return (
@@ -11,6 +12,7 @@ export default function H3({
         lineHeight: '1.75rem',
         fontStyle: 'italic',
         fontWeight: 100,
+        ...style,
       }}
       {...props}
     >
