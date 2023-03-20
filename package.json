@@ -31,7 +31,8 @@
     "start": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "typecheck": "tsc --noEmit --skipLibCheck"
+    "typecheck": "tsc --noEmit --skipLibCheck",
+    "lighthouse": "vite preview & lighthouse http://localhost:4173 --output html --output-path ./reports/lighthouse/report.html --view true"
   },
   "eslintConfig": {
     "extends": [
