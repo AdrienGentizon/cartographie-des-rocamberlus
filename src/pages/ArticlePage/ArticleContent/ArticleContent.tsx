@@ -1,7 +1,6 @@
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import React from 'react'
 import { ValidArticle } from '../../../types'
-import { H2 } from '../../../ui'
 import AssetsGallery from './AssetsGallery/AssetsGallery'
 import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types'
 import YoutubeVideoEmbedder from '../../../components/YoutubeVideoEmbedder/YoutubeVideoEmbedder'
@@ -78,7 +77,16 @@ export default function ArticleContent({ article }: PropsType) {
           justifyContent: 'center',
         }}
       >
-        <H2>{article.title}</H2>
+        <h2
+          style={{
+            fontSize: '1.5rem',
+            lineHeight: '2rem',
+            textTransform: 'uppercase',
+            fontWeight: 700,
+          }}
+        >
+          {article.title}
+        </h2>
         {locationName && (
           <p
             style={{

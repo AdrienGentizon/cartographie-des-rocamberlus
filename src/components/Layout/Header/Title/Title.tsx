@@ -1,6 +1,5 @@
 import React from 'react'
 import useHomePage from '../../../../graphql/useHomePage'
-import { H1 } from '../../../../ui'
 
 function Image({ url }: { url: string }) {
   return <img src={url} alt="site title" />
@@ -9,14 +8,37 @@ function Image({ url }: { url: string }) {
 export default function Title() {
   const { homePage } = useHomePage()
 
+  const fontSize: React.CSSProperties =
+    window.innerWidth >= 1024
+      ? {
+          fontSize: '2.25rem',
+          lineHeight: '2.5rem',
+        }
+      : {
+          fontSize: '1.875rem',
+          lineHeight: '2.25rem',
+        }
   if (!homePage) return <></>
   if (homePage.mainTitlePicture)
     return <Image url={homePage.mainTitlePicture.url} />
 
   if (homePage.title)
     return (
-      <div className="text-center pt-2">
-        <H1>{homePage.title}</H1>
+      <div
+        style={{
+          textAlign: 'center',
+          paddingTop: '0.5rem',
+        }}
+      >
+        <h1
+          style={{
+            ...fontSize,
+            textTransform: 'uppercase',
+            fontWeight: 100,
+          }}
+        >
+          {homePage.title}
+        </h1>
       </div>
     )
   return <></>

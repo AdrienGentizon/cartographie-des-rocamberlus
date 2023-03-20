@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import H3 from '../../../../components/H3/H3'
 import { Article } from '../../../../types'
 import PreviewScrollBar from './PreviewScrollBar/PreviewScrollBar'
 import SlideShow from './SlideShow/SlideShow'
@@ -30,15 +31,7 @@ export default function AssetsGallery({ article }: PropsType) {
 
   return (
     <>
-      <h3
-        style={{
-          fontSize: '1.25rem',
-          lineHeight: '1.75rem',
-          padding: '0.5rem 0 1rem 0',
-        }}
-      >
-        Galerie
-      </h3>
+      <H3>Galerie</H3>
       <div
         style={{
           display: 'flex',

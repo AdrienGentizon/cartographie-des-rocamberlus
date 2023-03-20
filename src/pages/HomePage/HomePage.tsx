@@ -1,9 +1,9 @@
 import React from 'react'
+import H3 from '../../components/H3/H3'
 import Layout from '../../components/Layout/Layout'
 import useImageFromId from '../../graphql/useAssetFromId'
 import useHomePage from '../../graphql/useHomePage'
 
-import { H3 } from '../../ui'
 import { ASSETS } from '../../utils/getAssetFromName'
 
 function Separator() {

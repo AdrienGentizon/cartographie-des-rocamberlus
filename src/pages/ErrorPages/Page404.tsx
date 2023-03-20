@@ -1,6 +1,6 @@
 import React from 'react'
+import H3 from '../../components/H3/H3'
 import Layout from '../../components/Layout/Layout'
-import { H3 } from '../../ui'
 
 function Page404() {
   return (
