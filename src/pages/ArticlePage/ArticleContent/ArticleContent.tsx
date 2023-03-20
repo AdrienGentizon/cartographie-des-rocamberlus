@@ -1,10 +1,11 @@
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import React from 'react'
 import { ValidArticle } from '../../../types'
-import { Asset, H2, Img } from '../../../ui'
+import { H2 } from '../../../ui'
 import AssetsGallery from './AssetsGallery/AssetsGallery'
 import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types'
 import YoutubeVideoEmbedder from '../../../components/YoutubeVideoEmbedder/YoutubeVideoEmbedder'
+import { Asset, Img } from '../../../components/Asset/Asset'
 
 function isHyperlinkNode(node: any): node is { data: { uri: string } } {
   return (node as { data: { uri: string } }).data?.uri !== undefined
