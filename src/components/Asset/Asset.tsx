@@ -4,15 +4,15 @@ import useImageFromId from '../../graphql/useAssetFromId'
 export function Img({
   src,
   alt = '',
-  className = '',
   description,
   loading = false,
+  style,
 }: {
   src: string
   alt?: string
   description?: string | null
-  className?: string
   loading?: boolean
+  style?: React.CSSProperties
 }) {
   const [imageLoading, setImageLoading] = useState(true)
   const isLoading = loading || imageLoading
@@ -20,15 +20,42 @@ export function Img({
   if (isLoading)
     return (
       <div
-        className={`border-2 border-gray-100 bg-gray-50 p-1 rounded ${className}`}
+        style={{
+          borderColor: 'rgb(243 244 246 / 1)',
+          borderWidth: 2,
+          borderRadius: '0.5rem',
+          backgroundColor: 'rgb(249 250 251 / 1)',
+          padding: 'O.25rem',
+          ...style,
+        }}
       >
-        <div className="flex justify-center bg-white  mx-auto  h-20 max-h-20 p-4 w-20 min-w-full">
-          <span className=" block loader" />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            backgroundColor: 'rgb(255 255 255 / 1)',
+            margin: '0 auto',
+            height: '5rem',
+            maxHeight: '5rem',
+            padding: '1rem',
+            width: '5rem',
+            minWidth: '100%',
+          }}
+        >
+          <span
+            className="loader"
+            style={{
+              display: 'block',
+            }}
+          />
         </div>
         <img
           src={src}
           alt={alt}
-          className={`invisible h-0`}
+          style={{
+            visibility: 'hidden',
+            height: 0,
+          }}
           onLoad={() => setImageLoading(false)}
         />
       </div>
@@ -48,8 +75,8 @@ export function Img({
           borderImageSlice: 16,
           borderImageRepeat: 'round',
           borderImageWidth: 1.5,
+          ...style,
         }}
-        className={className}
       >
         <img
           src={src}
@@ -64,7 +91,12 @@ export function Img({
         />
       </div>
       {description && (
-        <p className="text-sm">
+        <p
+          style={{
+            fontSize: '0.875rem',
+            lineHeight: '1.25rem',
+          }}
+        >
           <em>{description}</em>
         </p>
       )}
@@ -94,7 +126,9 @@ export function Asset({ id, alt }: PropsType) {
       src={image.url}
       alt={alt}
       description={getDescription()}
-      className="my-3 mx-auto"
+      style={{
+        margin: '0.75rem auto',
+      }}
       loading={loading}
     />
   )
