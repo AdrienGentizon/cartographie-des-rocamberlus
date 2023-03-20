@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { ArtistsHookType } from '../../../../../types'
 
@@ -24,13 +24,50 @@ function Icon() {
   )
 }
 
+interface SearchResult {
+  name: string
+  articleId: string
+}
+
+const getResultName = ({ artistName, articleTitle }: ArtistsHookType) => {
+  if (!articleTitle && artistName) return `${artistName}`
+  if (articleTitle && !artistName) return `${articleTitle}`
+  if (articleTitle && artistName) return `${artistName} - ${articleTitle}`
+  return undefined
+}
+const computeResultName = (
+  artist: ArtistsHookType
+): SearchResult | undefined => {
+  const name = getResultName(artist)
+  if (!name) return undefined
+  return {
+    name,
+    articleId: artist.articleId,
+  }
+}
+const filteroutUnnamedResult = (
+  a: SearchResult | undefined
+): a is SearchResult => a !== undefined
+
+const filterResultNameMatchingSearch =
+  (e: ChangeEvent<HTMLInputElement>) =>
+  ({ name }: SearchResult) =>
+    name?.toLowerCase().includes(e.target.value.toLowerCase())
+
+const sortResultsInPlace = (
+  { name: a }: SearchResult,
+  { name: b }: SearchResult
+) => a.toUpperCase().localeCompare(b.toUpperCase())
+
 interface PropsType {
   artists: ArtistsHookType[]
 }
 
 export default function Search({ artists }: PropsType) {
   const history = useHistory()
-  const [results, setResults] = useState<ArtistsHookType[]>([])
+  const [results, setResults] = useState<{ name: string; articleId: string }[]>(
+    []
+  )
   const [open, setOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -47,15 +84,16 @@ export default function Search({ artists }: PropsType) {
         ref={inputRef}
         type="search"
         onChange={(e) => {
-          const results = artists.filter(({ artistName }) =>
-            artistName.toLowerCase().includes(e.target.value.toLowerCase())
-          )
-          results.sort(({ artistName: a }, { artistName: b }) =>
-            a.toUpperCase().localeCompare(b.toUpperCase())
-          )
+          const results = artists
+            .map(computeResultName)
+            .filter(filteroutUnnamedResult)
+            .filter(filterResultNameMatchingSearch(e))
+
           if (results.length === 0 || e.target.value === '')
             return closeDialog(undefined, true)
+
           setOpen(true)
+          results.sort(sortResultsInPlace)
           setResults(results)
         }}
         className="outline-none w-full text-gray-700 font-extralight"
@@ -67,13 +105,13 @@ export default function Search({ artists }: PropsType) {
           className="rounded shadow-md absolute top-11 left-2 min-w-full p-0"
         >
           <ul>
-            {results.map(({ artistName, articleId }, n) => (
+            {results.map(({ name, articleId }, n) => (
               <li
                 key={`search-result-${n}`}
-                onClick={() => closeDialog(articleId)}
                 className="hover:bg-gray-50 hover:text-gray-700 whitespace-nowrap px-2 py-1 transition-colors cursor-pointer ease-in-out"
+                onClick={() => closeDialog(articleId)}
               >
-                {artistName}
+                {name}
               </li>
             ))}
           </ul>
