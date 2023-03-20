@@ -8,6 +8,7 @@ const GET_ARTICLES_QUERY = gql`
         sys {
           id
         }
+        title
         artistName
       }
     }
@@ -18,6 +19,7 @@ interface ItemType {
   sys: {
     id: string
   }
+  title: string | null
   artistName: string | null
 }
 
@@ -33,8 +35,12 @@ export default function useArtists(): {
       .map((d: ItemType) => ({
         artistName: d.artistName,
         articleId: d.sys.id,
+        articleTitle: d.title,
       }))
-      .filter(({ artistName }: ItemType) => artistName !== null),
+      .filter(
+        ({ artistName, title }: ItemType) =>
+          artistName !== null || title !== null
+      ),
     loading,
     error,
   }

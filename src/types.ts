@@ -106,6 +106,7 @@ export interface ContentfulLocation {
 export interface ArtistsHookType {
   artistName: string
   articleId: string
+  articleTitle: string
 }
 
 export interface HomePageType {
