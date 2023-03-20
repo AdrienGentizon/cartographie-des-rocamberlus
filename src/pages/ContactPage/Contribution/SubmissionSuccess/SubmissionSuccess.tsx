@@ -1,4 +1,4 @@
-import { Dialog } from '../../../../ui'
+import { Dialog } from '../../../../components/Dialog/Dialog'
 
 interface SubmissionSuccessProps {
   setSubmissionSuccess: (status: boolean) => void

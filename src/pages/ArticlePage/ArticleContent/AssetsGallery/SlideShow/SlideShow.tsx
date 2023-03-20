@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Dialog } from '../../../../../components/Dialog/Dialog'
 import GalleryItem from '../GalleryItem/GalleryItem'
 import CloseButton from './CloseButton/CloseButton'
 import Pagination from './Pagination/Pagination'
@@ -14,79 +15,62 @@ export default function SlideShow({ assetIds, onClose }: PropsType) {
   )
 
   return (
-    <div
+    <Dialog
       style={{
-        position: 'fixed',
-        inset: '0 0 0 0',
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
+        width: '75vw',
+        minWidth: '75vw',
+        height: '75vh',
         alignItems: 'center',
-        background: 'hsla(0, 0%, 0%, 0.25)',
+        justifyContent: 'center',
+        borderWidth: 8,
+        borderImageOutset: '0.5 0.5',
+        borderImageSource: 'url(/picture-frame.png)',
+        borderImageSlice: 16,
+        borderImageRepeat: 'round',
+        borderImageWidth: 1.5,
+        background: 'hsla(0, 0%, 0%, 0.75)',
+        borderRadius: '0.25rem',
       }}
-      onClick={(e) => {
-        e.stopPropagation()
-        onClose()
+      onClick={() => {
+        setSelectedAssetId((prev) => {
+          if (!prev || assetIds.length === 0) return
+          const prevIndex = assetIds.indexOf(prev)
+          if (prevIndex === assetIds.length - 1) return assetIds[0]
+          return assetIds[prevIndex + 1]
+        })
       }}
+      onClose={onClose}
     >
-      <dialog
-        open
+      <ul
         style={{
           display: 'flex',
-          width: '75vw',
-          minWidth: '75vw',
-          height: '75vh',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderWidth: 8,
-          borderImageOutset: '0.5 0.5',
-          borderImageSource: 'url(/picture-frame.png)',
-          borderImageSlice: 16,
-          borderImageRepeat: 'round',
-          borderImageWidth: 1.5,
-          background: 'hsla(0, 0%, 0%, 0.75)',
-          borderRadius: '0.25rem',
-        }}
-        onClick={(e) => {
-          e.stopPropagation()
-          setSelectedAssetId((prev) => {
-            if (!prev || assetIds.length === 0) return
-            const prevIndex = assetIds.indexOf(prev)
-            if (prevIndex === assetIds.length - 1) return assetIds[0]
-            return assetIds[prevIndex + 1]
-          })
+          gap: '0.5rem',
         }}
       >
-        <ul
-          style={{
-            display: 'flex',
-            gap: '0.5rem',
-          }}
-        >
-          {React.Children.map(assetIds, (id) => (
-            <li
-              style={{
-                display: id === selectedAssetId ? 'block' : 'none',
-                margin: '0 auto',
-                maxHeight: '75vh',
-              }}
-            >
-              <GalleryItem id={id} />
-            </li>
-          ))}
+        {React.Children.map(assetIds, (id) => (
           <li
             style={{
-              position: 'absolute',
-              bottom: 8,
-              left: 0,
-              width: '100%',
+              display: id === selectedAssetId ? 'block' : 'none',
+              margin: '0 auto',
+              maxHeight: '75vh',
             }}
           >
-            <Pagination assetIds={assetIds} selectedAssetId={selectedAssetId} />
+            <GalleryItem id={id} />
           </li>
-        </ul>
-        <CloseButton onClose={onClose} />
-      </dialog>
-    </div>
+        ))}
+        <li
+          style={{
+            position: 'absolute',
+            bottom: 8,
+            left: 0,
+            width: '100%',
+          }}
+        >
+          <Pagination assetIds={assetIds} selectedAssetId={selectedAssetId} />
+        </li>
+      </ul>
+      <CloseButton onClose={onClose} />
+    </Dialog>
   )
 }
