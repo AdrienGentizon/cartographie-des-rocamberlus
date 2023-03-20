@@ -1,5 +1,6 @@
 import React from 'react'
 import useHomePage from '../../../../graphql/useHomePage'
+import isDesktop from '../../../../utils/isDesktop'
 
 function Image({ url }: { url: string }) {
   return <img src={url} alt="site title" />
@@ -8,16 +9,15 @@ function Image({ url }: { url: string }) {
 export default function Title() {
   const { homePage } = useHomePage()
 
-  const fontSize: React.CSSProperties =
-    window.innerWidth >= 1024
-      ? {
-          fontSize: '2.25rem',
-          lineHeight: '2.5rem',
-        }
-      : {
-          fontSize: '1.875rem',
-          lineHeight: '2.25rem',
-        }
+  const fontSize: React.CSSProperties = isDesktop()
+    ? {
+        fontSize: '2.25rem',
+        lineHeight: '2.5rem',
+      }
+    : {
+        fontSize: '1.875rem',
+        lineHeight: '2.25rem',
+      }
   if (!homePage) return <></>
   if (homePage.mainTitlePicture)
     return <Image url={homePage.mainTitlePicture.url} />
