@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { NavLink } from 'react-router-dom'
+import isDesktop from '../../../../../utils/isDesktop'
 
 type MenuItemProps = React.PropsWithChildren<{
   url: string
@@ -15,7 +16,7 @@ export default function MenuItem({
   hoverBgSrc,
   title,
 }: MenuItemProps) {
-  const className = `nav-link nav-link-${title} block transition-opacity ease-in-out bg-contain bg-repeat-none`
+  const className = `nav-link nav-link-${title}`
 
   useEffect(() => {
     if (idleBgSrc && hoverBgSrc) {
@@ -32,20 +33,34 @@ export default function MenuItem({
 
   return (
     <>
-      <li className=" h-5 w-20 lg:h-10 lg:w-32">
+      <li
+        style={{
+          height: isDesktop() ? '2.5rem' : '1.25rem',
+          width: isDesktop() ? '8rem' : '5rem',
+        }}
+      >
         <NavLink
           exact
           activeClassName={`nav-link nav-link-${title} nav-link--active`}
           className={className}
+          style={{
+            display: 'block',
+            transitionProperty: 'opacity',
+            transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+            transitionDuration: '150ms',
+            backgroundSize: 'contain',
+          }}
           to={url}
         >
           {(!idleBgSrc || !hoverBgSrc) && <>{title}</>}
         </NavLink>
       </li>
-      <ul className="preload">
-        <li className={`nav-link nav-link-${title}`} />
-        <li className={`nav-link nav-link-${title} nav-link--active`} />
-      </ul>
+      <li>
+        <ul className="preload">
+          <li className={`nav-link nav-link-${title}`} />
+          <li className={`nav-link nav-link-${title} nav-link--active`} />
+        </ul>
+      </li>
     </>
   )
 }

@@ -4,6 +4,7 @@ import useArtists from '../../../../graphql/useArtists'
 import useImageFromId from '../../../../graphql/useAssetFromId'
 
 import { CONTACT_URL, HOME_URL, MAP_URL } from '../../../../routes'
+import isDesktop from '../../../../utils/isDesktop'
 import MenuItem from './MenuItem/MenuItem'
 import Search from './Search/Search'
 
@@ -38,8 +39,23 @@ export default function Nav() {
     return <></>
 
   return (
-    <nav className="flex flex-col pt-2">
-      <ul className="flex justify-center gap-8 w-full h-full px-8 lg-px-0">
+    <nav
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        paddingTop: '0.5rem',
+      }}
+    >
+      <ul
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '2rem',
+          width: '100%',
+          height: '100%',
+          padding: isDesktop() ? 0 : '0 2rem',
+        }}
+      >
         <MenuItem
           url={HOME_URL}
           title="Accueil"
@@ -61,7 +77,11 @@ export default function Nav() {
       </ul>
       {!history.location.pathname.startsWith('/map') &&
         !history.location.pathname.startsWith('/contact') && (
-          <div className="lg:px-32 lg:pt-4 px-4">
+          <div
+            style={{
+              padding: isDesktop() ? '1rem 8rem 0 8rem' : '0 1rem',
+            }}
+          >
             <Search artists={artists} />
           </div>
         )}

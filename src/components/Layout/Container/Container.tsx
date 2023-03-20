@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import isDesktop from '../../../utils/isDesktop'
 import { BackGroundRandom } from './BackGroundRandom/BackGroundRandom'
 
 export default function Container({
@@ -33,7 +34,17 @@ export default function Container({
       />
       <div
         ref={setContainerRef}
-        className="bg-white min-h-screen h-full flex flex-col lg:max-w-3xl mx-auto shadow-xl"
+        style={{
+          backgroundColor: 'rgb(255 255 255 / 1)',
+          minHeight: '100vh',
+          height: '100%',
+          maxWidth: isDesktop() ? '48rem' : undefined,
+          display: 'flex',
+          flexDirection: 'column',
+          margin: '0 auto',
+          boxShadow:
+            'rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px',
+        }}
       >
         {children}
       </div>

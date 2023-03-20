@@ -24,13 +24,15 @@ export function BackGroundRandom({ containerHeight, imageUrls }: PropsType) {
 
   return (
     <div
-      className="w-screen absolute -z-10"
       style={{
         display: 'grid',
         gridTemplateColumns: `repeat( auto-fill, minmax(${CELL_SIZE}px, 1fr) )`,
         gridTemplateRows: `repeat( auto-fit, minmax(${CELL_SIZE}px, 1fr) )`,
         placeItems: 'center',
         minHeight: containerHeight,
+        width: '100vw',
+        position: 'absolute',
+        zIndex: -10,
       }}
     >
       {/* cells number is computed against window width and overflowing content height */}
