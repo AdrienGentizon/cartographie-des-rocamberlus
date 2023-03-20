@@ -139,3 +139,5 @@ export interface Article {
   locationGpsCoordinates?: { lat: number; lon: number } | null
   showFullAddress?: boolean | null
 }
+
+export type ValidArticle = Article & { articleText: { json: any } }
