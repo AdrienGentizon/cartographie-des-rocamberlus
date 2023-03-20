@@ -29,6 +29,8 @@ export default function AssetsGallery({ article }: PropsType) {
       }: unknown & { data: { target: { sys: { id: string } } } }) => id
     )
 
+  if (assetIds.length === 0) return <></>
+
   return (
     <>
       <H3>Galerie</H3>
