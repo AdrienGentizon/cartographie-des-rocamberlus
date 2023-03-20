@@ -1,12 +1,22 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import useHomePage from '../../../../graphql/useHomePage'
 import isDesktop from '../../../../utils/isDesktop'
 
-function Image({ url }: { url: string }) {
-  return <img src={url} alt="site title" />
+function Image({ url, onClick }: { url: string; onClick: () => void }) {
+  return (
+    <img
+      onClick={onClick}
+      style={{ cursor: 'pointer' }}
+      src={url}
+      alt="site title"
+    />
+  )
 }
 
 export default function Title() {
+  const history = useHistory()
+
   const { homePage } = useHomePage()
 
   const fontSize: React.CSSProperties = isDesktop()
@@ -20,7 +30,12 @@ export default function Title() {
       }
   if (!homePage) return <></>
   if (homePage.mainTitlePicture)
-    return <Image url={homePage.mainTitlePicture.url} />
+    return (
+      <Image
+        onClick={() => history.push('/')}
+        url={homePage.mainTitlePicture.url}
+      />
+    )
 
   if (homePage.title)
     return (
@@ -28,7 +43,9 @@ export default function Title() {
         style={{
           textAlign: 'center',
           paddingTop: '0.5rem',
+          cursor: 'pointer',
         }}
+        onClick={() => history.push('/')}
       >
         <h1
           style={{
