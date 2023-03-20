@@ -59,11 +59,12 @@ export default function Nav() {
           hoverBgSrc={contactHover?.url}
         />
       </ul>
-      {!history.location.pathname.startsWith('/map') && (
-        <div className="lg:px-32 lg:pt-4 px-4">
-          <Search artists={artists} />
-        </div>
-      )}
+      {!history.location.pathname.startsWith('/map') &&
+        !history.location.pathname.startsWith('/contact') && (
+          <div className="lg:px-32 lg:pt-4 px-4">
+            <Search artists={artists} />
+          </div>
+        )}
     </nav>
   )
 }
