@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import useImageFromId from '../../../../../contentful/useAssetFromId'
+import useImageFromId from '../../../../../graphql/useAssetFromId'
 
 type LoadedAssetEventDetail = { id: string; url?: string }
 

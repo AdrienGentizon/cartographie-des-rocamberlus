@@ -1,5 +1,5 @@
 import React from 'react'
-import useHomePage from '../../../../contentful/useHomePage'
+import useHomePage from '../../../../graphql/useHomePage'
 import { H1 } from '../../../../ui'
 
 function Image({ url }: { url: string }) {

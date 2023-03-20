@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useImageFromId from '../contentful/useAssetFromId'
+import useImageFromId from '../graphql/useAssetFromId'
 
 export function Img({
   src,

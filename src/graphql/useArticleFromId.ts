@@ -1,5 +1,5 @@
 import { ApolloError, gql, useQuery } from '@apollo/client'
-import { Article } from '../types'
+import { Article, ValidArticle } from '../types'
 
 const ArticleFragment = gql`
   fragment ArticleFragment on Article {
@@ -43,8 +43,14 @@ const GET_ARTICLE_FORM_ID_QUERY = gql`
   }
 `
 
+function isValidArticle(
+  article: Article | null | undefined
+): article is ValidArticle {
+  return article?.articleText !== undefined && article?.articleText !== null
+}
+
 export default function useArticleFromId(id: string): {
-  article?: Article | null
+  article?: ValidArticle
   loading: boolean
   error?: ApolloError
   draft: boolean
@@ -56,7 +62,7 @@ export default function useArticleFromId(id: string): {
   })
 
   return {
-    article: data?.article,
+    article: isValidArticle(data?.article) ? data.article : undefined,
     loading,
     error,
     draft: !data?.article?.articleText,

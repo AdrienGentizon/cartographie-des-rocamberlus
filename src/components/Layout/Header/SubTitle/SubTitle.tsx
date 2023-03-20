@@ -1,5 +1,5 @@
 import React from 'react'
-import useHomePage from '../../../../contentful/useHomePage'
+import useHomePage from '../../../../graphql/useHomePage'
 
 function Image({ url }: { url: string }) {
   return <img className="px-4 lg:px-24 mx-auto" src={url} alt="site title" />

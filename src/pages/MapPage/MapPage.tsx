@@ -1,9 +1,8 @@
 import React from 'react'
 import Layout from '../../components/Layout/Layout'
+import useLocations from '../../graphql/useLocations'
 
 import Map from './Map/Map'
-
-import useLocations from '../../contentful/useLocations'
 
 function MapPage() {
   const { loading, error, locations } = useLocations()

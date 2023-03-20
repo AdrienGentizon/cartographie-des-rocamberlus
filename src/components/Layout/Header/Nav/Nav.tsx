@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import useArtists from '../../../../contentful/useArtists'
-import useImageFromId from '../../../../contentful/useAssetFromId'
+import useArtists from '../../../../graphql/useArtists'
+import useImageFromId from '../../../../graphql/useAssetFromId'
 
 import { CONTACT_URL, HOME_URL, MAP_URL } from '../../../../routes'
 import MenuItem from './MenuItem/MenuItem'

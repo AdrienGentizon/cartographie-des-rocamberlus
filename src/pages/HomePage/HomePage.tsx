@@ -1,8 +1,8 @@
 import React from 'react'
 import Layout from '../../components/Layout/Layout'
-import useImageFromId from '../../contentful/useAssetFromId'
+import useImageFromId from '../../graphql/useAssetFromId'
+import useHomePage from '../../graphql/useHomePage'
 
-import useHomePage from '../../contentful/useHomePage'
 import { H3 } from '../../ui'
 import { ASSETS } from '../../utils/getAssetFromName'
 
