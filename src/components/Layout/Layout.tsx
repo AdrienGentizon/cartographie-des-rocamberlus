@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Main } from './Main/Main'
 import Container from './Container/Container'
-import Footer from './Footer/Footer'
 import Header from './Header/Header'
 import { ASSETS } from '../../utils/getAssetFromName'
 import LoadingAsset from './Container/BackGroundRandom/LoadingAsset/loadingAsset'
@@ -23,7 +22,6 @@ export function Layout({
     <Container imageUrls={imageUrls}>
       <Header />
       <Main>{children}</Main>
-      <Footer />
     </Container>
   )
 }
