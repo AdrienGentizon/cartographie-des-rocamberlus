@@ -55,8 +55,8 @@ export default function MenuItem({
           {(!idleBgSrc || !hoverBgSrc) && <>{title}</>}
         </NavLink>
       </li>
-      <li>
-        <ul className="preload">
+      <li className="preload">
+        <ul>
           <li className={`nav-link nav-link-${title}`} />
           <li className={`nav-link nav-link-${title} nav-link--active`} />
         </ul>
