@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "type": "commonjs",
   "dependencies": {
     "@apollo/client": "^3.3.15",
     "@contentful/rich-text-html-renderer": "^16.0.2",
@@ -11,12 +12,13 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.0.2",
-    "@types/node": "^16.11.6",
+    "@types/node": "^18.15.3",
     "@types/ol": "^6.4.2",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
     "contentful": "^9.1.4",
+    "contentful-cli": "^2.2.7",
     "dotenv": "^10.0.0",
     "graphql": "^15.0.0",
     "ol": "^6.5.0",
@@ -24,6 +26,7 @@
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "ts-node": "^10.9.1",
     "typescript": "^4.1.2",
     "web-vitals": "^2.1.2"
   },
@@ -32,7 +35,11 @@
     "build": "tsc && vite build",
     "serve": "vite preview",
     "typecheck": "tsc --noEmit --skipLibCheck",
-    "lighthouse": "vite preview & lighthouse http://localhost:4173 --output html --output-path ./reports/lighthouse/report.html --view true"
+    "lighthouse": "vite preview & lighthouse http://localhost:4173 --output html --output-path ./_reports/lighthouse/report.html --view true",
+    "contentful::login": "eval $(egrep -v '^#' .env | xargs) bash ./scripts/contentfulLogin.sh",
+    "contentful::backup": "contentful space export --config contentful.config.json",
+    "contentful::logout": "contentful logout",
+    "script::run": "ts-node"
   },
   "eslintConfig": {
     "extends": [

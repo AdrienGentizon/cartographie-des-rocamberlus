@@ -30,4 +30,5 @@ yarn-error.log*
 
 #external files
 /_assets
-/reports
+/_reports
+/_contentful
