@@ -36,7 +36,15 @@ function Section({
           {title}:
         </p>
       </span>
-      <div>{children}</div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+        }}
+      >
+        {children}
+      </div>
     </>
   )
 }
@@ -46,7 +54,7 @@ export default function BottomNotes({ article }: PropsType) {
     renderNode: {
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
         return (
-          <p className="text-sm lg:text-base lg:font-extralight font-light  pb-3  text-justify whitespace-pre-wrap">
+          <p className="text-sm lg:text-base lg:font-extralight font-light text-justify whitespace-pre-wrap not-italic">
             {children}
           </p>
         )
@@ -54,7 +62,7 @@ export default function BottomNotes({ article }: PropsType) {
       [INLINES.HYPERLINK]: (node: any, children: any) => {
         return (
           <a
-            className="underline cursor-pointer"
+            className="underline cursor-pointer text-gray-500 hover:text-gray-800 text-sm"
             target="_blank"
             href={node.data.uri}
             rel="noreferrer"
@@ -66,31 +74,43 @@ export default function BottomNotes({ article }: PropsType) {
     },
   }
   return (
-    <>
+    <ul
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '2rem',
+      }}
+    >
       {article.articleReferences && (
-        <Section icon="🚗" title="Quelques références">
-          {documentToReactComponents(
-            article.articleReferences.json,
-            renderOptions
-          )}
-        </Section>
+        <li>
+          <Section icon="🚗" title="Quelques références">
+            {documentToReactComponents(
+              article.articleReferences.json,
+              renderOptions
+            )}
+          </Section>
+        </li>
       )}
       {article.articleWebography && (
-        <Section icon="💻" title="Webographie">
-          {documentToReactComponents(
-            article.articleWebography.json,
-            renderOptions
-          )}
-        </Section>
+        <li>
+          <Section icon="💻" title="Webographie">
+            {documentToReactComponents(
+              article.articleWebography.json,
+              renderOptions
+            )}
+          </Section>
+        </li>
       )}
       {article.articleAvDocuments && (
-        <Section icon="🎥" title="Documents audiovisuels">
-          {documentToReactComponents(
-            article.articleAvDocuments.json,
-            renderOptions
-          )}
-        </Section>
+        <li>
+          <Section icon="🎥" title="Documents audiovisuels">
+            {documentToReactComponents(
+              article.articleAvDocuments.json,
+              renderOptions
+            )}
+          </Section>
+        </li>
       )}
-    </>
+    </ul>
   )
 }
