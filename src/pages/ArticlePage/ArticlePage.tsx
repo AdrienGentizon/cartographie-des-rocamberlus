@@ -25,6 +25,25 @@ export default function Wrapper() {
   return (
     <Layout>
       <ArticlePage />
+      <button
+        style={{
+          position: 'fixed',
+          bottom: 32,
+          right: 32,
+          border: 'solid 1px black',
+          borderRadius: '100vh',
+          height: 32,
+          width: 32,
+        }}
+        onClick={() =>
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          })
+        }
+      >
+        &uarr;
+      </button>
     </Layout>
   )
 }
