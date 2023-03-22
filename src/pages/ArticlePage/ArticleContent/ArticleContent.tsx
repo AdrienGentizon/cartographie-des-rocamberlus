@@ -75,7 +75,7 @@ export default function ArticleContent({ article }: PropsType) {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        padding: '0 0.5rem',
+        padding: '0 0.5rem 4rem 0.5rem',
       }}
     >
       <div
