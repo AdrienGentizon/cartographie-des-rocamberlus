@@ -139,6 +139,9 @@ export interface Article {
   locationZipcode?: string | null
   locationGpsCoordinates?: { lat: number; lon: number } | null
   showFullAddress?: boolean | null
+  articleReferences?: { json: any }
+  articleWebography?: { json: any }
+  articleAvDocuments?: { json: any }
 }
 
 export type ValidArticle = Article & { articleText: { json: any } }

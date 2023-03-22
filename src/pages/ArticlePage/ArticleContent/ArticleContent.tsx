@@ -5,6 +5,7 @@ import AssetsGallery from './AssetsGallery/AssetsGallery'
 import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types'
 import YoutubeVideoEmbedder from '../../../components/YoutubeVideoEmbedder/YoutubeVideoEmbedder'
 import { Asset, Img } from '../../../components/Asset/Asset'
+import BottomNotes from './BottomNotes/BottomNotes'
 
 function isHyperlinkNode(node: any): node is { data: { uri: string } } {
   return (node as { data: { uri: string } }).data?.uri !== undefined
@@ -22,7 +23,7 @@ export default function ArticleContent({ article }: PropsType) {
       [MARKS.BOLD]: (node: any, children: any) => <strong>{children}</strong>,
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
         return (
-          <p className="text-sm lg:text-base lg:font-extralight font-light  pb-3  text-justify whitespace-pre-wrap">
+          <p className="text-sm lg:text-base lg:font-extralight font-light  pb-3  text-justify">
             {children}
           </p>
         )
@@ -138,6 +139,7 @@ export default function ArticleContent({ article }: PropsType) {
           </div>
         )}
         {documentToReactComponents(article.articleText.json, renderOptions)}
+        <BottomNotes article={article} />
         {<AssetsGallery article={article} />}
       </div>
     </article>

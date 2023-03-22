@@ -24,6 +24,15 @@ const ArticleFragment = gql`
     articleText {
       json
     }
+    articleReferences {
+      json
+    }
+    articleWebography {
+      json
+    }
+    articleAvDocuments {
+      json
+    }
     articleAuthor
     articleUrlSource
     locationName
