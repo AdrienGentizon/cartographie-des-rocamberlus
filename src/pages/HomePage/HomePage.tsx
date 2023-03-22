@@ -12,7 +12,7 @@ function Separator() {
 
 function HomePage() {
   const { loading, error, homePage } = useHomePage()
-  const { image: truelle } = useImageFromId(ASSETS.truelle)
+  const { image: brouette } = useImageFromId(ASSETS.brouette)
 
   const getArticleContent = (
     items: any[],
@@ -55,11 +55,11 @@ function HomePage() {
       <div className="py-8">
         <H3>{homePage.mainTextTitle}</H3>
       </div>
-      {truelle && (
+      {brouette && (
         <img
           className="max-h-40 mx-auto"
           alt="dessin de truelle"
-          src={truelle.url}
+          src={brouette.url}
         />
       )}
       <div>
