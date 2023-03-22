@@ -20,10 +20,11 @@ export default function Pagination({ assetIds, selectedAssetId }: PropsType) {
           <div
             style={{
               borderRadius: '100vh',
+              mixBlendMode: 'difference',
               background:
                 id === selectedAssetId
-                  ? 'hsla(0, 100%, 100%, 1)'
-                  : 'hsla(0, 100%, 100%, 0.4)',
+                  ? 'hsla(0, 0%, 100%, 1)'
+                  : 'hsla(0, 0%, 100%, 0.4)',
               width: 6,
               height: 6,
             }}
