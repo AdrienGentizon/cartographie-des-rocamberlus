@@ -63,6 +63,13 @@ article ul li p {
   font-style: italic;
 }
 
+@media (max-width: 1024px) {
+  article ul li p {
+    padding: 0 !important;
+    font-style: italic;
+  }
+}
+
 #map {
   height: 300px;
 }
