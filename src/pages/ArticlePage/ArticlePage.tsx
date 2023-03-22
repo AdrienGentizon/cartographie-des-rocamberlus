@@ -6,6 +6,7 @@ import useArticleFromId from '../../graphql/useArticleFromId'
 import ArticleError from './ArticleError/ArticleError'
 import ArticleDraft from './ArticleDraft/ArticleDraft'
 import ArticleContent from './ArticleContent/ArticleContent'
+import isDesktop from '../../utils/isDesktop'
 
 function ArticlePage() {
   const { id } = useParams<{ id?: string }>()
@@ -28,12 +29,13 @@ export default function Wrapper() {
       <button
         style={{
           position: 'fixed',
-          bottom: 32,
-          right: 32,
+          bottom: isDesktop() ? '2rem' : '0.75rem',
+          right: isDesktop() ? '2rem' : '1rem',
           border: 'solid 1px black',
           borderRadius: '100vh',
-          height: 32,
-          width: 32,
+          height: isDesktop() ? '2rem' : '1.5rem',
+          width: isDesktop() ? '2rem' : '1.5rem',
+          fontSize: isDesktop() ? '1rem' : '0.8rem',
         }}
         onClick={() =>
           window.scrollTo({
