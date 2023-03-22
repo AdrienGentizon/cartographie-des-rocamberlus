@@ -56,7 +56,15 @@ export default function ArticleContent({ article }: PropsType) {
       },
       [BLOCKS.EMBEDDED_ASSET]: (node: any, children: any) => {
         if (!node.data.target.sys.id) return <></>
-        return <Asset id={node.data.target.sys.id} />
+        return (
+          <div
+            style={{
+              paddingBottom: '1rem',
+            }}
+          >
+            <Asset id={node.data.target.sys.id} />
+          </div>
+        )
       },
     },
   }

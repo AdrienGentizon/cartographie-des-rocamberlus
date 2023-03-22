@@ -93,11 +93,12 @@ export function Img({
       {description && (
         <p
           style={{
-            fontSize: '0.875rem',
-            lineHeight: '1.25rem',
+            fontWeight: 100,
+            fontSize: '0.75rem',
+            lineHeight: '1rem',
           }}
         >
-          <em>{description}</em>
+          {description}
         </p>
       )}
     </div>
@@ -127,7 +128,7 @@ export function Asset({ id, alt }: PropsType) {
       alt={alt}
       description={getDescription()}
       style={{
-        margin: '0.75rem auto',
+        margin: '0 auto',
       }}
       loading={loading}
     />
