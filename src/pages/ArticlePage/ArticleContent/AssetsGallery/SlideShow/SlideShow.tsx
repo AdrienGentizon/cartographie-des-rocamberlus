@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { customBorderCssProperties } from '../../../../../components/CustomBorderDiv/CustomBorderDiv'
 import { Dialog } from '../../../../../components/Dialog/Dialog'
 import GalleryItem from '../GalleryItem/GalleryItem'
 import CloseButton from './CloseButton/CloseButton'
@@ -23,15 +24,8 @@ export default function SlideShow({ assetIds, onClose }: PropsType) {
         height: '60vh',
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 8,
-        // borderImageOutset: '0.5 0.5',
-        // borderImageOutset: '2 -2',
+        ...customBorderCssProperties,
         borderImageOutset: 0.001,
-        borderImageSource: 'url(/picture-frame.png)',
-        borderImageSlice: 16,
-        borderImageRepeat: 'round',
-        borderImageWidth: 1.5,
-        // background: 'hsla(0, 0%, 0%, 0.75)',
         background: 'hsla(0, 100%, 100%, 1)',
         borderRadius: '0.25rem',
       }}

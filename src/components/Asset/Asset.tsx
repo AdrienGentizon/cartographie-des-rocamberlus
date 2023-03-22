@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import useImageFromId from '../../graphql/useAssetFromId'
+import CustomBorderDiv from '../CustomBorderDiv/CustomBorderDiv'
 
 export function Img({
   src,
@@ -63,19 +64,13 @@ export function Img({
 
   return (
     <div>
-      <div
+      <CustomBorderDiv
         style={{
           display: 'flex',
           width: 'fit-content',
           alignItems: 'center',
           justifyContent: 'center',
-          borderWidth: 8,
-          borderImageOutset: 0,
-          borderImageSource: 'url(/picture-frame.png)',
-          borderImageSlice: 16,
-          borderImageRepeat: 'round',
-          borderImageWidth: 1.5,
-          ...style,
+          margin: '0 auto',
         }}
       >
         <img
@@ -89,7 +84,7 @@ export function Img({
           }}
           onLoad={() => setImageLoading(false)}
         />
-      </div>
+      </CustomBorderDiv>
       {description && (
         <p
           style={{

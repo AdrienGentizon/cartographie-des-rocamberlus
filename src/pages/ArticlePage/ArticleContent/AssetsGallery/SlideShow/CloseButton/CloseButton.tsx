@@ -8,12 +8,12 @@ export default function CloseButton({ onClose }: PropsType) {
   return (
     <button
       style={{
-        color: 'hsla(0, 100%, 100%, 0.5)',
+        color: 'hsla(0, 0%, 0%, 1)',
         fontSize: 32,
         fontWeight: 100,
         position: 'absolute',
-        top: 8,
-        right: 24,
+        top: 0,
+        right: 16,
       }}
       onClick={onClose}
     >

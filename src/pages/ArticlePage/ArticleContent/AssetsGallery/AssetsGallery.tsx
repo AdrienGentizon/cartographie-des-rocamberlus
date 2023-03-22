@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import CustomBorderDiv from '../../../../components/CustomBorderDiv/CustomBorderDiv'
 import H3 from '../../../../components/H3/H3'
 import { Article } from '../../../../types'
 import { isDevPlatform } from '../../../../utils/isDevPlatform'
@@ -59,18 +60,12 @@ export default function AssetsGallery({ article }: PropsType) {
             maxWidth: '100%',
           }}
         >
-          <div
+          <CustomBorderDiv
             style={{
               display: 'flex',
               maxWidth: '100%',
               alignItems: 'center',
               justifyContent: 'center',
-              borderWidth: 8,
-              borderImageOutset: 0,
-              borderImageSource: 'url(/picture-frame.png)',
-              borderImageSlice: 16,
-              borderImageRepeat: 'round',
-              borderImageWidth: 1.5,
               padding: '0 1rem',
               cursor: 'pointer',
             }}
@@ -80,7 +75,7 @@ export default function AssetsGallery({ article }: PropsType) {
             {open && (
               <SlideShow assetIds={assetIds} onClose={() => setOpen(false)} />
             )}
-          </div>
+          </CustomBorderDiv>
         </div>
       </div>
     </>
