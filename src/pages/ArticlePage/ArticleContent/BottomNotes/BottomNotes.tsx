@@ -1,5 +1,5 @@
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { BLOCKS } from '@contentful/rich-text-types'
+import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 
 import React from 'react'
 import { ValidArticle } from '../../../../types'
@@ -49,6 +49,18 @@ export default function BottomNotes({ article }: PropsType) {
           <p className="text-sm lg:text-base lg:font-extralight font-light  pb-3  text-justify whitespace-pre-wrap">
             {children}
           </p>
+        )
+      },
+      [INLINES.HYPERLINK]: (node: any, children: any) => {
+        return (
+          <a
+            className="underline cursor-pointer"
+            target="_blank"
+            href={node.data.uri}
+            rel="noreferrer"
+          >
+            {children}
+          </a>
         )
       },
     },
