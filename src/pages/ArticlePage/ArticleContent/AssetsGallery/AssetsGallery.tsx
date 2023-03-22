@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import CustomBorderDiv from '../../../../components/CustomBorderDiv/CustomBorderDiv'
 import H3 from '../../../../components/H3/H3'
 import { Article } from '../../../../types'
-import { isDevPlatform } from '../../../../utils/isDevPlatform'
 import PreviewScrollBar from './PreviewScrollBar/PreviewScrollBar'
 import SlideShow from './SlideShow/SlideShow'
 
@@ -30,8 +29,6 @@ export default function AssetsGallery({ article }: PropsType) {
         },
       }: unknown & { data: { target: { sys: { id: string } } } }) => id
     )
-
-  if (!isDevPlatform) return <></>
 
   if (assetIds.length === 0) return <></>
 
