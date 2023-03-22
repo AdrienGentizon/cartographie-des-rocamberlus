@@ -1,4 +1,5 @@
 import React, { MouseEvent, ChangeEvent, useState } from 'react'
+import CustomBorderDiv from '../../../components/CustomBorderDiv/CustomBorderDiv'
 import postContribution from '../../../queries/postContribution'
 import { Inputs } from '../../../types'
 import InputsError from './InputsError/InputsError'
@@ -54,43 +55,123 @@ export default function Contribution() {
         Envoyez votre contribution
       </h2>
       <input type="hidden" name="form-name" value="contribution" />
-      <fieldset className="flex flex-col gap-2">
-        <label htmlFor="contact_name" className="block text-left font-thin">
-          Nom du contributeur
-        </label>
-        <input
-          type="text"
-          name="contact_name"
-          id="contact_name"
-          className="rounded border border-gray-200 px-2 py-1"
-          onChange={onInputChange}
-        />
-        <label htmlFor="contact_email" className="block text-left font-thin">
-          Adresse électronique
-        </label>
-        <input
-          type="email"
-          name="contact_email"
-          id="contact_email"
-          className="rounded border border-gray-200 px-2 py-1"
-          onChange={onInputChange}
-        />
-        <label htmlFor="message" className="block text-left font-thin">
-          Message de contribution
-        </label>
-        <textarea
-          name="message"
-          id="message"
-          className="rounded border border-gray-200 px-2 py-1 resize-none h-48"
-          onChange={onInputChange}
-        ></textarea>
-      </fieldset>
-      <button
-        type="submit"
-        className="py-2 border rounded bg-gray-100 text-gray-600 font-normal text-sm uppercase w-full mt-4 mb-2"
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+        }}
       >
-        Envoyer
-      </button>
+        <fieldset
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <label
+            htmlFor="contact_name"
+            style={{
+              display: 'block',
+              textAlign: 'left',
+              fontWeight: 100,
+            }}
+          >
+            Nom du contributeur
+          </label>
+          <CustomBorderDiv>
+            <input
+              type="text"
+              name="contact_name"
+              id="contact_name"
+              style={{
+                width: '100%',
+                outline: 'none',
+                padding: '0.1rem 0.25rem',
+              }}
+              onChange={onInputChange}
+            />
+          </CustomBorderDiv>
+        </fieldset>
+        <fieldset
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <label
+            htmlFor="contact_email"
+            style={{
+              display: 'block',
+              textAlign: 'left',
+              fontWeight: 100,
+            }}
+          >
+            Adresse électronique
+          </label>
+          <CustomBorderDiv>
+            <input
+              type="email"
+              name="contact_email"
+              id="contact_email"
+              style={{
+                width: '100%',
+                outline: 'none',
+                padding: '0.1rem 0.25rem',
+              }}
+              onChange={onInputChange}
+            />
+          </CustomBorderDiv>
+        </fieldset>
+        <fieldset
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <label
+            htmlFor="message"
+            style={{
+              display: 'block',
+              textAlign: 'left',
+              fontWeight: 100,
+            }}
+          >
+            Message de contribution
+          </label>
+          <CustomBorderDiv>
+            <textarea
+              name="message"
+              id="message"
+              style={{
+                width: '100%',
+                outline: 'none',
+                padding: '0.1rem 0.25rem',
+                resize: 'none',
+                height: '12rem',
+              }}
+              onChange={onInputChange}
+            ></textarea>
+          </CustomBorderDiv>
+        </fieldset>
+        <CustomBorderDiv style={{ minWidth: '100%' }}>
+          <button
+            type="submit"
+            style={{
+              fontSize: '1rem',
+              padding: '0.25rem',
+              fontWeight: 100,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '1rem',
+              minWidth: '100%',
+            }}
+          >
+            Envoyer
+          </button>
+        </CustomBorderDiv>
+      </div>
+
       {inputsError && <InputsError setInputsError={setInputsError} />}
       {submissionError && (
         <SubmissionError setSubmissionError={setSubmissionError} />
