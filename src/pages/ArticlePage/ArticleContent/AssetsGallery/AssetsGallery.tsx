@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import CustomBorderDiv from '../../../../components/CustomBorderDiv/CustomBorderDiv'
 import H3 from '../../../../components/H3/H3'
 import { Article } from '../../../../types'
+import isDesktop from '../../../../utils/isDesktop'
 import PreviewScrollBar from './PreviewScrollBar/PreviewScrollBar'
 import SlideShow from './SlideShow/SlideShow'
 
@@ -30,22 +31,26 @@ export default function AssetsGallery({ article }: PropsType) {
       }: unknown & { data: { target: { sys: { id: string } } } }) => id
     )
 
+  if (!isDesktop()) return <></>
   if (assetIds.length === 0) return <></>
 
   return (
     <>
-      <H3
+      <h4
         style={{
-          padding: '0 0 1rem 0',
+          padding: '2rem 0 1rem 0',
+          fontSize: '1.25rem',
+          textTransform: 'none',
+          fontWeight: 200,
         }}
       >
         Galerie
-      </H3>
+      </h4>
       <div
         style={{
           display: 'grid',
           gridTemplateRows: 'min-content 1fr min-content',
-          gridTemplateColumns: '650px',
+          gridTemplateColumns: '700px',
           placeItems: 'center',
           justifyContent: 'center',
           paddingBottom: '2rem',
