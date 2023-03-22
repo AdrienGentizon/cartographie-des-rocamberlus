@@ -50,9 +50,9 @@ export default function AssetsGallery({ article }: PropsType) {
           gridTemplateColumns: '650px',
           placeItems: 'center',
           justifyContent: 'center',
+          paddingBottom: '2rem',
         }}
       >
-        <img alt="" src="/screen-top.png" />
         <div
           style={{
             padding: '0 1rem',
@@ -82,13 +82,6 @@ export default function AssetsGallery({ article }: PropsType) {
             )}
           </div>
         </div>
-        <img
-          alt=""
-          src="/screen-bottom.png"
-          style={{
-            width: 'fit-content',
-          }}
-        />
       </div>
     </>
   )

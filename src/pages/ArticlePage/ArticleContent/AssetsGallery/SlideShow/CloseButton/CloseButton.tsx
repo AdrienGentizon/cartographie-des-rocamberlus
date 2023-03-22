@@ -12,8 +12,8 @@ export default function CloseButton({ onClose }: PropsType) {
         fontSize: 32,
         fontWeight: 100,
         position: 'absolute',
-        top: 0,
-        right: 16,
+        top: 8,
+        right: 24,
       }}
       onClick={onClose}
     >

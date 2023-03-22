@@ -96,13 +96,15 @@ function generateMarkersFromLocations(
 function getMarkerStyle(
   vectorSource: VectorSource<Geometry>
 ): VectorLayer<any> {
+  // magenta    `343, 100%, 50%`
+  // jaune pipi `46, 98%, 50%`
   return new VectorLayer({
     source: vectorSource,
     style: new Style({
       image: new CircleStyle({
         radius: 8,
-        fill: new Fill({ color: 'hsla(343, 100%, 50%, 0.5)' }),
-        stroke: new Stroke({ color: 'hsl(343, 100%, 50%)', width: 1 }),
+        fill: new Fill({ color: `hsla(46, 98%, 50%, 0.75)` }),
+        stroke: new Stroke({ color: `hsla(40, 98%, 50%, 1)`, width: 1 }),
       }),
     }),
   })

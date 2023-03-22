@@ -18,18 +18,21 @@ export default function SlideShow({ assetIds, onClose }: PropsType) {
     <Dialog
       style={{
         display: 'flex',
-        width: '75vw',
-        minWidth: '75vw',
-        height: '75vh',
+        width: '50vw',
+        minWidth: '50vw',
+        height: '60vh',
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 8,
-        borderImageOutset: '0.5 0.5',
+        // borderImageOutset: '0.5 0.5',
+        // borderImageOutset: '2 -2',
+        borderImageOutset: 0.001,
         borderImageSource: 'url(/picture-frame.png)',
         borderImageSlice: 16,
         borderImageRepeat: 'round',
         borderImageWidth: 1.5,
-        background: 'hsla(0, 0%, 0%, 0.75)',
+        // background: 'hsla(0, 0%, 0%, 0.75)',
+        background: 'hsla(0, 100%, 100%, 1)',
         borderRadius: '0.25rem',
       }}
       onClick={() => {
@@ -53,7 +56,7 @@ export default function SlideShow({ assetIds, onClose }: PropsType) {
             style={{
               display: id === selectedAssetId ? 'block' : 'none',
               margin: '0 auto',
-              maxHeight: '75vh',
+              maxHeight: '60vh',
             }}
           >
             <GalleryItem id={id} />
@@ -62,7 +65,7 @@ export default function SlideShow({ assetIds, onClose }: PropsType) {
         <li
           style={{
             position: 'absolute',
-            bottom: 8,
+            bottom: 24,
             left: 0,
             width: '100%',
           }}
