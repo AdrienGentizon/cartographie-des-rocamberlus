@@ -49,11 +49,11 @@ export default function Nav() {
       <ul
         style={{
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           gap: '2rem',
           width: '100%',
           height: '100%',
-          padding: isDesktop() ? 0 : '0 2rem',
+          padding: isDesktop() ? '0 2rem' : '0.5rem 0',
         }}
       >
         <MenuItem
@@ -79,7 +79,7 @@ export default function Nav() {
         !history.location.pathname.startsWith('/contact') && (
           <div
             style={{
-              padding: isDesktop() ? '1rem 8rem 0 8rem' : '0 1rem',
+              padding: isDesktop() ? '1rem 8rem 0 8rem' : '0 0.5rem',
             }}
           >
             <Search artists={artists} />

@@ -35,7 +35,7 @@ export default function MenuItem({
     <>
       <li
         style={{
-          height: isDesktop() ? '2.5rem' : '1.25rem',
+          height: isDesktop() ? '2.5rem' : '1.85rem',
           width: isDesktop() ? '8rem' : '5rem',
         }}
       >
