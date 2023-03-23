@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import CustomBorderDiv from '../../../../components/CustomBorderDiv/CustomBorderDiv'
 import H3 from '../../../../components/H3/H3'
+import useImageFromId from '../../../../graphql/useAssetFromId'
 import { Article } from '../../../../types'
+import { ASSETS } from '../../../../utils/getAssetFromName'
 import isDesktop from '../../../../utils/isDesktop'
 import PreviewScrollBar from './PreviewScrollBar/PreviewScrollBar'
 import SlideShow from './SlideShow/SlideShow'
@@ -11,6 +13,7 @@ interface PropsType {
 }
 
 export default function AssetsGallery({ article }: PropsType) {
+  const { image } = useImageFromId(ASSETS.galery)
   const [open, setOpen] = useState(false)
 
   const assetIds = article.articleText.json.content
@@ -36,16 +39,27 @@ export default function AssetsGallery({ article }: PropsType) {
 
   return (
     <>
-      <h4
-        style={{
-          padding: '2rem 0 1rem 0',
-          fontSize: '1.25rem',
-          textTransform: 'none',
-          fontWeight: 200,
-        }}
-      >
-        Galerie
-      </h4>
+      {image ? (
+        <img
+          src={image.url}
+          style={{
+            width: '8rem',
+            margin: '0 auto',
+            padding: '1.5rem 0 0.5rem 0',
+          }}
+        />
+      ) : (
+        <h4
+          style={{
+            padding: '2rem 0 1rem 0',
+            fontSize: '1.25rem',
+            textTransform: 'none',
+            fontWeight: 200,
+          }}
+        >
+          Galerie
+        </h4>
+      )}
       <div
         style={{
           display: 'grid',
