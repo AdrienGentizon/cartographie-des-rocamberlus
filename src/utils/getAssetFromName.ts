@@ -11,4 +11,10 @@ export const ASSETS = {
   duck: '3JBqFnuMTu1pbSFS4ifafO',
   shark: 'hIjGc51v69UNChLdhQZbV',
   popeye: '4l7ViTUNNB4XcvbpaLGb3s',
+  galery: '2kCRTVPPQf8a9BrC6m3S6r',
+  references: '3EBKPJMbzUUwFKZVljHzYy',
+  webography: '55ZL931wk0hUZmOnCbpOdu',
+  media: '4v003RMtcCL3lPYx87xhBK',
+  main: '1WGLbOcRhCXXGTHcj095VL',
+  secondary: '33pDrIqsseQfcA0AqH0znY',
 }
