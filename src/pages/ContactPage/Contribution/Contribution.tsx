@@ -1,5 +1,11 @@
+import {
+  documentToReactComponents,
+  Options,
+} from '@contentful/rich-text-react-renderer'
+import { BLOCKS } from '@contentful/rich-text-types'
 import React, { MouseEvent, ChangeEvent, useState } from 'react'
 import CustomBorderDiv from '../../../components/CustomBorderDiv/CustomBorderDiv'
+import useContactPage from '../../../graphql/useContactPage'
 import postContribution from '../../../queries/postContribution'
 import { Inputs } from '../../../types'
 import InputsError from './InputsError/InputsError'
@@ -7,6 +13,7 @@ import SubmissionError from './SubmissionError/SubmissionError'
 import SubmissionSuccess from './SubmissionSuccess/SubmissionSuccess'
 
 export default function Contribution() {
+  const { contactPage } = useContactPage()
   const [inputs, setInputs] = useState<Inputs>({
     contact_name: '',
     contact_email: '',
@@ -44,6 +51,14 @@ export default function Contribution() {
     if (response) return setSubmissionSuccess(true)
   }
 
+  const renderOptions: Options = {
+    renderNode: {
+      [BLOCKS.PARAGRAPH]: (_node: any, children: React.ReactNode) => (
+        <p style={{ fontWeight: 200, paddingBottom: '1rem' }}>{children}</p>
+      ),
+    },
+  }
+
   return (
     <form
       name="contribution"
@@ -51,9 +66,13 @@ export default function Contribution() {
       className="lg:p-16 p-2 pt-8 text-sm"
       onSubmit={onSubmit}
     >
-      <h2 className="py-2 text-lg font-thin mb-4">
-        Envoyez votre contribution
-      </h2>
+      {contactPage ? (
+        documentToReactComponents(contactPage.message.json, renderOptions)
+      ) : (
+        <h2 className="py-2 text-lg font-thin mb-4">
+          Envoyez votre contribution
+        </h2>
+      )}
       <input type="hidden" name="form-name" value="contribution" />
       <div
         style={{
