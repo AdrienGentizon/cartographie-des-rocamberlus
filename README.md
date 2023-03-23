@@ -5,7 +5,5 @@ TO DO:
 2. use recaptcha with Netlify forms:
    [Netlify website](https://docs.netlify.com/forms/setup/)
 
-3. titrer les bottom notes
-4. ajouter texte de la page contact dans contentful
-5. Titre Galerie par Snug
-6. ajouter email regex verif on contact ?
+3. ajouter texte de la page contact dans contentful
+4. ajouter email regex verif on contact ?
