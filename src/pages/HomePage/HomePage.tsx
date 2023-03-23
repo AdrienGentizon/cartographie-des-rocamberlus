@@ -4,7 +4,7 @@ import Layout from '../../components/Layout/Layout'
 import useImageFromId from '../../graphql/useAssetFromId'
 import useHomePage from '../../graphql/useHomePage'
 
-import { ASSETS } from '../../utils/getAssetFromName'
+import { ASSETS } from '../../utils/assetsIds'
 
 function Separator() {
   return <div className="mx-auto border-b border-gray-500 w-2" />

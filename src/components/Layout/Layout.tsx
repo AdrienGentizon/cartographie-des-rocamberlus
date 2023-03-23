@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Main } from './Main/Main'
 import Container from './Container/Container'
 import Header from './Header/Header'
-import { ASSETS } from '../../utils/getAssetFromName'
+import { ASSETS } from '../../utils/assetsIds'
 import LoadingAsset from './Container/BackGroundRandom/LoadingAsset/loadingAsset'
 import { useHistory } from 'react-router-dom'
 

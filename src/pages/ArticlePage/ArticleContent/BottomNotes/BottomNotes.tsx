@@ -4,7 +4,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 import React from 'react'
 import useImageFromId from '../../../../graphql/useAssetFromId'
 import { ValidArticle } from '../../../../types'
-import { ASSETS } from '../../../../utils/getAssetFromName'
+import { TITLES } from '../../../../utils/assetsIds'
 
 interface PropsType {
   article: ValidArticle
@@ -94,7 +94,7 @@ export default function BottomNotes({ article }: PropsType) {
     >
       {article.articleReferences && (
         <li>
-          <Section imageId={ASSETS.references} title="Quelques références">
+          <Section imageId={TITLES.references} title="Quelques références">
             {documentToReactComponents(
               article.articleReferences.json,
               renderOptions
@@ -104,7 +104,7 @@ export default function BottomNotes({ article }: PropsType) {
       )}
       {article.articleWebography && (
         <li>
-          <Section imageId={ASSETS.webography} title="Webographie">
+          <Section imageId={TITLES.webography} title="Webographie">
             {documentToReactComponents(
               article.articleWebography.json,
               renderOptions
@@ -114,7 +114,7 @@ export default function BottomNotes({ article }: PropsType) {
       )}
       {article.articleAvDocuments && (
         <li>
-          <Section imageId={ASSETS.media} title="Documents audiovisuels">
+          <Section imageId={TITLES.media} title="Documents audiovisuels">
             {documentToReactComponents(
               article.articleAvDocuments.json,
               renderOptions

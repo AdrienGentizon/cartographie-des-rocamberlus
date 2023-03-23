@@ -3,7 +3,7 @@ import CustomBorderDiv from '../../../../components/CustomBorderDiv/CustomBorder
 import H3 from '../../../../components/H3/H3'
 import useImageFromId from '../../../../graphql/useAssetFromId'
 import { Article } from '../../../../types'
-import { ASSETS } from '../../../../utils/getAssetFromName'
+import { TITLES } from '../../../../utils/assetsIds'
 import isDesktop from '../../../../utils/isDesktop'
 import PreviewScrollBar from './PreviewScrollBar/PreviewScrollBar'
 import SlideShow from './SlideShow/SlideShow'
@@ -13,7 +13,7 @@ interface PropsType {
 }
 
 export default function AssetsGallery({ article }: PropsType) {
-  const { image } = useImageFromId(ASSETS.galery)
+  const { image } = useImageFromId(TITLES.galery)
   const [open, setOpen] = useState(false)
 
   const assetIds = article.articleText.json.content
