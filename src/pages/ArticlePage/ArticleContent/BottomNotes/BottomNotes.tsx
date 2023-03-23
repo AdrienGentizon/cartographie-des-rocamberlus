@@ -2,7 +2,9 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 
 import React from 'react'
+import useImageFromId from '../../../../graphql/useAssetFromId'
 import { ValidArticle } from '../../../../types'
+import { ASSETS } from '../../../../utils/getAssetFromName'
 
 interface PropsType {
   article: ValidArticle
@@ -10,14 +12,15 @@ interface PropsType {
 
 interface SectionPropsType {
   title: string
-  icon: string
+  imageId: string
 }
 
 function Section({
   title,
-  icon,
+  imageId,
   children,
 }: React.PropsWithChildren<SectionPropsType>) {
+  const { image } = useImageFromId(imageId)
   return (
     <>
       <span
@@ -27,14 +30,22 @@ function Section({
           paddingBottom: '0.5rem',
         }}
       >
-        {icon}
-        <p
-          style={{
-            textDecoration: 'underline',
-          }}
-        >
-          {title}:
-        </p>
+        {image ? (
+          <img
+            src={image.url}
+            style={{
+              height: '3rem',
+            }}
+          />
+        ) : (
+          <p
+            style={{
+              textDecoration: 'underline',
+            }}
+          >
+            {title}:
+          </p>
+        )}
       </span>
       <div
         style={{
@@ -83,7 +94,7 @@ export default function BottomNotes({ article }: PropsType) {
     >
       {article.articleReferences && (
         <li>
-          <Section icon="🚗" title="Quelques références">
+          <Section imageId={ASSETS.references} title="Quelques références">
             {documentToReactComponents(
               article.articleReferences.json,
               renderOptions
@@ -93,7 +104,7 @@ export default function BottomNotes({ article }: PropsType) {
       )}
       {article.articleWebography && (
         <li>
-          <Section icon="💻" title="Webographie">
+          <Section imageId={ASSETS.webography} title="Webographie">
             {documentToReactComponents(
               article.articleWebography.json,
               renderOptions
@@ -103,7 +114,7 @@ export default function BottomNotes({ article }: PropsType) {
       )}
       {article.articleAvDocuments && (
         <li>
-          <Section icon="🎥" title="Documents audiovisuels">
+          <Section imageId={ASSETS.media} title="Documents audiovisuels">
             {documentToReactComponents(
               article.articleAvDocuments.json,
               renderOptions
