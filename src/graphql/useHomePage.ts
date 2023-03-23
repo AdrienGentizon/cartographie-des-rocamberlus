@@ -1,5 +1,7 @@
 import { ApolloError, gql, useQuery } from '@apollo/client'
 import { HomePageType } from '../types'
+import { PAGES } from '../utils/entriesIds'
+import { Document } from '@contentful/rich-text-types/dist/types/types'
 
 const HomePageFramgent = gql`
   fragment HomePageFragment on HomePage {
@@ -20,7 +22,7 @@ const HomePageFramgent = gql`
 const GET_HOME_PAGE_QUERY = gql`
   ${HomePageFramgent}
   query getHomePage {
-    homePage(id: "74SXJsnKRJX9IFN1830JaM") {
+    homePage(id: "${PAGES.home}") {
       ...HomePageFragment
     }
   }
