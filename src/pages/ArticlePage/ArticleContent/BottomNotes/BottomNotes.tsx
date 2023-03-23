@@ -65,7 +65,7 @@ export default function BottomNotes({ article }: PropsType) {
     renderNode: {
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
         return (
-          <p className="text-sm lg:text-base lg:font-extralight font-light text-justify whitespace-pre-wrap not-italic">
+          <p className="text-sm lg:text-base lg:font-extralight text-left font-light not-italic">
             {children}
           </p>
         )
