@@ -54,7 +54,7 @@ export default function Contribution() {
   const renderOptions: Options = {
     renderNode: {
       [BLOCKS.PARAGRAPH]: (_node: any, children: React.ReactNode) => (
-        <p style={{ fontWeight: 200, paddingBottom: '1rem' }}>{children}</p>
+        <p style={{ fontWeight: 200 }}>{children}</p>
       ),
     },
   }
@@ -66,13 +66,15 @@ export default function Contribution() {
       className="lg:p-16 p-2 pt-8 text-sm"
       onSubmit={onSubmit}
     >
-      {contactPage ? (
-        documentToReactComponents(contactPage.message.json, renderOptions)
-      ) : (
-        <h2 className="py-2 text-lg font-thin mb-4">
-          Envoyez votre contribution
-        </h2>
-      )}
+      <div style={{ padding: '1rem 0' }}>
+        {contactPage ? (
+          documentToReactComponents(contactPage.message.json, renderOptions)
+        ) : (
+          <h2 className="py-2 text-lg font-thin mb-4">
+            Envoyez votre contribution
+          </h2>
+        )}
+      </div>
       <input type="hidden" name="form-name" value="contribution" />
       <div
         style={{
@@ -166,7 +168,7 @@ export default function Contribution() {
                 outline: 'none',
                 padding: '0.1rem 0.25rem',
                 resize: 'none',
-                height: '12rem',
+                height: '10ch',
               }}
               onChange={onInputChange}
             ></textarea>
@@ -189,6 +191,10 @@ export default function Contribution() {
             Envoyer
           </button>
         </CustomBorderDiv>
+        <div style={{ padding: '1rem 0' }}>
+          {contactPage?.credits &&
+            documentToReactComponents(contactPage.credits.json, renderOptions)}
+        </div>
       </div>
 
       {inputsError && <InputsError setInputsError={setInputsError} />}

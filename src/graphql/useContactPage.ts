@@ -7,12 +7,18 @@ type ContactPage = {
   message: {
     json: Document
   }
+  credits: {
+    json: Document
+  }
 }
 type RawContactPage = Partial<ContactPage>
 
 const ContactPageFramgent = gql`
   fragment ContactPageFramgent on ContactPage {
     message {
+      json
+    }
+    credits {
       json
     }
   }
@@ -28,7 +34,10 @@ const GET_CONTACT_PAGE_QUERY = gql`
 `
 
 function isValidContactPage(raw: RawContactPage | null): raw is ContactPage {
-  return Boolean(raw?.message && raw.message.json.content.length > 0)
+  return (
+    Boolean(raw?.message && raw.message.json.content.length > 0) &&
+    Boolean(raw?.credits && raw.credits.json.content.length > 0)
+  )
 }
 
 export default function useContactPage(): {
