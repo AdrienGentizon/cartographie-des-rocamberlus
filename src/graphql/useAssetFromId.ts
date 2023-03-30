@@ -29,13 +29,24 @@ interface AssetType {
   url: string
 }
 
-export default function useImageFromId(id: string): {
+export default function useImageFromId(
+  id: string,
+  options?: { width?: number }
+): {
   image?: AssetType
   loading: boolean
   error?: ApolloError
 } {
+  const getQueryOptions = () => {
+    if (!options) return { width: 720 }
+    if (options.width) {
+      if (options.width === -1) return
+      return { width: options.width }
+    }
+    return { width: 720 }
+  }
   const { data, error, loading } = useQuery<{ asset?: AssetType }>(
-    getImageFromIdQuery({ width: 720 }),
+    getImageFromIdQuery(getQueryOptions()),
     {
       variables: { id },
     }

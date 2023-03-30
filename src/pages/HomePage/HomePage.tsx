@@ -4,7 +4,7 @@ import Layout from '../../components/Layout/Layout'
 import useImageFromId from '../../graphql/useAssetFromId'
 import useHomePage from '../../graphql/useHomePage'
 
-import { ASSETS } from '../../utils/assetsIds'
+import { ASSETS, TITLES } from '../../utils/assetsIds'
 
 function Separator() {
   return <div className="mx-auto border-b border-gray-500 w-2" />
@@ -13,6 +13,7 @@ function Separator() {
 function HomePage() {
   const { loading, error, homePage } = useHomePage()
   const { image: brouette } = useImageFromId(ASSETS.brouette)
+  const { image: tertiary } = useImageFromId(TITLES.tertiary, { width: -1 })
 
   const getArticleContent = (
     items: any[],
@@ -52,8 +53,15 @@ function HomePage() {
 
   return (
     <section className="pb-8 px-4">
-      <div className="py-8">
-        <H3>{homePage.mainTextTitle}</H3>
+      <div className="pt-8 pb-0 px-24">
+        {tertiary ? (
+          <img
+            src={tertiary.url}
+            alt={homePage.mainTextTitle ?? 'site description'}
+          />
+        ) : (
+          <H3>{homePage.mainTextTitle}</H3>
+        )}
       </div>
       {brouette && (
         <img

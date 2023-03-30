@@ -20,4 +20,5 @@ export const TITLES = {
   media: '4v003RMtcCL3lPYx87xhBK',
   main: '1WGLbOcRhCXXGTHcj095VL',
   secondary: '33pDrIqsseQfcA0AqH0znY',
+  tertiary: 'MI3pP8IThpzJLHuVC95tQ',
 }
