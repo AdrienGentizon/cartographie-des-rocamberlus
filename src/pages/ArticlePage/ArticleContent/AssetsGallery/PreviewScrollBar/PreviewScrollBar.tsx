@@ -18,6 +18,7 @@ export default function PreviewScrollBar({ assetIds }: PropsType) {
         gridRow: 'repeat(1, 48px)',
         gridAutoFlow: 'column',
         padding: '0 0.25rem',
+        overflowY: 'hidden',
       }}
     >
       {React.Children.map(assetIds, (id) => (
