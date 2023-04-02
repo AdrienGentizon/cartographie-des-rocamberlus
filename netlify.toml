@@ -10,9 +10,15 @@
   publish = "dist"
   
 [[redirects]]
- from = "/*"
- to = "/index.html"
- status = 200
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "https://www.cartebrute.art/"
+  to = "https://www.cartographie-des-rocamberlus.com/"
+  status = 301
+  force = false
 
 [[headers]]
 for = "/*"
