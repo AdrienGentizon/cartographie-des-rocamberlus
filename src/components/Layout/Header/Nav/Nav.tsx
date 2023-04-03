@@ -43,8 +43,8 @@ export default function Nav() {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        paddingTop: '0.5rem',
       }}
+      className="pt-2 lg:pt-8"
     >
       <ul
         style={{
