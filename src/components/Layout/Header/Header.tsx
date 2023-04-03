@@ -22,7 +22,7 @@ export default function Header() {
       }}
     >
       <Title />
-      <SubTitle />
+      {/* <SubTitle /> */}
       <Nav />
     </header>
   )
