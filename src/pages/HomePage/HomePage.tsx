@@ -53,7 +53,7 @@ function HomePage() {
 
   return (
     <section className="pb-8 px-4">
-      <div className="pt-8 pb-0 px-24">
+      <div className="pt-8 pb-0 lg:px-24">
         {tertiary ? (
           <img
             src={tertiary.url}
