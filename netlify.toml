@@ -1,9 +1,3 @@
-# [[redirects]]
-#   from = "https://api.cartebrute.art"
-#   to = "http://157.230.110.237/graphql"
-#   status = 200
-#   force = true
-
 [build]
   command = "vite build"
   functions = "netlify/functions"
@@ -13,12 +7,6 @@
   from = "/*"
   to = "/index.html"
   status = 200
-
-[[redirects]]
-  from = "https://www.cartebrute.art/*"
-  to = "https://www.cartographie-des-rocamberlus.com/:splat"
-  status = 301
-  force = true
 
 [[headers]]
 for = "/*"
