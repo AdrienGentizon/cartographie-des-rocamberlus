@@ -5,6 +5,13 @@ import { ValidArticle } from '@/types'
 import { TITLES } from '@/utils/assetsIds'
 import React from 'react'
 
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `https://www.cartographie-des-rocamberlus.com/article/1tSKGhWoQldll52ToIw4uh`,
+  },
+}
 async function getArticleContent(params: { id: string }) {
   const { article, error, draft } = await getArticleFromId(params.id ?? '')
   if (article?.artistPicture?.sys?.id) {

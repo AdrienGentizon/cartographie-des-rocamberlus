@@ -1,6 +1,14 @@
 import ContactPage from '@/app/contact/ContactPage'
 import getContactPage from '@/queries/getContactPage'
 
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `https://www.cartographie-des-rocamberlus.com/contact/`,
+  },
+}
+
 async function getContactPageContent() {
   const { contactPage, error } = await getContactPage()
   return { contactPage, error }

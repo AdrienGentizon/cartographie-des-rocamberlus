@@ -8,6 +8,7 @@ import { Main } from '@/components/Main/Main'
 import getHomePage from '@/queries/getHomePage'
 import getArtists from '@/queries/getArtists'
 import { ContentfulAsset } from '@/types'
+import { Metadata } from 'next'
 
 async function getAssets() {
   const assets = []
@@ -45,9 +46,12 @@ async function getHeaderContent() {
   return { artists, assets }
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Cartographie des rocamberlus',
   description: "La cartographie des environnements d'art singulier",
+  alternates: {
+    canonical: `https://www.cartographie-des-rocamberlus.com/`,
+  },
 }
 
 export default async function RootLayout({
