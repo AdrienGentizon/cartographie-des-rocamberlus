@@ -14,11 +14,17 @@ export const ASSETS = {
 }
 
 export const TITLES = {
-  galery: '2kCRTVPPQf8a9BrC6m3S6r',
+  gallery: '2kCRTVPPQf8a9BrC6m3S6r',
   references: '3EBKPJMbzUUwFKZVljHzYy',
   webography: '55ZL931wk0hUZmOnCbpOdu',
   media: '4v003RMtcCL3lPYx87xhBK',
   main: '1WGLbOcRhCXXGTHcj095VL',
   secondary: '33pDrIqsseQfcA0AqH0znY',
   tertiary: 'MI3pP8IThpzJLHuVC95tQ',
+}
+
+export const NAV_ASSETS = {
+  contact: '5f5T2Q1PWn4QMmoVhyo9lK',
+  carte: '3hnECgYsTVQLTaHgBV2JJY',
+  accueil: '7pIx1x9yol6iORr3uCLSch',
 }

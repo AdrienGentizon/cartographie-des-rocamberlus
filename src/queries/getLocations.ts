@@ -1,0 +1,62 @@
+import getContentfulGraphqlQueryHeaders from '@/utils/getContentfulGraphqlQueryHeaders'
+import { ContentfulLocation } from '../types'
+import convertErrorFromUnknownType from '@/utils/convertErrorFromUnknownType'
+
+const GET_LOCATIONS_QUERY = `
+  query {
+    articleCollection {
+      items {
+        sys {
+          id
+        }
+        title
+        locationName
+        locationDescription
+        locationCategory
+        locationCountry
+        locationZipcode
+        locationCityName
+        locationStreetName
+        locationGpsCoordinates {
+          lat
+          lon
+        }
+        showFullAddress
+        visitDate
+        locationPicture {
+          sys {
+            id
+          }
+          url
+        }
+      }
+    }
+  }
+`
+
+export default async function getLocations(): Promise<{
+  locations: ContentfulLocation[]
+  error?: Error
+}> {
+  try {
+    const response = await fetch(
+      `${process.env.CONTENTFUL_GRAPHQL_ENDPOINT}/${process.env.CONTENTFUL_SPACE_ID}`,
+      {
+        method: 'POST',
+        headers: getContentfulGraphqlQueryHeaders(),
+        body: JSON.stringify({ query: GET_LOCATIONS_QUERY }),
+      }
+    )
+    const { data } = await response.json()
+    return {
+      locations: data?.articleCollection?.items ?? [],
+      error: undefined,
+    }
+  } catch (error) {
+    console.error(convertErrorFromUnknownType(error, `[Error] getLocations`))
+    return {
+      locations: [],
+      error: convertErrorFromUnknownType(error, `[Error] getLocations`),
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { RichTextContent } from 'contentful'
+import { Document } from '@contentful/rich-text-types/dist/types/types'
 
 export interface PostalAddress {
   country: string
@@ -73,14 +74,15 @@ export interface ContentfulSys {
 }
 
 export interface ContentfulAsset {
-  title: string
-  description: string
+  sys: ContentfulSys
+  title: string | null
+  description: string | null
   contentType: string
   fileName: string
-  size: string
+  size: number
   url: string
-  width: string
-  height: string
+  width: number
+  height: number
 }
 
 export interface ContentfulLocation {
@@ -127,6 +129,7 @@ export interface Article {
   artistDescription: string | null
   artistName?: string | null
   artistPicture?: {
+    sys: ContentfulSys
     url: string
     description?: string | null
     title?: string | null
@@ -145,3 +148,13 @@ export interface Article {
 }
 
 export type ValidArticle = Article & { articleText: { json: any } }
+
+export type ContactPage = {
+  message: {
+    json: Document
+  }
+  credits: {
+    json: Document
+  }
+}
+export type RawContactPage = Partial<ContactPage>

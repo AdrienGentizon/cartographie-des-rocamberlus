@@ -1,66 +1,19 @@
-import React, { useState } from 'react'
-import useImageFromId from '../../graphql/useAssetFromId'
+import React, { CSSProperties } from 'react'
 import CustomBorderDiv from '../CustomBorderDiv/CustomBorderDiv'
+import { ContentfulAsset } from '@/types'
+import Image from 'next/image'
 
-export function Img({
-  src,
-  alt = '',
-  description,
-  loading = false,
-  style,
-}: {
-  src: string
-  alt?: string
-  description?: string | null
-  loading?: boolean
-  style?: React.CSSProperties
-}) {
-  const [imageLoading, setImageLoading] = useState(true)
-  const isLoading = loading || imageLoading
+interface PropsType {
+  asset: ContentfulAsset
+  imageStyle?: CSSProperties
+}
 
-  if (isLoading)
-    return (
-      <div
-        style={{
-          borderColor: 'rgb(243 244 246 / 1)',
-          borderWidth: 2,
-          borderRadius: '0.5rem',
-          backgroundColor: 'rgb(249 250 251 / 1)',
-          padding: 'O.25rem',
-          ...style,
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            backgroundColor: 'rgb(255 255 255 / 1)',
-            margin: '0 auto',
-            height: '5rem',
-            maxHeight: '5rem',
-            padding: '1rem',
-            width: '5rem',
-            minWidth: '100%',
-          }}
-        >
-          <span
-            className="loader"
-            style={{
-              display: 'block',
-            }}
-          />
-        </div>
-        <img
-          src={src}
-          alt={alt}
-          style={{
-            visibility: 'hidden',
-            height: 0,
-          }}
-          onLoad={() => setImageLoading(false)}
-        />
-      </div>
-    )
+export function Asset({ asset, imageStyle }: PropsType) {
+  const getDescription = () => {
+    if (asset.description && asset.description !== '') return asset.description
+    if (asset.title && asset.title !== '') return asset.title
+    return null
+  }
 
   return (
     <div>
@@ -73,19 +26,21 @@ export function Img({
           margin: '0 auto',
         }}
       >
-        <img
-          src={src}
-          alt={alt}
+        <Image
+          src={asset.url}
+          alt={asset.description ?? ''}
+          width={asset.width ?? undefined}
+          height={asset.height ?? undefined}
           style={{
             boxShadow: 'inset 0 0 10px white',
             borderRadius: 6,
             padding: 2,
             maxHeight: 480,
+            ...imageStyle,
           }}
-          onLoad={() => setImageLoading(false)}
         />
       </CustomBorderDiv>
-      {description && (
+      {getDescription() !== null && (
         <p
           style={{
             fontWeight: 100,
@@ -93,39 +48,9 @@ export function Img({
             lineHeight: '1rem',
           }}
         >
-          {description}
+          {getDescription()}
         </p>
       )}
     </div>
-  )
-}
-
-interface PropsType {
-  id: string
-  alt?: string
-}
-
-export function Asset({ id, alt }: PropsType) {
-  const { loading, error, image } = useImageFromId(id)
-
-  const getDescription = () => {
-    if (image?.description && image?.description !== '')
-      return image.description
-    if (image?.title && image?.title !== '') return image.title
-    return undefined
-  }
-
-  if (error) return <></>
-  if (!image) return <></>
-  return (
-    <Img
-      src={image.url}
-      alt={alt}
-      description={getDescription()}
-      style={{
-        margin: '0 auto',
-      }}
-      loading={loading}
-    />
   )
 }

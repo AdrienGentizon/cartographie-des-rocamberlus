@@ -1,1 +1,1 @@
-export const isDevPlatform = import.meta.env.MODE === 'development'
+export const isDevPlatform = process.env.MODE === 'development'
