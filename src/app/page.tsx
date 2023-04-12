@@ -1,4 +1,5 @@
 import H3 from '@/components/H3/H3'
+import { Main } from '@/components/Main/Main'
 import getAssetFromId from '@/queries/getAssetFromId'
 import getHomePage from '@/queries/getHomePage'
 import { ASSETS, TITLES } from '@/utils/assetsIds'
@@ -49,44 +50,46 @@ export default async function HomePage() {
   if (error || !homePage) return <p>Error!</p>
 
   return (
-    <section className="pb-8 px-4">
-      <div className="pt-8 pb-0 lg:px-24">
-        {tertiary ? (
+    <Main>
+      <section className="pb-8 px-4">
+        <div className="pt-8 pb-0 lg:px-24">
+          {tertiary ? (
+            <Image
+              src={tertiary.url}
+              alt={homePage.mainTextTitle ?? 'site description'}
+              width={480}
+              height={40}
+            />
+          ) : (
+            <H3>{homePage.mainTextTitle}</H3>
+          )}
+        </div>
+        {brouette && (
           <Image
-            src={tertiary.url}
-            alt={homePage.mainTextTitle ?? 'site description'}
-            width={480}
-            height={40}
+            className="max-h-40 mx-auto"
+            alt="dessin de truelle"
+            src={brouette.url}
+            width={164}
+            height={160}
           />
-        ) : (
-          <H3>{homePage.mainTextTitle}</H3>
         )}
-      </div>
-      {brouette && (
-        <Image
-          className="max-h-40 mx-auto"
-          alt="dessin de truelle"
-          src={brouette.url}
-          width={164}
-          height={160}
-        />
-      )}
-      <div>
-        {homeContent.map(({ tag, value }, n) => {
-          if (tag === 'p') {
-            return (
-              <span key={`home-p-${n}`}>
-                <p className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify">
-                  {value}
-                </p>
-                {n < homeContent.length - 1 && <Separator />}
-              </span>
-            )
-          }
+        <div>
+          {homeContent.map(({ tag, value }, n) => {
+            if (tag === 'p') {
+              return (
+                <span key={`home-p-${n}`}>
+                  <p className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify">
+                    {value}
+                  </p>
+                  {n < homeContent.length - 1 && <Separator />}
+                </span>
+              )
+            }
 
-          return <></>
-        })}
-      </div>
-    </section>
+            return <></>
+          })}
+        </div>
+      </section>
+    </Main>
   )
 }
