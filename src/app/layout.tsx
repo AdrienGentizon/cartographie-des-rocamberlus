@@ -4,11 +4,11 @@ import Header from '@/components/Header/Header'
 import getAssetFromId from '@/queries/getAssetFromId'
 import { ASSETS, NAV_ASSETS } from '@/utils/assetsIds'
 import Container from '@/components/Container/Container'
-import { Main } from '@/components/Main/Main'
 import getHomePage from '@/queries/getHomePage'
 import getArtists from '@/queries/getArtists'
 import { ContentfulAsset } from '@/types'
 import { Metadata } from 'next'
+import Loader from '@/components/Link/Loader/Loader'
 
 async function getAssets() {
   const assets = []
@@ -75,6 +75,7 @@ export default async function RootLayout({
           />
           {children}
         </Container>
+        <Loader />
       </body>
     </html>
   )

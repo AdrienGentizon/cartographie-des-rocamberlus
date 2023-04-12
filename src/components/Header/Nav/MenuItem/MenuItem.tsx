@@ -1,10 +1,10 @@
 'use client'
 import React from 'react'
 
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { ContentfulAsset } from '@/types'
+import Link from '@/components/Link/Link'
 
 type MenuItemProps = React.PropsWithChildren<{
   url: string

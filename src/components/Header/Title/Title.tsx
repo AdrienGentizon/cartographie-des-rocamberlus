@@ -1,5 +1,5 @@
+import Link from '@/components/Link/Link'
 import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 
 interface PropsType {

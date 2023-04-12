@@ -3,7 +3,7 @@ import React from 'react'
 
 import Map from './Map'
 import { ContentfulLocation } from '@/types'
-import Link from 'next/link'
+import Link from '@/components/Link/Link'
 
 interface PropsType {
   locations: ContentfulLocation[]

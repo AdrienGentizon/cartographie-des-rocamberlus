@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import MapBuilder from './MapBuilder'
 import { ContentfulLocation } from '../../types'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 interface PropsType {
   locations: ContentfulLocation[]
@@ -9,15 +9,28 @@ interface PropsType {
 
 export default function Map({ locations }: PropsType) {
   const router = useRouter()
-
+  const pathname = usePathname()
+  const searchParams = useSearchParams
   const mapRef = useRef<HTMLDivElement>(null)
+  const loader = document.querySelector<HTMLDivElement>('.loader')
 
   const onSelectedLocation = (location: ContentfulLocation) => {
+    if (loader) loader.style.display = 'block'
     router.push(`/article/${location.sys.id}`)
   }
   const [hoveredLocation, setHoveredLocation] = useState<
     ContentfulLocation | undefined
   >(undefined)
+
+  useEffect(() => {
+    return () => {
+      if (loader) loader.style.display = 'none'
+    }
+  }, [loader])
+
+  useEffect(() => {
+    if (loader) loader.style.display = 'none'
+  }, [pathname, searchParams, loader])
   return (
     <div
       id="map"

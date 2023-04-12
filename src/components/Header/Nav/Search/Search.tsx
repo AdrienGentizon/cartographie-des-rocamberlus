@@ -1,7 +1,8 @@
 'use client'
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { ArtistsHookType } from '../../../../types'
-import { useRouter } from 'next/navigation'
+import Link from '@/components/Link/Link'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 function Icon() {
   return (
@@ -65,19 +66,23 @@ interface PropsType {
 }
 
 export default function Search({ artists }: PropsType) {
-  const router = useRouter()
   const [results, setResults] = useState<{ name: string; articleId: string }[]>(
     []
   )
   const [open, setOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
-  const closeDialog = (articleId?: string, leaveInput = false) => {
-    if (articleId) router.push(`/article/${articleId}`)
+  const closeDialog = (leaveInput = false) => {
     setOpen(false)
     setResults([])
     if (!leaveInput && inputRef.current) inputRef.current.value = ''
   }
+
+  useEffect(() => {
+    closeDialog()
+  }, [pathname, searchParams])
 
   return (
     <div className="border-b border-gray-400 hover:border-gray-600 focus-within:border-gray-600 px-2 py-1 flex items-center relative transition-colors ease-in-out">
@@ -91,7 +96,7 @@ export default function Search({ artists }: PropsType) {
             .filter(filterResultNameMatchingSearch(e))
 
           if (results.length === 0 || e.target.value === '')
-            return closeDialog(undefined, true)
+            return closeDialog(true)
 
           setOpen(true)
           results.sort(sortResultsInPlace)
@@ -110,9 +115,8 @@ export default function Search({ artists }: PropsType) {
               <li
                 key={`search-result-${n}`}
                 className="hover:bg-gray-50 hover:text-gray-700  overflow-x-hidden text-ellipsis whitespace-nowrap px-2 py-1 transition-colors cursor-pointer ease-in-out"
-                onClick={() => closeDialog(articleId)}
               >
-                {name}
+                <Link href={`/article/${articleId}`}>{name}</Link>
               </li>
             ))}
           </ul>
