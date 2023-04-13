@@ -46,6 +46,7 @@ export function Asset({ asset, imageStyle }: PropsType) {
             fontWeight: 100,
             fontSize: '0.75rem',
             lineHeight: '1rem',
+            maxWidth: imageStyle?.maxWidth,
           }}
         >
           {getDescription()}
