@@ -25,36 +25,32 @@ function Section({
   children,
 }: React.PropsWithChildren<SectionPropsType>) {
   return (
-    <>
-      <span
-        style={{
-          display: 'flex',
-          gap: '0.5em',
-          paddingBottom: '0.5rem',
-        }}
-      >
-        {icon ? (
-          <Image
-            src={icon.url}
-            style={{
-              height: '3rem',
-              objectFit: 'none',
-              objectPosition: 'left',
-            }}
-            width={icon.width ?? undefined}
-            height={icon.height ?? undefined}
-            alt={icon.description ?? ''}
-          />
-        ) : (
-          <p
-            style={{
-              textDecoration: 'underline',
-            }}
-          >
-            {title}:
-          </p>
-        )}
-      </span>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      {icon ? (
+        <Image
+          src={icon.url}
+          style={{
+            scale: 0.5,
+            transformOrigin: 'left',
+          }}
+          width={icon.width ?? undefined}
+          height={icon.height ?? undefined}
+          alt={icon.description ?? ''}
+        />
+      ) : (
+        <p
+          style={{
+            textDecoration: 'underline',
+          }}
+        >
+          {title}:
+        </p>
+      )}
       <div
         style={{
           display: 'flex',
@@ -64,7 +60,7 @@ function Section({
       >
         {children}
       </div>
-    </>
+    </div>
   )
 }
 
@@ -97,7 +93,6 @@ export default function BottomNotes({ article, icons }: PropsType) {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '2rem',
       }}
     >
       {article.articleReferences && (
