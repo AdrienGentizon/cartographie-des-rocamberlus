@@ -2,6 +2,7 @@
 import NextLink, { LinkProps } from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { CSSProperties, PropsWithChildren, useEffect, useState } from 'react'
+import { hideLoader, showLoader } from './Loader/Loader'
 
 export default function Link({
   children,
@@ -13,21 +14,21 @@ export default function Link({
   const loader = document.querySelector<HTMLDivElement>('.loader')
 
   useEffect(() => {
-    if (loader) loader.style.display = 'none'
+    hideLoader(loader)
 
     return () => {
-      if (loader) loader.style.display = 'none'
+      hideLoader(loader)
     }
   }, [loader])
 
   useEffect(() => {
-    if (loader) loader.style.display = 'none'
+    hideLoader(loader)
   }, [pathname, searchParams, loader])
 
   return (
     <NextLink
       onClick={(e) => {
-        if (loader) loader.style.display = 'block'
+        showLoader(loader)
         if (onClick) onClick(e)
       }}
       {...props}

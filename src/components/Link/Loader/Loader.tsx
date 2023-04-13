@@ -1,4 +1,13 @@
+import Image from 'next/image'
 import React from 'react'
+
+export function showLoader(loader: HTMLDivElement | null) {
+  if (loader) loader.style.display = 'block'
+}
+
+export function hideLoader(loader: HTMLDivElement | null) {
+  if (loader) setTimeout(() => (loader.style.display = 'none'), 360)
+}
 
 function Icon({ strokeWidth, ...props }: React.SVGProps<SVGSVGElement>) {
   return (
@@ -53,13 +62,23 @@ export default function Loader() {
           width: '100%',
           height: '100%',
           background: 'transparent',
+          paddingTop: '30vh',
         }}
       >
-        <Icon
+        {/* <Icon
           style={{
             scale: 2,
             strokeWidth: 1,
             animation: 'rotation ease-in-out 1500ms infinite',
+          }}
+        /> */}
+        <Image
+          src={`/voiture.png`}
+          width={101}
+          height={68}
+          alt="petite voiture rouge"
+          style={{
+            animation: 'rolling ease-out 600ms infinite',
           }}
         />
       </dialog>

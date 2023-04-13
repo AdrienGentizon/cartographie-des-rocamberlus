@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import MapBuilder from './MapBuilder'
 import { ContentfulLocation } from '../../types'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { hideLoader, showLoader } from '@/components/Link/Loader/Loader'
 
 interface PropsType {
   locations: ContentfulLocation[]
@@ -15,7 +16,7 @@ export default function Map({ locations }: PropsType) {
   const loader = document.querySelector<HTMLDivElement>('.loader')
 
   const onSelectedLocation = (location: ContentfulLocation) => {
-    if (loader) loader.style.display = 'block'
+    showLoader(loader)
     router.push(`/article/${location.sys.id}`)
   }
   const [hoveredLocation, setHoveredLocation] = useState<
@@ -24,12 +25,12 @@ export default function Map({ locations }: PropsType) {
 
   useEffect(() => {
     return () => {
-      if (loader) loader.style.display = 'none'
+      hideLoader(loader)
     }
   }, [loader])
 
   useEffect(() => {
-    if (loader) loader.style.display = 'none'
+    hideLoader(loader)
   }, [pathname, searchParams, loader])
   return (
     <div
