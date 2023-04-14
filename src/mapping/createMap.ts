@@ -6,7 +6,7 @@ import Feature from 'ol/Feature'
 import { Geometry, Point } from 'ol/geom'
 import VectorSource from 'ol/source/Vector'
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
-import { Circle, Icon, Style } from 'ol/style'
+import { Circle, Fill, Stroke, Style } from 'ol/style'
 
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 import { ContentfulLocation, GqlLocation } from '../types'
@@ -101,17 +101,17 @@ function getMarkerStyle(
   return new VectorLayer({
     source: vectorSource,
     style: new Style({
-      // image: new Circle({
-      //   radius: 8,
-      //   fill: new Fill({ color: `hsla(46, 98%, 50%, 0.75)` }),
-      //   stroke: new Stroke({ color: `hsla(40, 98%, 50%, 1)`, width: 1 }),
-      // }),
-      image: new Icon({
-        anchor: [0.5, 46],
-        anchorXUnits: 'fraction',
-        anchorYUnits: 'pixels',
-        src: './map-icon.png',
+      image: new Circle({
+        radius: 8,
+        fill: new Fill({ color: `hsla(46, 98%, 50%, 0.75)` }),
+        stroke: new Stroke({ color: `hsla(40, 98%, 50%, 1)`, width: 1 }),
       }),
+      // image: new Icon({
+      //   anchor: [0.5, 46],
+      //   anchorXUnits: 'fraction',
+      //   anchorYUnits: 'pixels',
+      //   src: './map-icon.png',
+      // }),
     }),
   })
 }
