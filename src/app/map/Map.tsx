@@ -13,7 +13,10 @@ export default function Map({ locations }: PropsType) {
   const pathname = usePathname()
   const searchParams = useSearchParams
   const mapRef = useRef<HTMLDivElement>(null)
-  const loader = document.querySelector<HTMLDivElement>('.loader')
+  const loader =
+    typeof document === 'undefined'
+      ? null
+      : document.querySelector<HTMLDivElement>('.loader')
 
   const onSelectedLocation = (location: ContentfulLocation) => {
     showLoader(loader)
