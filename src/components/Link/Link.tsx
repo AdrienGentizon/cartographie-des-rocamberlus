@@ -11,7 +11,10 @@ export default function Link({
 }: PropsWithChildren<LinkProps & { style?: CSSProperties }>) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const loader = document.querySelector<HTMLDivElement>('.loader')
+  const loader =
+    typeof document === 'undefined'
+      ? null
+      : document.querySelector<HTMLDivElement>('.loader')
 
   useEffect(() => {
     hideLoader(loader)
