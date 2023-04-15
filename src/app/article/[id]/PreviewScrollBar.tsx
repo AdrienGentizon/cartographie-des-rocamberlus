@@ -4,9 +4,13 @@ import { ContentfulAsset } from '@/types'
 
 interface PropsType {
   assets: ContentfulAsset[]
+  setSelectedAsset: (assert: ContentfulAsset) => void
 }
 
-export default function PreviewScrollBar({ assets = [] }: PropsType) {
+export default function PreviewScrollBar({
+  assets = [],
+  setSelectedAsset,
+}: PropsType) {
   return (
     <ul
       style={{
@@ -29,6 +33,7 @@ export default function PreviewScrollBar({ assets = [] }: PropsType) {
             alignItems: 'center',
             justifyContent: 'center',
           }}
+          onClick={() => setSelectedAsset(asset)}
         >
           <GalleryItem asset={asset} isThumbnail />
         </li>

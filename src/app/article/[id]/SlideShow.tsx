@@ -8,13 +8,18 @@ import { Dialog } from '@/components/Dialog/Dialog'
 
 interface PropsType {
   assets: ContentfulAsset[]
+  initialAsset: ContentfulAsset
   onClose: () => void
 }
 
-export default function SlideShow({ assets = [], onClose }: PropsType) {
-  const [selectedAsset, setSelectedAsset] = useState(
-    assets.length > 0 ? assets[0] : undefined
-  )
+export default function SlideShow({
+  assets = [],
+  initialAsset,
+  onClose,
+}: PropsType) {
+  const [selectedAsset, setSelectedAsset] = useState<
+    ContentfulAsset | undefined
+  >(initialAsset)
 
   return (
     <Dialog

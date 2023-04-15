@@ -16,7 +16,9 @@ interface PropsType {
 }
 
 export default function AssetsGallery({ assets = [], icons }: PropsType) {
-  const [open, setOpen] = useState(false)
+  const [selectedAsset, setSelectedAsset] = useState<
+    ContentfulAsset | undefined
+  >(undefined)
 
   if (assets.length === 0) return <></>
 
@@ -71,11 +73,17 @@ export default function AssetsGallery({ assets = [], icons }: PropsType) {
               padding: '0 1rem',
               cursor: 'pointer',
             }}
-            onClick={() => setOpen(true)}
           >
-            <PreviewScrollBar assets={assets} />
-            {open && (
-              <SlideShow assets={assets} onClose={() => setOpen(false)} />
+            <PreviewScrollBar
+              assets={assets}
+              setSelectedAsset={setSelectedAsset}
+            />
+            {selectedAsset !== undefined && (
+              <SlideShow
+                assets={assets}
+                initialAsset={selectedAsset}
+                onClose={() => setSelectedAsset(undefined)}
+              />
             )}
           </CustomBorderDiv>
         </div>
