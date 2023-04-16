@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import ArticleError from './ArticleError'
 import ArticleDraft from './ArticleDraft'
@@ -19,7 +18,7 @@ interface PropsType {
   error?: Error
 }
 
-function ArticlePage({
+export default function ArticlePage({
   article,
   artistPicture,
   assets,
@@ -38,24 +37,5 @@ function ArticlePage({
       assets={assets}
       icons={icons}
     />
-  )
-}
-
-export default function Wrapper({ ...props }: PropsType) {
-  return (
-    <>
-      <ArticlePage {...props} />
-      <button
-        className="scroll-to-top-btn"
-        onClick={() =>
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-          })
-        }
-      >
-        &uarr;
-      </button>
-    </>
   )
 }

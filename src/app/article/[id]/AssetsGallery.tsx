@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import PreviewScrollBar from './PreviewScrollBar'
 import SlideShow from './SlideShow'
