@@ -122,6 +122,37 @@ export default function Search({ artists }: PropsType) {
           </ul>
         </dialog>
       )}
+      <ul
+        style={{
+          opacity: 0,
+          height: 0,
+          width: 0,
+          pointerEvents: 'none',
+          position: 'absolute',
+          zIndex: -10000,
+        }}
+      >
+        {artists
+          .map(computeResultName)
+          .filter(filteroutUnnamedResult)
+          .map(({ name, articleId }, n) => (
+            <li key={`search-result-${n}`}>
+              <Link
+                style={{
+                  width: 0,
+                  height: 0,
+                  pointerEvents: 'none',
+                  opacity: 0,
+                  position: 'absolute',
+                  zIndex: -10000,
+                }}
+                href={`/article/${articleId}`}
+              >
+                {name}
+              </Link>
+            </li>
+          ))}
+      </ul>
     </div>
   )
 }
