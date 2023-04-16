@@ -1,25 +1,17 @@
 import H3 from '@/components/H3/H3'
+import Header from '@/components/Header/Header'
 import { Main } from '@/components/Main/Main'
-import getAssetFromId from '@/queries/getAssetFromId'
-import getHomePage from '@/queries/getHomePage'
-import { ASSETS, TITLES } from '@/utils/assetsIds'
+import getHeaderContent from '@/utils/getHeaderContent'
+import getHomePageContent from '@/utils/getHomePageContent'
 import Image from 'next/image'
 import React from 'react'
-
-async function getHomePageContent() {
-  const { homePage, error } = await getHomePage()
-  const { image: brouette } = await getAssetFromId(ASSETS.brouette)
-  const { image: tertiary } = await getAssetFromId(TITLES.tertiary, {
-    size: -1,
-  })
-  return { homePage, error, brouette, tertiary }
-}
 
 function Separator() {
   return <div className="mx-auto border-b border-gray-500 w-2" />
 }
 
 export default async function HomePage() {
+  const header = await getHeaderContent()
   const { homePage, error, brouette, tertiary } = await getHomePageContent()
 
   const getArticleContent = (
@@ -50,46 +42,55 @@ export default async function HomePage() {
   if (error || !homePage) return <p>Error!</p>
 
   return (
-    <Main>
-      <section className="pb-8 px-4">
-        <div className="pt-8 pb-0 lg:px-24">
-          {tertiary ? (
+    <>
+      <Header
+        title={homePage?.title === null ? undefined : homePage?.title}
+        mainTitlePicture={homePage?.mainTitlePicture}
+        artists={header.artists}
+        assets={header.assets}
+        asSearch
+      />
+      <Main>
+        <section className="pb-8 px-4">
+          <div className="pt-8 pb-0 lg:px-24">
+            {tertiary ? (
+              <Image
+                src={tertiary.url}
+                alt={homePage.mainTextTitle ?? 'site description'}
+                width={480}
+                height={40}
+              />
+            ) : (
+              <H3>{homePage.mainTextTitle}</H3>
+            )}
+          </div>
+          {brouette && (
             <Image
-              src={tertiary.url}
-              alt={homePage.mainTextTitle ?? 'site description'}
-              width={480}
-              height={40}
+              className="max-h-40 mx-auto"
+              alt="dessin de truelle"
+              src={brouette.url}
+              width={164}
+              height={160}
             />
-          ) : (
-            <H3>{homePage.mainTextTitle}</H3>
           )}
-        </div>
-        {brouette && (
-          <Image
-            className="max-h-40 mx-auto"
-            alt="dessin de truelle"
-            src={brouette.url}
-            width={164}
-            height={160}
-          />
-        )}
-        <div>
-          {homeContent.map(({ tag, value }, n) => {
-            if (tag === 'p') {
-              return (
-                <span key={`home-p-${n}`}>
-                  <p className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify">
-                    {value}
-                  </p>
-                  {n < homeContent.length - 1 && <Separator />}
-                </span>
-              )
-            }
+          <div>
+            {homeContent.map(({ tag, value }, n) => {
+              if (tag === 'p') {
+                return (
+                  <span key={`home-p-${n}`}>
+                    <p className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify">
+                      {value}
+                    </p>
+                    {n < homeContent.length - 1 && <Separator />}
+                  </span>
+                )
+              }
 
-            return <></>
-          })}
-        </div>
-      </section>
-    </Main>
+              return <></>
+            })}
+          </div>
+        </section>
+      </Main>
+    </>
   )
 }
