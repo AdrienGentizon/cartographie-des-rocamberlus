@@ -12,6 +12,7 @@ interface PropsType {
     carte?: ContentfulAsset
     accueil?: ContentfulAsset
   }
+  asSearch?: boolean
 }
 
 export default function Header({
@@ -19,6 +20,7 @@ export default function Header({
   mainTitlePicture,
   artists,
   assets,
+  asSearch = false,
 }: PropsType) {
   return (
     <header
@@ -29,7 +31,7 @@ export default function Header({
       }}
     >
       <Title title={title} mainTitlePicture={mainTitlePicture} />
-      <Nav artists={artists} assets={assets} />
+      <Nav artists={artists} assets={assets} asSearch={asSearch} />
     </header>
   )
 }

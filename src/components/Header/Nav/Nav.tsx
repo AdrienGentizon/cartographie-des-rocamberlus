@@ -1,10 +1,8 @@
-'use client'
 import React from 'react'
 import { CONTACT_URL, HOME_URL, MAP_URL } from '../../../routes'
 import MenuItem from './MenuItem/MenuItem'
 import Search from './Search/Search'
 import { ArtistsHookType, ContentfulAsset } from '@/types'
-import { usePathname } from 'next/navigation'
 
 interface PropsType {
   artists: ArtistsHookType[]
@@ -13,15 +11,14 @@ interface PropsType {
     carte?: ContentfulAsset
     accueil?: ContentfulAsset
   }
+  asSearch?: boolean
 }
 
 export default function Nav({
   artists,
   assets: { contact, carte, accueil },
+  asSearch = false,
 }: PropsType) {
-  const pathname = usePathname()
-  const asSearch =
-    !pathname?.startsWith('/map') && !pathname?.startsWith('/contact')
   return (
     <nav
       style={{
