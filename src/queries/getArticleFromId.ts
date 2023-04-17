@@ -71,6 +71,7 @@ export default async function getArticleFromId(id: string): Promise<{
           query: GET_ARTICLE_FORM_ID_QUERY,
           variables: { id },
         }),
+        cache: 'no-cache',
       }
     )
     const { data } = await response.json()

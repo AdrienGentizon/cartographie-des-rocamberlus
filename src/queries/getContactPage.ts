@@ -37,6 +37,7 @@ export default async function getContactPage(): Promise<{
           query: GET_CONTACT_PAGE_QUERY,
           variables: { id: PAGES.contact },
         }),
+        cache: 'no-cache',
       }
     )
     const { data } = await response.json()

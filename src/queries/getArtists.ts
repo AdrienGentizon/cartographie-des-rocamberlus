@@ -35,6 +35,7 @@ export default async function getArtists(): Promise<{
         method: 'POST',
         headers: getContentfulGraphqlQueryHeaders(),
         body: JSON.stringify({ query: GET_ARTICLES_QUERY }),
+        cache: 'no-cache',
       }
     )
     const { data } = await response.json()
