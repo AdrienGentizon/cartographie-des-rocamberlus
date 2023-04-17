@@ -36,7 +36,7 @@ export default function ArticleContent({
       [MARKS.BOLD]: (node: any, children: any) => <strong>{children}</strong>,
       [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
         return (
-          <p className="text-sm lg:text-base lg:font-extralight font-light  pb-3  text-justify">
+          <p className="text-sm lg:text-base lg:font-extralight font-light pb-3 px-2 lg:px-0 text-justify">
             {children}
           </p>
         )
