@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `https://www.cartographie-des-rocamberlus.com/contact/`,
   },
+  robots: {
+    index: false,
+  },
 }
 
 async function getContactPageContent() {
