@@ -35,6 +35,7 @@ export default async function getHomePage(): Promise<{
           query: GET_HOME_PAGE_QUERY,
           variables: { id: PAGES.home },
         }),
+        cache: 'no-cache',
       }
     )
     const { data } = await response.json()
