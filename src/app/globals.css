@@ -18,12 +18,6 @@ body {
   overflow-y: hidden;
 }
 
-::selection,
-::-moz-selection {
-  color: inherit;
-  background: transparent;
-}
-
 /* MAP specifics */
 .ol-control {
   display: none;
