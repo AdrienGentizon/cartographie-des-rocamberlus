@@ -86,7 +86,10 @@ export default function Search({ artists }: PropsType) {
 
   return (
     <div className="border-b border-gray-400 hover:border-gray-600 focus-within:border-gray-600 px-2 py-1 flex items-center relative transition-colors ease-in-out">
+      <label className="hide-me" htmlFor="artist-search-input" />
       <input
+        id="artist-search-input"
+        name="artist-search-input"
         ref={inputRef}
         type="search"
         onChange={(e) => {
@@ -122,16 +125,7 @@ export default function Search({ artists }: PropsType) {
           </ul>
         </dialog>
       )}
-      <ul
-        style={{
-          opacity: 0,
-          height: 0,
-          width: 0,
-          pointerEvents: 'none',
-          position: 'absolute',
-          zIndex: -10000,
-        }}
-      >
+      <ul className="hide-me">
         {artists
           .map(computeResultName)
           .filter(filteroutUnnamedResult)
