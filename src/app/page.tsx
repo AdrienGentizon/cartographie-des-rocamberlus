@@ -54,12 +54,15 @@ export default async function HomePage() {
         <section className="pb-8 px-4">
           <div className="pt-8 pb-0 lg:px-24">
             {tertiary ? (
-              <Image
-                src={tertiary.url}
-                alt={homePage.mainTextTitle ?? 'site description'}
-                width={480}
-                height={40}
-              />
+              <>
+                <h2 className="hide-me">{homePage.mainTextTitle}</h2>
+                <Image
+                  src={tertiary.url}
+                  alt={homePage.mainTextTitle ?? 'site description'}
+                  width={480}
+                  height={40}
+                />
+              </>
             ) : (
               <H3>{homePage.mainTextTitle}</H3>
             )}
