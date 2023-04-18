@@ -1,18 +1,40 @@
+import { Asset } from '@/components/Asset/Asset'
 import H3 from '@/components/H3/H3'
 import Header from '@/components/Header/Header'
 import { Main } from '@/components/Main/Main'
+import { ContentfulAsset } from '@/types'
 import getHeaderContent from '@/utils/getHeaderContent'
 import getHomePageContent from '@/utils/getHomePageContent'
 import Image from 'next/image'
 import React from 'react'
 
-function Separator() {
-  return <div className="mx-auto border-b border-gray-500 w-2" />
+function Separator({
+  asset,
+  flip,
+}: {
+  asset: ContentfulAsset | undefined
+  flip: boolean
+}) {
+  if (!asset) return <div className="mx-auto border-b border-gray-500 w-2" />
+  return (
+    <Image
+      src={asset.url}
+      alt="truelle"
+      width={asset.width}
+      height={asset.height}
+      style={{
+        width: '56px',
+        margin: '0 auto',
+        transform: flip ? `rotateY(180deg)` : undefined,
+      }}
+    />
+  )
 }
 
 export default async function HomePage() {
   const header = await getHeaderContent()
-  const { homePage, error, brouette, tertiary } = await getHomePageContent()
+  const { homePage, error, brouette, tertiary, truelle } =
+    await getHomePageContent()
 
   const getArticleContent = (
     items: any[],
@@ -84,7 +106,9 @@ export default async function HomePage() {
                     <p className="text-sm lg:text-base lg:font-extralight font-light  py-4  text-justify">
                       {value}
                     </p>
-                    {n < homeContent.length - 1 && <Separator />}
+                    {n < homeContent.length - 2 && (
+                      <Separator asset={truelle} flip={(n & 1) === 0} />
+                    )}
                   </span>
                 )
               }
