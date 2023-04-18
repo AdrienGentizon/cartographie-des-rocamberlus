@@ -22,15 +22,7 @@ export default function MapPage({
       <>
         <Map locations={locations} />
         {articlesIds.length > 0 && (
-          <ul
-            style={{
-              position: 'absolute',
-              zIndex: -1,
-              opacity: '0',
-              pointerEvents: 'none',
-              height: '0px',
-            }}
-          >
+          <ul className="hide-me">
             {articlesIds.map(({ articleId, articleTitle }) => (
               <li key={`article-link-${articleId}`}>
                 <Link href={`/article/${articleId}`}>{articleTitle}</Link>

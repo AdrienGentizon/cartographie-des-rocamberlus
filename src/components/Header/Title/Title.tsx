@@ -11,14 +11,13 @@ export default function Title({ title, mainTitlePicture }: PropsType) {
   if (mainTitlePicture)
     return (
       <Link href={`/`}>
-        <h1 style={{ visibility: 'hidden', opacity: 0, scale: 0 }}>{title}</h1>
+        <h1 className="hide-me">{title}</h1>
         <Image
           style={{ cursor: 'pointer' }}
           src={mainTitlePicture.url}
           alt="site title"
           width={688}
           height={162}
-          role="h1"
         />
       </Link>
     )
