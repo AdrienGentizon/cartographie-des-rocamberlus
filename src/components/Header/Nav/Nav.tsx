@@ -32,7 +32,7 @@ export default function Nav({
         style={{
           display: 'flex',
           justifyContent: 'space-between',
-          gap: '2rem',
+          gap: '3rem',
           width: '100%',
           height: '100%',
         }}
