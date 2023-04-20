@@ -1,5 +1,5 @@
 import { ContributionFormFetchBody, Inputs } from '@/types'
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 function encode(inputs: ContributionFormFetchBody) {
   return Object.keys(inputs)
@@ -15,13 +15,12 @@ function encode(inputs: ContributionFormFetchBody) {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json()
-    console.log(data)
-    await fetch('https://www.cartographie-des-rocamberlus.com/', {
+    const res = await fetch('https://www.cartographie-des-rocamberlus.com/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode({ 'form-name': 'contribution', ...data }),
     })
-    return new Response('Hello, Next.js!')
+    return new Response(`${res.status}`)
   } catch (error) {
     throw error
   }
