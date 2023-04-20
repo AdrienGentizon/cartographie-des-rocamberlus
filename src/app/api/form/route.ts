@@ -15,7 +15,7 @@ function encode(inputs: ContributionFormFetchBody) {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json()
-    const res = await fetch('/', {
+    const res = await fetch('https://www.cartographie-des-rocamberlus.com/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode({ 'form-name': 'contribution', ...data }),
