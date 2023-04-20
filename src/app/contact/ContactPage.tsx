@@ -55,6 +55,9 @@ export default function ContactPage({ contactPage }: PropsType) {
     message: '',
   })
   const button = useRef<HTMLButtonElement>(null)
+  const name = useRef<HTMLInputElement>(null)
+  const email = useRef<HTMLInputElement>(null)
+  const message = useRef<HTMLTextAreaElement>(null)
 
   const onInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -162,6 +165,7 @@ export default function ContactPage({ contactPage }: PropsType) {
             </label>
             <CustomBorderDiv>
               <input
+                ref={name}
                 type="text"
                 name="contact_name"
                 id="contact_name"
@@ -192,6 +196,7 @@ export default function ContactPage({ contactPage }: PropsType) {
             </label>
             <CustomBorderDiv>
               <input
+                ref={email}
                 type="email"
                 name="contact_email"
                 id="contact_email"
@@ -222,6 +227,7 @@ export default function ContactPage({ contactPage }: PropsType) {
             </label>
             <CustomBorderDiv>
               <textarea
+                ref={message}
                 name="message"
                 id="message"
                 style={{
@@ -328,7 +334,14 @@ export default function ContactPage({ contactPage }: PropsType) {
                 if (!button.current) return
                 button.current.style.background = 'hsl(0, 0%, 100%)'
               }}
-              onClick={() => setPostResult(undefined)}
+              onClick={() => {
+                if (postResult?.error === false) {
+                  if (name.current) name.current.value = ''
+                  if (email.current) email.current.value = ''
+                  if (message.current) message.current.value = ''
+                }
+                setPostResult(undefined)
+              }}
             >
               Fermer
             </button>
