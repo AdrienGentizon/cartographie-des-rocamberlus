@@ -7,10 +7,34 @@ import { BLOCKS } from '@contentful/rich-text-types'
 import React, { MouseEvent, ChangeEvent, useState } from 'react'
 import CustomBorderDiv from '../../components/CustomBorderDiv/CustomBorderDiv'
 import postContribution from '../../queries/postContribution'
-import { Inputs } from '../../types'
 import InputsError from './InputsError'
 import { ContactPage as ContactPageType } from '@/types'
 import { useRouter } from 'next/navigation'
+
+export type ValidInputs = {
+  contact_name: string
+  contact_email: string
+  message: string
+}
+export type Inputs = Partial<ValidInputs>
+export type PostBody = ValidInputs & { 'form-name': 'contribution' }
+
+export function isValidInputs(inputs: Inputs): inputs is ValidInputs {
+  return (
+    inputs.contact_name !== undefined &&
+    inputs.contact_email !== undefined &&
+    inputs.message !== ''
+  )
+}
+
+function encodeFormPostBody(inputs: PostBody) {
+  return Object.entries(inputs)
+    .map(
+      ([key, value]) =>
+        encodeURIComponent(key) + '=' + encodeURIComponent(value)
+    )
+    .join('&')
+}
 
 interface PropsType {
   contactPage: ContactPageType | undefined
@@ -35,26 +59,28 @@ export default function ContactPage({ contactPage }: PropsType) {
 
   const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
     event.preventDefault()
+    try {
+      setInputsError(false)
+      if (!isValidInputs(inputs)) return setInputsError(true)
 
-    const checkInputsValidity = (inputs: Inputs): boolean => {
-      return Object.values(inputs).reduce(
-        (prev, curr) => (prev && curr.length ? true : false),
-        true
-      )
+      const response = await fetch(`/form.html`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: encodeFormPostBody({
+          'form-name': 'contribution',
+          ...inputs,
+        }),
+      })
+      console.log(response)
+      console.log(await response.json())
+      if (response.status !== 200)
+        throw new Error(`Nous n'arrivons pas à poster votre contribution.`)
+    } catch (error) {
+      if (error instanceof Error) console.error(error.message)
+      throw error
     }
-
-    setInputsError(false)
-
-    if (!checkInputsValidity(inputs)) return setInputsError(true)
-    const response = await fetch('/api/form', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(inputs),
-    })
-    console.log(await response.json())
-    if (response) return router.push('/')
   }
 
   const renderOptions: Options = {

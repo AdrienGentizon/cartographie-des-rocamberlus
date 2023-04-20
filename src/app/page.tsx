@@ -118,16 +118,6 @@ export default async function HomePage() {
           </div>
         </section>
       </Main>
-      <form
-        name="contribution"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        hidden
-      >
-        <input type="text" name="contact_name" />
-        <input type="email" name="contact_email" />
-        <textarea name="message"></textarea>
-      </form>
     </>
   )
 }
