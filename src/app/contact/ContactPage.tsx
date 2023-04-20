@@ -9,9 +9,8 @@ import CustomBorderDiv from '../../components/CustomBorderDiv/CustomBorderDiv'
 import postContribution from '../../queries/postContribution'
 import { Inputs } from '../../types'
 import InputsError from './InputsError'
-import SubmissionError from './SubmissionError'
-import SubmissionSuccess from './SubmissionSuccess'
 import { ContactPage as ContactPageType } from '@/types'
+import { useRouter } from 'next/navigation'
 
 interface PropsType {
   contactPage: ContactPageType | undefined
@@ -19,6 +18,7 @@ interface PropsType {
 }
 
 export default function ContactPage({ contactPage }: PropsType) {
+  const router = useRouter()
   const [inputs, setInputs] = useState<Inputs>({
     contact_name: '',
     contact_email: '',
@@ -26,8 +26,6 @@ export default function ContactPage({ contactPage }: PropsType) {
   })
 
   const [inputsError, setInputsError] = useState(false)
-  const [submissionError, setSubmissionError] = useState(false)
-  const [submissionSuccess, setSubmissionSuccess] = useState(false)
 
   const onInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -46,14 +44,12 @@ export default function ContactPage({ contactPage }: PropsType) {
     }
 
     setInputsError(false)
-    setSubmissionError(false)
-    setSubmissionSuccess(false)
 
     if (!checkInputsValidity(inputs)) return setInputsError(true)
 
     const { response, error } = await postContribution(inputs)
-    if (error) return setSubmissionError(true)
-    if (response) return setSubmissionSuccess(true)
+    if (error) return
+    if (response) return router.push('/')
   }
 
   const renderOptions: Options = {
@@ -203,12 +199,6 @@ export default function ContactPage({ contactPage }: PropsType) {
       </div>
 
       {inputsError && <InputsError setInputsError={setInputsError} />}
-      {submissionError && (
-        <SubmissionError setSubmissionError={setSubmissionError} />
-      )}
-      {submissionSuccess && (
-        <SubmissionSuccess setSubmissionSuccess={setSubmissionError} />
-      )}
     </form>
   )
 }
