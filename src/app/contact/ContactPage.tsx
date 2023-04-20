@@ -54,9 +54,7 @@ export default function ContactPage({ contactPage }: PropsType) {
       body: JSON.stringify(inputs),
     })
     console.log(await response.json())
-    // const { response, error } = await postContribution(inputs)
-    // if (error) return
-    // if (response) return router.push('/')
+    if (response) return router.push('/')
   }
 
   const renderOptions: Options = {
