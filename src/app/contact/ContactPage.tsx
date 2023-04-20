@@ -4,12 +4,11 @@ import {
   Options,
 } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
-import React, { MouseEvent, ChangeEvent, useState } from 'react'
-import CustomBorderDiv from '../../components/CustomBorderDiv/CustomBorderDiv'
-import postContribution from '../../queries/postContribution'
-import InputsError from './InputsError'
+import React, { MouseEvent, ChangeEvent, useState, useRef } from 'react'
+import CustomBorderDiv, {
+  customBorderCssProperties,
+} from '../../components/CustomBorderDiv/CustomBorderDiv'
 import { ContactPage as ContactPageType } from '@/types'
-import { useRouter } from 'next/navigation'
 
 export type ValidInputs = {
   contact_name: string
@@ -42,14 +41,20 @@ interface PropsType {
 }
 
 export default function ContactPage({ contactPage }: PropsType) {
-  const router = useRouter()
+  const [postResult, setPostResult] = useState<
+    | {
+        error: boolean
+        title: string
+        message: string
+      }
+    | undefined
+  >(undefined)
   const [inputs, setInputs] = useState<Inputs>({
     contact_name: '',
     contact_email: '',
     message: '',
   })
-
-  const [inputsError, setInputsError] = useState(false)
+  const button = useRef<HTMLButtonElement>(null)
 
   const onInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -60,8 +65,17 @@ export default function ContactPage({ contactPage }: PropsType) {
   const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
     event.preventDefault()
     try {
-      setInputsError(false)
-      if (!isValidInputs(inputs)) return setInputsError(true)
+      setPostResult(undefined)
+      if (!isValidInputs(inputs))
+        return setPostResult({
+          error: true,
+          title: 'Oups',
+          message: `
+          Tous les champs sont requis 
+          pour que nous puissions vous répondre 
+          une fois votre message envoyé.
+          `,
+        })
 
       const response = await fetch(`/form.html`, {
         method: 'POST',
@@ -73,9 +87,17 @@ export default function ContactPage({ contactPage }: PropsType) {
           ...inputs,
         }),
       })
-      console.log(response)
       if (response.status !== 200)
-        throw new Error(`Nous n'arrivons pas à poster votre contribution.`)
+        return setPostResult({
+          error: true,
+          title: 'Oups',
+          message: `Nous n'avons pas pu envoyer votre message`,
+        })
+      setPostResult({
+        error: false,
+        title: 'Merci',
+        message: 'Votre message a bien été envoyé.',
+      })
     } catch (error) {
       if (error instanceof Error) console.error(error.message)
       throw error
@@ -238,9 +260,81 @@ export default function ContactPage({ contactPage }: PropsType) {
               )}
           </div>
         </div>
-
-        {inputsError && <InputsError setInputsError={setInputsError} />}
       </form>
+      {postResult && (
+        <dialog
+          open
+          style={{
+            inset: '0 0 0 0',
+            position: 'fixed',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            minWidth: '50vw',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'hsla(0, 0%, 0%, 0.1)',
+          }}
+        >
+          <div
+            style={{
+              border: 'solid 1px black',
+              background: 'white',
+              ...customBorderCssProperties,
+              borderImageOutset: 0.001,
+              borderRadius: '0.25rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+              padding: '1.5rem 3rem',
+            }}
+          >
+            <h1
+              style={{
+                fontWeight: 300,
+                fontSize: '1.5rem',
+              }}
+            >
+              {postResult.title}
+            </h1>
+            <p
+              style={{
+                fontWeight: 200,
+                fontSize: '0.875rem',
+                color: postResult.error
+                  ? 'hsl(340, 100%, 53%)'
+                  : 'hsl(0? 0%, 0%)',
+                maxWidth: '35ch',
+              }}
+            >
+              {postResult.message}
+            </p>
+            <button
+              ref={button}
+              style={{
+                border: 'solid 1px hsl(0, 0%, 93%)',
+                borderRadius: '0.25rem',
+                padding: '0.125em 0.25em',
+                fontSize: '0.875rem',
+                fontWeight: 100,
+                background: 'hsl(0, 0%, 100%)',
+              }}
+              onMouseOver={() => {
+                if (!button.current) return
+                button.current.style.background = 'hsl(0, 0%, 97%)'
+              }}
+              onMouseOut={() => {
+                if (!button.current) return
+                button.current.style.background = 'hsl(0, 0%, 100%)'
+              }}
+              onClick={() => setPostResult(undefined)}
+            >
+              Fermer
+            </button>
+          </div>
+        </dialog>
+      )}
     </>
   )
 }
