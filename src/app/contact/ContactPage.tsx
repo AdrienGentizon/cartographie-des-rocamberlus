@@ -74,7 +74,6 @@ export default function ContactPage({ contactPage }: PropsType) {
         }),
       })
       console.log(response)
-      console.log(await response.json())
       if (response.status !== 200)
         throw new Error(`Nous n'arrivons pas à poster votre contribution.`)
     } catch (error) {
