@@ -31,6 +31,7 @@ export default function Link({
   return (
     <NextLink
       onClick={(e) => {
+        if (pathname === props.href) hideLoader(loader)
         showLoader(loader)
         if (onClick) onClick(e)
       }}
