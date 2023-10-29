@@ -1,10 +1,10 @@
 import StadiaMaps from 'ol/source/StadiaMaps'
 import * as olProj from 'ol/proj'
 import Feature from 'ol/Feature'
-import { Circle, Geometry, Point } from 'ol/geom'
+import { Geometry, Point } from 'ol/geom'
 import VectorSource from 'ol/source/Vector'
 import VectorLayer from 'ol/layer/Vector'
-import { Fill, Icon, Stroke, Style } from 'ol/style'
+import { Icon, Style } from 'ol/style'
 
 import Map from 'ol/Map'
 import View from 'ol/View'

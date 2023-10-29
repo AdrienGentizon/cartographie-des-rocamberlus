@@ -1,7 +1,7 @@
 'use client'
 import NextLink, { LinkProps } from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { CSSProperties, PropsWithChildren, useEffect, useState } from 'react'
+import { CSSProperties, PropsWithChildren, useEffect } from 'react'
 import { hideLoader, showLoader } from './Loader/Loader'
 
 export default function Link({

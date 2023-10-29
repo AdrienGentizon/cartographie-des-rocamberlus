@@ -1,4 +1,3 @@
-import { Asset } from '@/components/Asset/Asset'
 import H3 from '@/components/H3/H3'
 import Header from '@/components/Header/Header'
 import { Main } from '@/components/Main/Main'

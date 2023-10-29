@@ -1,6 +1,5 @@
 import getContentfulGraphqlQueryHeaders from '@/utils/getContentfulGraphqlQueryHeaders'
 import { Article, ValidArticle } from '../types'
-import { PAGES } from '@/utils/entriesIds'
 import convertErrorFromUnknownType from '@/utils/convertErrorFromUnknownType'
 
 const GET_ARTICLE_FORM_ID_QUERY = `

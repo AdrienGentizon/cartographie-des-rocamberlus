@@ -1,5 +1,5 @@
 import { ContributionFormFetchBody, Inputs } from '@/types'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 
 function encode(inputs: ContributionFormFetchBody) {
   return Object.keys(inputs)
