@@ -102,6 +102,7 @@ export interface ContentfulLocation {
   showFullAddress: boolean
   visitDate: string
   locationPicture: ContentfulAsset
+  taggedAsNew: boolean | null
   __typename: 'Article'
 }
 

@@ -133,11 +133,11 @@ function getNewArticlesStyle(
     source: vectorSource,
     style: new Style({
       image: new Icon({
-        anchor: [0, 0],
+        anchor: [0.25, 0],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
         src: './star.svg',
-        scale: 0.5,
+        scale: 0.6,
       }),
     }),
   })
@@ -175,14 +175,14 @@ function addMapClickEventListener(
 }
 
 function spawnLocationsOnMap(map: Map, locations: ContentfulLocation[]) {
-  const showNewArticleBadge = false
+  const showNewArticleBadge = true
   const showVisitedLocationBadge = false
   const locationsMarkers = generateMarkersFromLocations(locations)
   const visitedLocationsMarkers = generateMarkersFromLocations(
     locations.filter(() => showVisitedLocationBadge)
   )
   const newArticlesMarkers = generateMarkersFromLocations(
-    locations.filter(() => showNewArticleBadge)
+    locations.filter(({ taggedAsNew }) => showNewArticleBadge && taggedAsNew)
   )
 
   const locationsVectorSource = new VectorSource({ features: locationsMarkers })

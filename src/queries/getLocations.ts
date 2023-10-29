@@ -10,6 +10,7 @@ const GET_LOCATIONS_QUERY = `
           id
         }
         title
+        taggedAsNew
         locationName
         locationDescription
         locationCategory
@@ -48,7 +49,14 @@ export default async function getLocations(): Promise<{
         cache: 'no-cache',
       }
     )
-    const { data } = await response.json()
+    const { data } = (await response.json()) as unknown as {
+      data?: {
+        articleCollection: {
+          items: ContentfulLocation[]
+        }
+      }
+    }
+
     return {
       locations: data?.articleCollection?.items ?? [],
       error: undefined,
