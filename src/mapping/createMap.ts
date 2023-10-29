@@ -1,12 +1,14 @@
-import Map from 'ol/Map'
-import View from 'ol/View'
-import XYZ from 'ol/source/XYZ'
+import StadiaMaps from 'ol/source/StadiaMaps'
 import * as olProj from 'ol/proj'
 import Feature from 'ol/Feature'
 import { Geometry, Point } from 'ol/geom'
 import VectorSource from 'ol/source/Vector'
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
+import VectorLayer from 'ol/layer/Vector'
 import { Icon, Style } from 'ol/style'
+
+import Map from 'ol/Map'
+import View from 'ol/View'
+import TileLayer from 'ol/layer/Tile'
 
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 import { ContentfulLocation, GqlLocation } from '../types'
@@ -39,29 +41,26 @@ function initMap(mapId: string, options?: CreateMapOptions) {
     ? { ...options }
     : { center: FRANCE_COORDINATES, zoom }
 
-  const urls = {
-    toner: 'https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
-    tonerBackground:
-      'https://stamen-tiles.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.png',
-    base: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  }
+  const layer = new TileLayer({
+    source: new StadiaMaps({
+      layer: 'stamen_toner_background',
+      apiKey: process.env.STADIA_API_KEY ?? '',
+      retina: true,
+    }),
+  })
+
+  const view = new View({
+    center: olProj.fromLonLat([
+      _options.center.gps_longitude,
+      _options.center.gps_latitude,
+    ]),
+    zoom: _options.zoom,
+  })
 
   const map = new Map({
+    layers: [layer],
+    view,
     target: mapId,
-    layers: [
-      new TileLayer({
-        source: new XYZ({
-          url: urls.tonerBackground,
-        }),
-      }),
-    ],
-    view: new View({
-      center: olProj.fromLonLat([
-        _options.center.gps_longitude,
-        _options.center.gps_latitude,
-      ]),
-      zoom: _options.zoom,
-    }),
   })
 
   return map
