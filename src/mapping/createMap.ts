@@ -1,10 +1,10 @@
 import StadiaMaps from 'ol/source/StadiaMaps'
 import * as olProj from 'ol/proj'
 import Feature from 'ol/Feature'
-import { Geometry, Point } from 'ol/geom'
+import { Circle, Geometry, Point } from 'ol/geom'
 import VectorSource from 'ol/source/Vector'
 import VectorLayer from 'ol/layer/Vector'
-import { Icon, Style } from 'ol/style'
+import { Fill, Icon, Stroke, Style } from 'ol/style'
 
 import Map from 'ol/Map'
 import View from 'ol/View'
@@ -92,7 +92,7 @@ function generateMarkersFromLocations(
     )
 }
 
-function getMarkerStyle(
+function getLocationsStyle(
   vectorSource: VectorSource<Geometry>
 ): VectorLayer<any> {
   return new VectorLayer({
@@ -104,6 +104,40 @@ function getMarkerStyle(
         anchorYUnits: 'pixels',
         src: './brique.png',
         scale: 0.75,
+      }),
+    }),
+  })
+}
+
+function getVisitedLocationsStyle(
+  vectorSource: VectorSource<Geometry>
+): VectorLayer<any> {
+  return new VectorLayer({
+    source: vectorSource,
+    style: new Style({
+      image: new Icon({
+        anchor: [0, 0],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+        src: './brique-desat.png',
+        scale: 0.75,
+      }),
+    }),
+  })
+}
+
+function getNewArticlesStyle(
+  vectorSource: VectorSource<Geometry>
+): VectorLayer<any> {
+  return new VectorLayer({
+    source: vectorSource,
+    style: new Style({
+      image: new Icon({
+        anchor: [0, 0],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+        src: './star.svg',
+        scale: 0.5,
       }),
     }),
   })
@@ -140,17 +174,33 @@ function addMapClickEventListener(
   map.on('pointermove', hoverHandler)
 }
 
-function spawnLocationsOnMap(
-  map: Map,
-  locations: ContentfulLocation[],
-  selectedLocation?: GqlLocation
-) {
-  const markers = generateMarkersFromLocations(locations)
+function spawnLocationsOnMap(map: Map, locations: ContentfulLocation[]) {
+  const showNewArticleBadge = false
+  const showVisitedLocationBadge = false
+  const locationsMarkers = generateMarkersFromLocations(locations)
+  const visitedLocationsMarkers = generateMarkersFromLocations(
+    locations.filter(() => showVisitedLocationBadge)
+  )
+  const newArticlesMarkers = generateMarkersFromLocations(
+    locations.filter(() => showNewArticleBadge)
+  )
 
-  const markersVectorSource = new VectorSource({ features: markers })
-  const markerVectorLayer = getMarkerStyle(markersVectorSource)
+  const locationsVectorSource = new VectorSource({ features: locationsMarkers })
+  const visitedLocationsVectorSource = new VectorSource({
+    features: visitedLocationsMarkers,
+  })
+  const newArticlesVectorSource = new VectorSource({
+    features: newArticlesMarkers,
+  })
+  const locationsVectorLayer = getLocationsStyle(locationsVectorSource)
+  const visitedLocationsVectorLayer = getVisitedLocationsStyle(
+    visitedLocationsVectorSource
+  )
+  const newArticlesVectorLayer = getNewArticlesStyle(newArticlesVectorSource)
 
-  map.addLayer(markerVectorLayer)
+  map.addLayer(locationsVectorLayer)
+  map.addLayer(visitedLocationsVectorLayer)
+  map.addLayer(newArticlesVectorLayer)
 }
 
 let map: Map | undefined = undefined
@@ -185,7 +235,7 @@ export default function createMap({
     })
   }
 
-  spawnLocationsOnMap(map, locations, mapCenter)
+  spawnLocationsOnMap(map, locations)
   addMapClickEventListener(map, onSelectedLocation, onHoveringLocation)
 
   return map
