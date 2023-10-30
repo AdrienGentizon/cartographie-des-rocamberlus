@@ -19,13 +19,15 @@ export default function Map({ locations }: PropsType) {
       ? null
       : document.querySelector<HTMLDivElement>('.loader')
 
-  const onSelectedLocation = (location: ContentfulLocation) => {
-    showLoader(loader)
-    router.push(`/article/${location.sys.id}`)
-  }
   const [hoveredLocation, setHoveredLocation] = useState<
     ContentfulLocation | undefined
   >(undefined)
+  const onSelectedLocation = useRef((location: ContentfulLocation) => {
+    showLoader(loader)
+    router.push(`/article/${location.sys.id}`)
+  })
+
+  const onHoveringLocation = useRef(setHoveredLocation)
 
   useEffect(() => {
     return () => {
@@ -46,8 +48,8 @@ export default function Map({ locations }: PropsType) {
         <MapBuilder
           mapRef={mapRef}
           locations={locations}
-          onSelectedLocation={onSelectedLocation}
-          onHoveringLocation={setHoveredLocation}
+          onSelectedLocation={onSelectedLocation.current}
+          onHoveringLocation={onHoveringLocation.current}
         />
       )}
 
