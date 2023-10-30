@@ -120,7 +120,7 @@ function getVisitedLocationsStyle(
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
         src: './brique-desat.png',
-        scale: 0.75,
+        scale: 0.55,
       }),
     }),
   })
