@@ -11,7 +11,7 @@ import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
 
 import MapBrowserEvent from 'ol/MapBrowserEvent'
-import { ContentfulLocation, GqlLocation } from '../types'
+import { ContentfulLocation, GqlLocation, ReadArticle } from '@/types'
 
 const FRANCE_COORDINATES = {
   gps_longitude: 2.3632841,
@@ -174,13 +174,23 @@ function addMapClickEventListener(
   map.on('pointermove', hoverHandler)
 }
 
-function spawnLocationsOnMap(map: Map, locations: ContentfulLocation[]) {
+function spawnLocationsOnMap(
+  map: Map,
+  locations: ContentfulLocation[],
+  readArticles: ReadArticle[]
+) {
   const showNewArticleBadge = true
-  const showVisitedLocationBadge = false
+  const showVisitedLocationBadge = true
   const locationsMarkers = generateMarkersFromLocations(locations)
-  const visitedLocationsMarkers = generateMarkersFromLocations(
-    locations.filter(() => showVisitedLocationBadge)
+  const visitedLocations = locations.filter(
+    ({ sys: { id: locationArticleId } }) =>
+      readArticles.find(
+        ({ id: readArticleId }) => readArticleId === locationArticleId
+      )
   )
+  const visitedLocationsMarkers = showVisitedLocationBadge
+    ? generateMarkersFromLocations(visitedLocations)
+    : []
   const newArticlesMarkers = generateMarkersFromLocations(
     locations.filter(({ taggedAsNew }) => showNewArticleBadge && taggedAsNew)
   )
@@ -197,7 +207,6 @@ function spawnLocationsOnMap(map: Map, locations: ContentfulLocation[]) {
     visitedLocationsVectorSource
   )
   const newArticlesVectorLayer = getNewArticlesStyle(newArticlesVectorSource)
-
   map.addLayer(locationsVectorLayer)
   map.addLayer(visitedLocationsVectorLayer)
   map.addLayer(newArticlesVectorLayer)
@@ -208,12 +217,14 @@ let map: Map | undefined = undefined
 export default function createMap({
   mapRef,
   locations,
+  readArticles,
   onSelectedLocation,
   onHoveringLocation,
   mapCenter,
 }: {
   mapRef: React.RefObject<HTMLDivElement>
   locations: ContentfulLocation[]
+  readArticles: ReadArticle[]
   onSelectedLocation: (location: ContentfulLocation) => void
   onHoveringLocation: (location?: ContentfulLocation) => void
   mapCenter?: GqlLocation
@@ -235,7 +246,7 @@ export default function createMap({
     })
   }
 
-  spawnLocationsOnMap(map, locations)
+  spawnLocationsOnMap(map, locations, readArticles)
   addMapClickEventListener(map, onSelectedLocation, onHoveringLocation)
 
   return map

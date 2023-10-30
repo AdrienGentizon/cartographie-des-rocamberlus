@@ -121,6 +121,7 @@ export interface HomePageType {
 }
 
 export interface Article {
+  sys: ContentfulSys
   articleAuthor?: string | null
   articleText?: {
     json: any | null
@@ -159,3 +160,17 @@ export type ContactPage = {
   }
 }
 export type RawContactPage = Partial<ContactPage>
+
+export type ReadArticle = {
+  id: string
+  lastRead: number
+}
+
+export type Storage = {
+  readArticles: ReadArticle[]
+}
+
+export type Context = {
+  readArticles: ReadArticle[]
+  addReadArticle: (article: Article) => void
+}

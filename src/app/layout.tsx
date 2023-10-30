@@ -5,6 +5,7 @@ import { ASSETS } from '@/utils/assetsIds'
 import Container from '@/components/Container/Container'
 import { Metadata } from 'next'
 import Loader from '@/components/Link/Loader/Loader'
+import StorageProvider from './contexts/StorageContext'
 
 async function getAssets() {
   const assets = []
@@ -32,10 +33,12 @@ export default async function RootLayout({
 
   return (
     <html lang="fr">
-      <body>
-        <Container assets={assets}>{children}</Container>
-        <Loader />
-      </body>
+      <StorageProvider>
+        <body>
+          <Container assets={assets}>{children}</Container>
+          <Loader />
+        </body>
+      </StorageProvider>
     </html>
   )
 }

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import createMap from '../../../mapping/createMap'
 import { GqlLocation, ContentfulLocation } from '../../../types'
+import { useStorageContext } from '@/app/contexts/StorageContext'
 
 interface MapBuilderProps {
   mapRef: React.RefObject<HTMLDivElement>
@@ -18,6 +19,8 @@ export default function MapBuilder({
   onHoveringLocation,
   mapCenter,
 }: MapBuilderProps) {
+  const { readArticles } = useStorageContext()
+
   useEffect(() => {
     const map = createMap({
       mapRef,
@@ -26,13 +29,20 @@ export default function MapBuilder({
           location.locationGpsCoordinates?.lon &&
           location.locationGpsCoordinates?.lat
       ),
+      readArticles,
       onSelectedLocation,
       onHoveringLocation,
       mapCenter,
     })
     return () => map?.dispose()
-    // eslint-disable-next-line
-  }, [mapCenter])
+  }, [
+    mapCenter,
+    readArticles,
+    locations,
+    mapRef,
+    onHoveringLocation,
+    onSelectedLocation,
+  ])
 
   return <></>
 }

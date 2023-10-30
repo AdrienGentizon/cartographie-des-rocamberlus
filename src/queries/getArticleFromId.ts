@@ -5,6 +5,9 @@ import convertErrorFromUnknownType from '@/utils/convertErrorFromUnknownType'
 const GET_ARTICLE_FORM_ID_QUERY = `
   query getArticleFromId($id: String!) {
     article(id: $id) {
+      sys {
+        id
+      }
       title
       coverPicture {
         sys {

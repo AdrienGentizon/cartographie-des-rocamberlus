@@ -1,8 +1,11 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect } from 'react'
 import ArticleError from './ArticleError'
 import ArticleDraft from './ArticleDraft'
 import ArticleContent from './ArticleContent'
 import { ContentfulAsset, ValidArticle } from '@/types'
+import { useStorageContext } from '@/app/contexts/StorageContext'
 
 interface PropsType {
   article: ValidArticle | undefined
@@ -26,6 +29,12 @@ export default function ArticlePage({
   error,
   icons,
 }: PropsType) {
+  const { addReadArticle } = useStorageContext()
+
+  useEffect(() => {
+    if (article) addReadArticle(article)
+  }, [article, addReadArticle])
+
   if (error || article === undefined) return <ArticleError />
 
   if (draft) return <ArticleDraft />
