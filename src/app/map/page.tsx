@@ -1,4 +1,4 @@
-import MapPage from '@/app/map/MapPage'
+import MapPage from '@/app/map/components/MapPage'
 import getArtists from '@/queries/getArtists'
 import getLocations from '@/queries/getLocations'
 import { Metadata } from 'next'

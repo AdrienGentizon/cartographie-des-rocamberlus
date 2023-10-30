@@ -1,4 +1,4 @@
-import ContactPage from '@/app/contact/ContactPage'
+import ContactPage from '@/app/contact/components/ContactPage'
 import getContactPage from '@/queries/getContactPage'
 
 import { Metadata } from 'next'

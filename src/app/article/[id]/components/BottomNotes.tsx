@@ -2,7 +2,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS, INLINES } from '@contentful/rich-text-types'
 
 import React from 'react'
-import { ContentfulAsset, ValidArticle } from '../../../types'
+import { ContentfulAsset, ValidArticle } from '../../../../types'
 import Image from 'next/image'
 
 interface PropsType {

@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
 import MapBuilder from './MapBuilder'
-import { ContentfulLocation } from '../../types'
+import { ContentfulLocation } from '../../../types'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { hideLoader, showLoader } from '@/components/Link/Loader/Loader'
 

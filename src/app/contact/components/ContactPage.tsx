@@ -7,7 +7,7 @@ import { BLOCKS } from '@contentful/rich-text-types'
 import React, { MouseEvent, ChangeEvent, useState, useRef } from 'react'
 import CustomBorderDiv, {
   customBorderCssProperties,
-} from '../../components/CustomBorderDiv/CustomBorderDiv'
+} from '../../../components/CustomBorderDiv/CustomBorderDiv'
 import { ContactPage as ContactPageType } from '@/types'
 
 export type ValidInputs = {

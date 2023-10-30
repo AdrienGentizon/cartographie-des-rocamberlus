@@ -1,4 +1,4 @@
-import ArticlePage from '@/app/article/[id]/ArticlePage'
+import ArticlePage from '@/app/article/[id]/components/ArticlePage'
 import getArticleFromId from '@/queries/getArticleFromId'
 import getAssetFromId from '@/queries/getAssetFromId'
 import { ValidArticle } from '@/types'

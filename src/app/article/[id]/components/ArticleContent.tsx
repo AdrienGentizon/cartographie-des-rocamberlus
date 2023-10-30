@@ -1,10 +1,10 @@
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import React from 'react'
-import { ContentfulAsset, ValidArticle } from '../../../types'
+import { ContentfulAsset, ValidArticle } from '../../../../types'
 import AssetsGallery from './AssetsGallery'
 import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types'
-import YoutubeVideoEmbedder from '../../../components/YoutubeVideoEmbedder/YoutubeVideoEmbedder'
-import { Asset } from '../../../components/Asset/Asset'
+import YoutubeVideoEmbedder from '../../../../components/YoutubeVideoEmbedder/YoutubeVideoEmbedder'
+import { Asset } from '../../../../components/Asset/Asset'
 import BottomNotes from './BottomNotes'
 
 function isHyperlinkNode(node: any): node is { data: { uri: string } } {

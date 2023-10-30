@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
-import createMap from '../../mapping/createMap'
-import { GqlLocation, ContentfulLocation } from '../../types'
+import createMap from '../../../mapping/createMap'
+import { GqlLocation, ContentfulLocation } from '../../../types'
 
 interface MapBuilderProps {
   mapRef: React.RefObject<HTMLDivElement>
