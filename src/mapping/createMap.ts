@@ -133,11 +133,11 @@ function getNewArticlesStyle(
     source: vectorSource,
     style: new Style({
       image: new Icon({
-        anchor: [0.25, 0],
+        anchor: [0, 0],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
-        src: './star.svg',
-        scale: 0.6,
+        src: './brique-doree.png',
+        scale: 0.85,
       }),
     }),
   })
@@ -181,7 +181,9 @@ function spawnLocationsOnMap(
 ) {
   const showNewArticleBadge = true
   const showVisitedLocationBadge = true
-  const locationsMarkers = generateMarkersFromLocations(locations)
+  const locationsMarkers = generateMarkersFromLocations(
+    locations.filter(({ taggedAsNew }) => !showNewArticleBadge || !taggedAsNew)
+  )
   const visitedLocations = locations.filter(
     ({ sys: { id: locationArticleId } }) =>
       readArticles.find(
