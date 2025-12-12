@@ -93,7 +93,7 @@ function generateMarkersFromLocations(
 }
 
 function getLocationsStyle(
-  vectorSource: VectorSource<Geometry>
+  vectorSource: VectorSource<Feature<Geometry>>
 ): VectorLayer<any> {
   return new VectorLayer({
     source: vectorSource,
@@ -110,7 +110,7 @@ function getLocationsStyle(
 }
 
 function getVisitedLocationsStyle(
-  vectorSource: VectorSource<Geometry>
+  vectorSource: VectorSource<Feature<Geometry>>
 ): VectorLayer<any> {
   return new VectorLayer({
     source: vectorSource,
@@ -127,7 +127,7 @@ function getVisitedLocationsStyle(
 }
 
 function getNewArticlesStyle(
-  vectorSource: VectorSource<Geometry>
+  vectorSource: VectorSource<Feature<Geometry>>
 ): VectorLayer<any> {
   return new VectorLayer({
     source: vectorSource,
