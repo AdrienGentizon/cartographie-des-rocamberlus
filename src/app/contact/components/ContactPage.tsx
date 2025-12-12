@@ -4,11 +4,18 @@ import {
   Options,
 } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
-import React, { MouseEvent, ChangeEvent, useState, useRef } from 'react'
+import React, {
+  MouseEvent,
+  ChangeEvent,
+  useState,
+  useRef,
+  useEffect,
+} from 'react'
 import CustomBorderDiv, {
   customBorderCssProperties,
 } from '../../../components/CustomBorderDiv/CustomBorderDiv'
 import { ContactPage as ContactPageType } from '@/types'
+import { useForm } from '@formspree/react'
 
 export type ValidInputs = {
   contact_name: string
@@ -41,6 +48,10 @@ interface PropsType {
 }
 
 export default function ContactPage({ contactPage }: PropsType) {
+  const [formSubmissionState, submitForm] = useForm(
+    process.env.NEXT_PUBLIC_FORMSPREE_CONTRIBUTION_FORM_ID!
+  )
+
   const [postResult, setPostResult] = useState<
     | {
         error: boolean
@@ -67,45 +78,31 @@ export default function ContactPage({ contactPage }: PropsType) {
 
   const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
     event.preventDefault()
-    try {
-      setPostResult(undefined)
-      if (!isValidInputs(inputs))
-        return setPostResult({
-          error: true,
-          title: 'Oups',
-          message: `
+    setPostResult(undefined)
+
+    if (!isValidInputs(inputs))
+      return setPostResult({
+        error: true,
+        title: 'Oups',
+        message: `
           Tous les champs sont requis 
           pour que nous puissions vous répondre 
           une fois votre message envoyé.
           `,
-        })
-
-      const response = await fetch(`/form.html`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: encodeFormPostBody({
-          'form-name': 'contribution',
-          ...inputs,
-        }),
       })
-      if (response.status !== 200)
-        return setPostResult({
-          error: true,
-          title: 'Oups',
-          message: `Nous n'avons pas pu envoyer votre message`,
-        })
+
+    submitForm(event)
+  }
+
+  useEffect(() => {
+    if (formSubmissionState.succeeded) {
       setPostResult({
         error: false,
         title: 'Merci',
         message: 'Votre message a bien été envoyé.',
       })
-    } catch (error) {
-      if (error instanceof Error) console.error(error.message)
-      throw error
     }
-  }
+  }, [formSubmissionState])
 
   const renderOptions: Options = {
     renderNode: {
@@ -134,10 +131,8 @@ export default function ContactPage({ contactPage }: PropsType) {
       </div>
       <form
         name="contribution"
-        method="post"
-        data-netlify="true"
-        className="lg:px-16 px-2 text-sm"
         onSubmit={onSubmit}
+        className="lg:px-16 px-2 text-sm"
       >
         <input type="hidden" name="form-name" value="contribution" />
         <div
