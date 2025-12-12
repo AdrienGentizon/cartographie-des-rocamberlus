@@ -29,7 +29,7 @@ export default async function getContactPage(): Promise<{
 }> {
   try {
     const response = await fetch(
-      `${process.env.CONTENTFUL_GRAPHQL_ENDPOINT}/${process.env.CONTENTFUL_SPACE_ID}`,
+      `${process.env.NEXT_PUBLIC_CONTENTFUL_GRAPHQL_ENDPOINT}/${process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}`,
       {
         method: 'POST',
         headers: getContentfulGraphqlQueryHeaders(),
