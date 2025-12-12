@@ -29,7 +29,7 @@ export default function GalleryItem({
       src={asset.url}
       width={asset.width}
       height={asset.height}
-      alt={asset.description ?? ''}
+      alt={asset.description ?? asset.title ?? ''}
     />
   )
 }

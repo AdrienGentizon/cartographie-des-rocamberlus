@@ -33,9 +33,9 @@ export default function AssetsGallery({ assets = [], icons }: PropsType) {
             margin: '0 auto',
             padding: '1.5rem 0 0.5rem 0',
           }}
-          width={icons.gallery.width ?? undefined}
-          height={icons.gallery.height ?? undefined}
-          alt={icons.gallery.description ?? ''}
+          width={icons.gallery.width}
+          height={icons.gallery.height}
+          alt={icons.gallery.description ?? icons.gallery.title ?? ''}
         />
       ) : (
         <h4
