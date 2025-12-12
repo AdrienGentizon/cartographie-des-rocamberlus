@@ -2,7 +2,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { ArtistsHookType } from '../../../../types'
 import Link from '@/components/Link/Link'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 function Icon() {
   return (
@@ -72,7 +72,6 @@ export default function Search({ artists }: PropsType) {
   const [open, setOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const pathname = usePathname()
-  const searchParams = useSearchParams()
 
   const closeDialog = (leaveInput = false) => {
     setOpen(false)
@@ -82,7 +81,7 @@ export default function Search({ artists }: PropsType) {
 
   useEffect(() => {
     closeDialog()
-  }, [pathname, searchParams])
+  }, [pathname])
 
   return (
     <div className="border-b border-gray-400 hover:border-gray-600 focus-within:border-gray-600 px-2 py-1 flex items-center relative transition-colors ease-in-out">

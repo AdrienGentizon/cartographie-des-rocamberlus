@@ -1,8 +1,8 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import MapBuilder from './MapBuilder'
 import { ContentfulLocation } from '../../../types'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { hideLoader, showLoader } from '@/components/Link/Loader/Loader'
 
 interface PropsType {
@@ -12,7 +12,6 @@ interface PropsType {
 export default function Map({ locations }: PropsType) {
   const router = useRouter()
   const pathname = usePathname()
-  const searchParams = useSearchParams
   const mapRef = useRef<HTMLDivElement>(null)
   const loader =
     typeof document === 'undefined'
@@ -37,7 +36,7 @@ export default function Map({ locations }: PropsType) {
 
   useEffect(() => {
     hideLoader(loader)
-  }, [pathname, searchParams, loader])
+  }, [pathname, loader])
   return (
     <div
       id="map"

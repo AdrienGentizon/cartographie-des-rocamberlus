@@ -1,6 +1,6 @@
 'use client'
 import NextLink, { LinkProps } from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { CSSProperties, PropsWithChildren, useEffect } from 'react'
 import { hideLoader, showLoader } from './Loader/Loader'
 
@@ -10,7 +10,6 @@ export default function Link({
   ...props
 }: PropsWithChildren<LinkProps & { style?: CSSProperties }>) {
   const pathname = usePathname()
-  const searchParams = useSearchParams()
   const loader =
     typeof document === 'undefined'
       ? null
@@ -26,7 +25,7 @@ export default function Link({
 
   useEffect(() => {
     hideLoader(loader)
-  }, [pathname, searchParams, loader])
+  }, [pathname, loader])
 
   return (
     <NextLink
