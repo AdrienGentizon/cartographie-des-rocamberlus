@@ -5,7 +5,7 @@ import { ASSETS } from '@/utils/assetsIds'
 import Container from '@/components/Container/Container'
 import { Metadata } from 'next'
 import Loader from '@/components/Link/Loader/Loader'
-import StorageProvider from './contexts/StorageContext'
+import StorageProvider from '../components/contexts/StorageContext'
 
 async function getAssets() {
   const assets = []

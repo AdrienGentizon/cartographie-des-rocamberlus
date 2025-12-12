@@ -5,7 +5,7 @@ import ArticleError from './ArticleError'
 import ArticleDraft from './ArticleDraft'
 import ArticleContent from './ArticleContent'
 import { ContentfulAsset, ValidArticle } from '@/types'
-import { useStorageContext } from '@/app/contexts/StorageContext'
+import { useStorageContext } from '@/components/contexts/StorageContext'
 
 interface PropsType {
   article: ValidArticle | undefined

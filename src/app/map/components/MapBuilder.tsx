@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import createMap from '../../../mapping/createMap'
 import { GqlLocation, ContentfulLocation } from '../../../types'
-import { useStorageContext } from '@/app/contexts/StorageContext'
+import { useStorageContext } from '@/components/contexts/StorageContext'
 
 interface MapBuilderProps {
   mapRef: React.RefObject<HTMLDivElement>

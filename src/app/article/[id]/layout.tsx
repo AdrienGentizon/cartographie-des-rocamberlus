@@ -19,7 +19,7 @@ export default async function RootLayout({
         artists={header.artists}
         assets={header.assets}
         asSearch
-      />{' '}
+      />
       <Main>{children}</Main>
     </>
   )

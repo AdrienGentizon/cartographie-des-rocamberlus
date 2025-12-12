@@ -18,7 +18,7 @@ export default async function RootLayout({
         mainTitlePicture={homePage?.mainTitlePicture}
         artists={header.artists}
         assets={header.assets}
-      />{' '}
+      />
       <Main>{children}</Main>
     </>
   )
