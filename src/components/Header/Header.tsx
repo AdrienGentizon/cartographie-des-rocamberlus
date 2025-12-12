@@ -5,7 +5,7 @@ import { ArtistsHookType, ContentfulAsset } from '@/types'
 
 interface PropsType {
   title?: string
-  mainTitlePicture?: { url: string } | null
+  mainTitlePicture?: { url: string; width: number; height: number } | null
   artists: ArtistsHookType[]
   assets: {
     contact?: ContentfulAsset

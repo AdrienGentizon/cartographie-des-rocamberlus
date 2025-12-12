@@ -28,9 +28,9 @@ export function Asset({ asset, imageStyle }: PropsType) {
       >
         <Image
           src={asset.url}
-          alt={asset.description ?? ''}
-          width={asset.width ?? undefined}
-          height={asset.height ?? undefined}
+          alt={asset.description ?? asset.title ?? ''}
+          width={asset.width}
+          height={asset.height}
           style={{
             boxShadow: 'inset 0 0 10px white',
             borderRadius: 6,

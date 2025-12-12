@@ -13,9 +13,17 @@ const GET_HOME_PAGE_QUERY = `
     }
     mainTitlePicture {
       url
+      title
+      description
+      width
+      height
     }
     subTitlePicture {
       url
+      title
+      description
+      width
+      height
     }
     }
   }

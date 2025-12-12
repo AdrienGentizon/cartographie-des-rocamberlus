@@ -116,8 +116,20 @@ export interface HomePageType {
   title?: string | null
   mainTextTitle?: string | null
   mainText?: { json: RichTextContent } | null
-  mainTitlePicture?: { url: string } | null
-  subTitlePicture?: { url: string } | null
+  mainTitlePicture?: {
+    url: string
+    title?: string
+    description?: string
+    width: number
+    height: number
+  } | null
+  subTitlePicture?: {
+    url: string
+    title?: string
+    description?: string
+    width: number
+    height: number
+  } | null
 }
 
 export interface Article {

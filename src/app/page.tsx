@@ -18,7 +18,7 @@ function Separator({
   return (
     <Image
       src={asset.url}
-      alt="truelle"
+      alt={asset.description ?? asset.title ?? ''}
       width={asset.width}
       height={asset.height}
       style={{
@@ -80,8 +80,8 @@ export default async function HomePage() {
                 <Image
                   src={tertiary.url}
                   alt={homePage.mainTextTitle ?? 'site description'}
-                  width={480}
-                  height={40}
+                  width={tertiary.width}
+                  height={tertiary.height}
                 />
               </>
             ) : (
@@ -90,11 +90,11 @@ export default async function HomePage() {
           </div>
           {brouette && (
             <Image
-              className="max-h-40 mx-auto"
-              alt="dessin de truelle"
+              className="max-h-40 mx-auto object-contain"
+              alt="dessin d'une brouette"
               src={brouette.url}
-              width={164}
-              height={160}
+              width={brouette.width}
+              height={brouette.height}
             />
           )}
           <div>

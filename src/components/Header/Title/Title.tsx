@@ -4,7 +4,7 @@ import React from 'react'
 
 interface PropsType {
   title?: string
-  mainTitlePicture?: { url: string } | null
+  mainTitlePicture?: { url: string; width: number; height: number } | null
 }
 
 export default function Title({ title, mainTitlePicture }: PropsType) {
@@ -13,11 +13,12 @@ export default function Title({ title, mainTitlePicture }: PropsType) {
       <Link href={`/`}>
         <h1 className="hide-me">{title}</h1>
         <Image
+          aria-hidden
           style={{ cursor: 'pointer' }}
           src={mainTitlePicture.url}
-          alt="site title"
-          width={688}
-          height={162}
+          alt={''}
+          width={mainTitlePicture.width}
+          height={mainTitlePicture.height}
         />
       </Link>
     )

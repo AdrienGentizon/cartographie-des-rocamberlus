@@ -38,8 +38,8 @@ function Section({
             scale: 0.5,
             transformOrigin: 'left',
           }}
-          width={icon.width ?? undefined}
-          height={icon.height ?? undefined}
+          width={icon.width}
+          height={icon.height}
           alt={icon.description ?? ''}
         />
       ) : (

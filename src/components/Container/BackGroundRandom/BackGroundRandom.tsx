@@ -1,7 +1,6 @@
-'use client'
-
 import React, { ReactNode } from 'react'
 import { ContentfulAsset } from '@/types'
+import Image from 'next/image'
 
 const ITEM_DENSITY = 0.85
 const ITEM_ROTATION = 0
@@ -26,19 +25,23 @@ export function BackGroundRandom({
         }}
       >
         {Array.from({ length: 10000 }).map((_, n) => {
-          const url = assets.at(Math.floor(assets.length * Math.random()))?.url
+          const asset = assets.at(Math.floor(assets.length * Math.random()))
 
-          if (Math.random() < ITEM_DENSITY || !url)
+          if (Math.random() < ITEM_DENSITY || !asset)
             return <div key={`empty-div-${n}`} />
 
           return (
-            <div
+            <Image
               key={`empty-div-${n}`}
               style={{
-                backgroundImage: `url('${url}')`,
                 rotate: `${ITEM_ROTATION * (-1 * Math.random() + 0.5)}deg`,
                 transform: Math.random() > 0.5 ? `rotateY(180deg)` : undefined,
+                objectFit: 'contain',
               }}
+              src={asset.url}
+              width={asset.width}
+              height={asset.height}
+              alt={asset.description ?? asset.title ?? ''}
             />
           )
         })}

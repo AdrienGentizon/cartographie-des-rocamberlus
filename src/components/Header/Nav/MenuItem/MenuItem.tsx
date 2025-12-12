@@ -19,12 +19,14 @@ export default function MenuItem({ url, asset, title }: MenuItemProps) {
     <>
       <li className={pathname === url ? 'nav-link active' : 'nav-link'}>
         <Link href={url}>
+          <span className="sr-only">{title}</span>
           {asset && (
             <Image
               src={asset.url}
-              alt={`link ${title}`}
+              alt={asset.description ?? asset.title ?? ''}
               width={asset.width}
               height={asset.height}
+              aria-hidden
             />
           )}
           {!asset && <>{title}</>}
