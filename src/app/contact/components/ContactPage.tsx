@@ -33,21 +33,13 @@ export function isValidInputs(inputs: Inputs): inputs is ValidInputs {
   )
 }
 
-function encodeFormPostBody(inputs: PostBody) {
-  return Object.entries(inputs)
-    .map(
-      ([key, value]) =>
-        encodeURIComponent(key) + '=' + encodeURIComponent(value)
-    )
-    .join('&')
-}
-
 interface PropsType {
   contactPage: ContactPageType | undefined
   error?: Error
 }
 
 export default function ContactPage({ contactPage }: PropsType) {
+  const [submitted, setSubmitted] = useState(false)
   const [formSubmissionState, submitForm] = useForm(
     process.env.NEXT_PUBLIC_FORMSPREE_CONTRIBUTION_FORM_ID!
   )
@@ -79,6 +71,7 @@ export default function ContactPage({ contactPage }: PropsType) {
   const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
     event.preventDefault()
     setPostResult(undefined)
+    setSubmitted(false)
 
     if (!isValidInputs(inputs))
       return setPostResult({
@@ -95,14 +88,15 @@ export default function ContactPage({ contactPage }: PropsType) {
   }
 
   useEffect(() => {
-    if (formSubmissionState.succeeded) {
+    if (formSubmissionState.succeeded && !submitted) {
+      setSubmitted(true)
       setPostResult({
         error: false,
         title: 'Merci',
         message: 'Votre message a bien été envoyé.',
       })
     }
-  }, [formSubmissionState])
+  }, [formSubmissionState, submitted])
 
   const renderOptions: Options = {
     renderNode: {
@@ -334,8 +328,8 @@ export default function ContactPage({ contactPage }: PropsType) {
                   if (name.current) name.current.value = ''
                   if (email.current) email.current.value = ''
                   if (message.current) message.current.value = ''
+                  return setPostResult(undefined)
                 }
-                setPostResult(undefined)
               }}
             >
               Fermer
