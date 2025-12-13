@@ -1,6 +1,6 @@
-import { ArtistsHookType } from "../types";
 import { fetchCollectionGraphQL } from "../utils/contentful";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
+import { ArtistsHookType } from "../utils/types";
 
 export default async function getArtists(): Promise<{
   artists: ArtistsHookType[];

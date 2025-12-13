@@ -2,20 +2,16 @@ import React from "react";
 
 import { Metadata } from "next";
 
+import getAssetsCollection from "@/queries/getAssetsCollection";
+
 import Container from "../components/Container/Container";
 import Loader from "../components/Link/Loader/Loader";
 import StorageProvider from "../components/contexts/StorageContext";
-import getAssetFromId from "../queries/getAssetFromId";
 import { ASSETS } from "../utils/assetsIds";
 import "./globals.css";
 
 async function getAssets() {
-  const assets = [];
-  for (const id of Object.values(ASSETS)) {
-    const { image } = await getAssetFromId(id, { size: 192 });
-    if (image) assets.push(image);
-  }
-  return assets;
+  return getAssetsCollection(Object.values(ASSETS));
 }
 
 export const metadata: Metadata = {

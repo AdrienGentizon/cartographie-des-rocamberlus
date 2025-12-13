@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 import CustomBorderDiv from "../../../../components/CustomBorderDiv/CustomBorderDiv";
-import { ContentfulAsset } from "../../../../types";
+import { ContentfulAsset } from "../../../../utils/types";
 import PreviewScrollBar from "./PreviewScrollBar";
 import SlideShow from "./SlideShow";
 

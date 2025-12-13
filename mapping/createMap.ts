@@ -10,7 +10,7 @@ import StadiaMaps from "ol/source/StadiaMaps";
 import VectorSource from "ol/source/Vector";
 import { Icon, Style } from "ol/style";
 
-import { ContentfulLocation, GqlLocation, ReadArticle } from "../types";
+import { ContentfulLocation, GqlLocation, ReadArticle } from "../utils/types";
 
 const FRANCE_COORDINATES = {
   gps_longitude: 2.3632841,

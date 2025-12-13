@@ -1,25 +1,18 @@
+import getAssetsCollection from "@/queries/getAssetsCollection";
+
 import getArtists from "../queries/getArtists";
-import getAssetFromId from "../queries/getAssetFromId";
-import { ContentfulAsset } from "../types";
 import { NAV_ASSETS } from "./assetsIds";
 
 export default async function getHeaderContent() {
   const { artists } = await getArtists();
-  const assets: {
-    contact?: ContentfulAsset;
-    carte?: ContentfulAsset;
-    accueil?: ContentfulAsset;
-  } = {};
-  for (const [key, id] of Object.entries(NAV_ASSETS)) {
-    const { image } = await getAssetFromId(id, { size: 256 });
-    if (image)
-      assets[
-        key as keyof {
-          contact?: ContentfulAsset;
-          carte?: ContentfulAsset;
-          accueil?: ContentfulAsset;
-        }
-      ] = image;
-  }
-  return { artists, assets };
+  const assets = await getAssetsCollection(Object.values(NAV_ASSETS));
+
+  return {
+    artists,
+    assets: {
+      contact: assets.find(({ sys }) => sys.id === NAV_ASSETS.contact),
+      carte: assets.find(({ sys }) => sys.id === NAV_ASSETS.carte),
+      accueil: assets.find(({ sys }) => sys.id === NAV_ASSETS.accueil),
+    },
+  };
 }

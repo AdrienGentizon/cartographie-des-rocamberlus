@@ -11,14 +11,6 @@
 }
 
 /* MOBILE first  */
-article ul li p {
-  padding: 0 !important;
-  font-style: italic;
-}
-.article-content-asset > div > div > img {
-  min-width: unset;
-  max-width: calc(100dvw - 4rem);
-}
 
 #map {
   height: 300px;
@@ -119,14 +111,6 @@ li.nav-link img {
   article ul li p {
     padding: 0 1rem !important;
     font-style: italic;
-  }
-
-  .article-content-asset > div > div > img {
-    min-width: unset;
-    max-width: 480px;
-    object-fit: contain;
-    width: auto;
-    max-height: 400px;
   }
 
   #map {

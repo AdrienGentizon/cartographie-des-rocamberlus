@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import { usePathname } from "next/navigation";
 
-import { ArtistsHookType } from "../../../../types";
+import { ArtistsHookType } from "../../../../utils/types";
 import Link from "../../../Link/Link";
 
 function Icon() {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { GqlLocation } from "../../../types";
+import { GqlLocation } from "../../../utils/types";
 
 interface SelectedLocationProps {
   location: GqlLocation;

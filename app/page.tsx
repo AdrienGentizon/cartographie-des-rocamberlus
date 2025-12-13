@@ -3,9 +3,9 @@ import Image from "next/image";
 import H3 from "../components/H3/H3";
 import Header from "../components/Header/Header";
 import { Main } from "../components/Main/Main";
-import { ContentfulAsset } from "../types";
 import getHeaderContent from "../utils/getHeaderContent";
 import getHomePageContent from "../utils/getHomePageContent";
+import { ContentfulAsset } from "../utils/types";
 
 function Separator({
   asset,

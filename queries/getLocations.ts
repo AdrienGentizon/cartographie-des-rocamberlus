@@ -1,6 +1,6 @@
-import { ContentfulLocation } from "../types";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
 import getContentfulGraphqlQueryHeaders from "../utils/getContentfulGraphqlQueryHeaders";
+import { ContentfulLocation } from "../utils/types";
 
 const GET_LOCATIONS_QUERY = `
   query {

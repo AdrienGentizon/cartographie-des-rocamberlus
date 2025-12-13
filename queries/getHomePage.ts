@@ -1,7 +1,7 @@
-import { HomePageType } from "../types";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
 import { PAGES } from "../utils/entriesIds";
 import getContentfulGraphqlQueryHeaders from "../utils/getContentfulGraphqlQueryHeaders";
+import { HomePageType } from "../utils/types";
 
 const GET_HOME_PAGE_QUERY = `
   query homePage($id: String!) {

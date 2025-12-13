@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 
-import { Article, Context, ReadArticle, Storage } from "../../types";
+import { Article, Context, ReadArticle, Storage } from "../../utils/types";
 
 const initialStorage: Storage = {
   readArticles: [],

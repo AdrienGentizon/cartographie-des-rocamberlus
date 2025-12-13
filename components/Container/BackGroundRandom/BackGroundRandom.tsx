@@ -3,7 +3,7 @@ import React, { ReactNode } from "react";
 
 import Image from "next/image";
 
-import { ContentfulAsset } from "../../../types";
+import { ContentfulAsset } from "../../../utils/types";
 
 const ITEM_DENSITY = 0.85;
 const ITEM_ROTATION = 0;
@@ -22,7 +22,7 @@ export function BackGroundRandom({
       }}
     >
       <div
-        className="random-background"
+        className="random-background w-full max-w-dvw overflow-hidden"
         style={{
           height: "100%",
         }}

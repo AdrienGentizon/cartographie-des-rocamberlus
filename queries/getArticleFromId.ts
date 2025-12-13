@@ -1,6 +1,6 @@
-import { Article, ValidArticle } from "../types";
 import { fetchEntryGraphQL } from "../utils/contentful";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
+import { Article, ValidArticle } from "../utils/types";
 
 function isValidArticle(
   article: Article | null | undefined
