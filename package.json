@@ -10,27 +10,33 @@
     "typecheck": "npx tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
-    "@contentful/rich-text-html-renderer": "^16.0.3",
-    "@contentful/rich-text-react-renderer": "^15.16.3",
+    "@contentful/rich-text-html-renderer": "^17.1.6",
+    "@contentful/rich-text-react-renderer": "^16.1.6",
     "@contentful/rich-text-types": "^17.2.5",
     "@formspree/react": "^3.0.0",
-    "@types/node": "18.15.11",
-    "@types/react": "18.0.33",
-    "@types/react-dom": "18.0.11",
-    "autoprefixer": "10.4.14",
-    "contentful": "^9.3.5",
-    "eslint": "8.38.0",
-    "eslint-config-next": "13.3.0",
-    "next": "^14.2.35",
-    "ol": "^8.1.0",
-    "postcss": "^8.4.31",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "25.0.1",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "autoprefixer": "10.4.22",
+    "contentful": "^11.10.0",
+    "next": "^16.0.10",
+    "ol": "^10.7.0",
+    "postcss": "^8.5.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "sharp": "^0.34.5",
-    "tailwindcss": "3.3.1",
-    "typescript": "5.0.4"
+    "tailwindcss": "^4.1.18",
+    "typescript": "5.9.3"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^4.39.1"
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.2",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.0",
+    "eslint": "9.39.1",
+    "eslint-config-next": "16.0.10",
+    "prettier": "^3.7.4",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript-eslint": "^8.49.0"
   }
 }

@@ -1,0 +1,28 @@
+# Dependencies
+node_modules
+.next
+.turbo
+
+# Build outputs
+dist
+build
+out
+.vercel
+
+# Generated files
+*.types.ts
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Git
+.git
+
+# Lock files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
