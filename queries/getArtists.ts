@@ -36,13 +36,15 @@ export default async function getArtists(): Promise<{
           }[],
           curr
         ) => {
-          if (!curr.title || !curr.artistName) return acc;
+          if (!curr.title) return acc;
+          const handle = curr.artistName ?? curr.title;
+          if (!handle) return acc;
           return [
             ...acc,
             {
               articleId: curr.sys.id,
               articleTitle: curr.title,
-              artistName: curr.artistName,
+              artistName: handle,
             },
           ];
         },

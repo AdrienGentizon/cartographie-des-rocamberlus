@@ -1,5 +1,3 @@
-import React from "react";
-
 import Image from "next/image";
 
 import H3 from "../components/H3/H3";

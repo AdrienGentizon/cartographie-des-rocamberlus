@@ -2,6 +2,8 @@ import React from "react";
 
 import { Metadata } from "next";
 
+import getArtists from "@/queries/getArtists";
+
 import getArticleFromId from "../../../queries/getArticleFromId";
 import getAssetFromId from "../../../queries/getAssetFromId";
 import { ValidArticle } from "../../../types";
@@ -59,6 +61,14 @@ async function getArticleAssets(article: ValidArticle | undefined) {
     if (image) assets.push(image);
   }
   return assets;
+}
+
+export async function generateStaticParams() {
+  const { artists } = await getArtists();
+
+  return artists.map((artist) => ({
+    id: artist.articleId,
+  }));
 }
 
 export default async function Article({
