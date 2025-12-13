@@ -63,7 +63,6 @@ export default async function getAssetFromId(
           }),
           variables: { id },
         }),
-        cache: "default",
       }
     );
     const { data } = await response.json();
