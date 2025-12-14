@@ -15,7 +15,7 @@ export default function contentful() {
   return client;
 }
 
-export type EntryTag = "article";
+export type EntryTag = `article-${string}`;
 export type CollectionTag = "articleCollection";
 
 type CollectionData<K extends CollectionTag, T = unknown> = {
