@@ -17,7 +17,7 @@ import React, {
 import CustomBorderDiv, {
   customBorderCssProperties,
 } from "../../../components/CustomBorderDiv/CustomBorderDiv";
-import { ContactPageProps } from "../../../types";
+import { ContactPageProps } from "../../../utils/types";
 
 export type ValidInputs = {
   contact_name: string;

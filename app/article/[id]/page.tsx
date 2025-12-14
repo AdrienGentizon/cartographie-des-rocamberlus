@@ -1,11 +1,12 @@
-import React from "react";
-
 import { Metadata } from "next";
 
-import getArticleFromId from "../../../queries/getArticleFromId";
-import getAssetFromId from "../../../queries/getAssetFromId";
-import { ValidArticle } from "../../../types";
-import { TITLES } from "../../../utils/assetsIds";
+import getArticleFromId from "@/queries/getArticleFromId";
+import getArtists from "@/queries/getArtists";
+import getAssetFromId from "@/queries/getAssetFromId";
+import getAssetsCollection from "@/queries/getAssetsCollection";
+import { TITLES } from "@/utils/assetsIds";
+import { ValidArticle } from "@/utils/types";
+
 import ArticlePage from "./components/ArticlePage";
 
 export const metadata: Metadata = {
@@ -16,28 +17,24 @@ export const metadata: Metadata = {
 async function getArticleContent(params: { id: string }) {
   const { article, error, draft } = await getArticleFromId(params.id ?? "");
   if (article?.artistPicture?.sys?.id) {
-    const { image: artistPicture } = await getAssetFromId(
-      article.artistPicture.sys.id,
-      {
-        size: 256,
-      }
-    );
-    return { article, error, draft, artistPicture };
+    return {
+      article,
+      error,
+      draft,
+      artistPicture: await getAssetFromId(article.artistPicture.sys.id),
+    };
   }
   return { article, error, draft, artistPicture: undefined };
 }
 
 async function getIcons() {
-  const { image: references } = await getAssetFromId(TITLES.references);
-  const { image: webography } = await getAssetFromId(TITLES.webography);
-  const { image: media } = await getAssetFromId(TITLES.media);
-  const { image: gallery } = await getAssetFromId(TITLES.gallery);
+  const assets = await getAssetsCollection(Object.values(TITLES));
 
   return {
-    references,
-    webography,
-    media,
-    gallery,
+    references: assets.find(({ sys }) => sys.id === TITLES.references),
+    webography: assets.find(({ sys }) => sys.id === TITLES.webography),
+    media: assets.find(({ sys }) => sys.id === TITLES.media),
+    gallery: assets.find(({ sys }) => sys.id === TITLES.gallery),
   };
 }
 
@@ -50,15 +47,15 @@ async function getArticleAssets(article: ValidArticle | undefined) {
     return acc;
   }, []);
 
-  const assets = [];
+  return await getAssetsCollection(ids);
+}
 
-  for (const id of ids) {
-    const { image } = await getAssetFromId(id, {
-      size: 720,
-    });
-    if (image) assets.push(image);
-  }
-  return assets;
+export async function generateStaticParams() {
+  const { artists } = await getArtists();
+
+  return artists.map((artist) => ({
+    id: artist.articleId,
+  }));
 }
 
 export default async function Article({

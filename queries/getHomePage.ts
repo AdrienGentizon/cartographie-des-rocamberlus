@@ -1,7 +1,7 @@
-import { HomePageType } from "../types";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
 import { PAGES } from "../utils/entriesIds";
 import getContentfulGraphqlQueryHeaders from "../utils/getContentfulGraphqlQueryHeaders";
+import { HomePageType } from "../utils/types";
 
 const GET_HOME_PAGE_QUERY = `
   query homePage($id: String!) {
@@ -43,7 +43,6 @@ export default async function getHomePage(): Promise<{
           query: GET_HOME_PAGE_QUERY,
           variables: { id: PAGES.home },
         }),
-        cache: "no-cache",
       }
     );
     const { data } = await response.json();

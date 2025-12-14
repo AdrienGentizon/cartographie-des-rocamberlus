@@ -1,6 +1,6 @@
-import { Article, ValidArticle } from "../types";
 import { fetchEntryGraphQL } from "../utils/contentful";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
+import { Article, ValidArticle } from "../utils/types";
 
 function isValidArticle(
   article: Article | null | undefined
@@ -15,7 +15,10 @@ export default async function getArticleFromId(id: string): Promise<{
 }> {
   try {
     const response = await fetchEntryGraphQL<ValidArticle>(
-      `article`,
+      {
+        key: "article",
+        id,
+      },
       `query article($id: String!) {
         article(id: $id) {
           sys {

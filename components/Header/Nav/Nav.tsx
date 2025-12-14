@@ -1,7 +1,7 @@
 import React from "react";
 
-import { CONTACT_URL, HOME_URL, MAP_URL } from "../../../routes";
-import { ArtistsHookType, ContentfulAsset } from "../../../types";
+import { CONTACT_URL, HOME_URL, MAP_URL } from "../../../utils/routes";
+import { ArtistsHookType, ContentfulAsset } from "../../../utils/types";
 import MenuItem from "./MenuItem/MenuItem";
 import Search from "./Search/Search";
 

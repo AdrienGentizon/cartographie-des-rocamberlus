@@ -1,6 +1,6 @@
-import { ContentfulLocation } from "../types";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
 import getContentfulGraphqlQueryHeaders from "../utils/getContentfulGraphqlQueryHeaders";
+import { ContentfulLocation } from "../utils/types";
 
 const GET_LOCATIONS_QUERY = `
   query {
@@ -46,7 +46,6 @@ export default async function getLocations(): Promise<{
         method: "POST",
         headers: getContentfulGraphqlQueryHeaders(),
         body: JSON.stringify({ query: GET_LOCATIONS_QUERY }),
-        cache: "no-cache",
       }
     );
     const { data } = (await response.json()) as unknown as {

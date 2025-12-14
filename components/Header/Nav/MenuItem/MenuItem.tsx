@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-import { ContentfulAsset } from "../../../../types";
+import { ContentfulAsset } from "../../../../utils/types";
 import Link from "../../../Link/Link";
 
 type MenuItemProps = React.PropsWithChildren<{

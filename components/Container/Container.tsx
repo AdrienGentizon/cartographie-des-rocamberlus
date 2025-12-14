@@ -1,12 +1,12 @@
 import { ReactNode, Suspense } from "react";
 
-import { ContentfulAsset } from "../../types";
+import { ContentfulAsset } from "../../utils/types";
 import { BackGroundRandom } from "./BackGroundRandom/BackGroundRandom";
 
 function Div({ children }: { children: ReactNode }) {
   return (
     <div
-      className="container"
+      className="container w-full max-w-dvw"
       style={{
         backgroundColor: "rgb(255 255 255 / 1)",
         minHeight: "100vh",

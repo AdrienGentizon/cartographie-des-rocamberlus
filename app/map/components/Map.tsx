@@ -3,7 +3,7 @@ import { ComponentRef, useEffect, useRef, useState } from "react";
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { ContentfulLocation } from "@/types";
+import { ContentfulLocation } from "@/utils/types";
 
 import { hideLoader, showLoader } from "../../../components/Link/Loader/Loader";
 import { useStorageContext } from "../../../components/contexts/StorageContext";

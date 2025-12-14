@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ArtistsHookType, ContentfulAsset } from "../../types";
+import { ArtistsHookType, ContentfulAsset } from "../../utils/types";
 import Nav from "./Nav/Nav";
 import Title from "./Title/Title";
 

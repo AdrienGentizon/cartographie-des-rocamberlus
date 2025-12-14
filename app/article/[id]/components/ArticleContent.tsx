@@ -3,11 +3,10 @@ import { BLOCKS, INLINES, MARKS } from "@contentful/rich-text-types";
 
 import { ReactNode } from "react";
 
-import { ContentfulAsset, ValidArticle } from "@/types";
+import { Asset } from "@/components/Asset/Asset";
+import YoutubeVideoEmbedder from "@/components/YoutubeVideoEmbedder/YoutubeVideoEmbedder";
+import { ContentfulAsset, ValidArticle } from "@/utils/types";
 
-import { Asset } from "../../../../components/Asset/Asset";
-import YoutubeVideoEmbedder from "../../../../components/YoutubeVideoEmbedder/YoutubeVideoEmbedder";
-import AssetsGallery from "./AssetsGallery";
 import BottomNotes from "./BottomNotes";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -85,18 +84,7 @@ export default function ArticleContent({
           ({ sys: { id } }) => id === node.data.target.sys.id
         );
         if (!asset) return <></>;
-        return (
-          <div
-            className={`article-content-asset ${
-              asset.width > asset.height ? "paysage" : "portrait"
-            }`}
-            style={{
-              paddingBottom: "1rem",
-            }}
-          >
-            <Asset asset={asset} />
-          </div>
-        );
+        return <Asset asset={asset} />;
       },
     },
   };
@@ -141,25 +129,9 @@ export default function ArticleContent({
         )}
       </div>
       <div>
-        {artistPicture && (
-          <div
-            className="lg:float-left lg:mr-8"
-            style={{
-              marginBottom: "1rem",
-            }}
-          >
-            <Asset
-              asset={artistPicture}
-              imageStyle={{
-                objectFit: "cover",
-                maxWidth: "256px",
-              }}
-            />
-          </div>
-        )}
+        {artistPicture && <Asset asset={artistPicture} />}
         {documentToReactComponents(article.articleText.json, renderOptions)}
         <BottomNotes article={article} icons={icons} />
-        {<AssetsGallery assets={assets} icons={icons} />}
       </div>
     </article>
   );

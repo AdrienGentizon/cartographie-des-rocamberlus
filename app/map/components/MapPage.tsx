@@ -1,7 +1,7 @@
 import React from "react";
 
 import Link from "../../../components/Link/Link";
-import { ContentfulLocation } from "../../../types";
+import { ContentfulLocation } from "../../../utils/types";
 import Map from "./Map";
 
 interface PropsType {
