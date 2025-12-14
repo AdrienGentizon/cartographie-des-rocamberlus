@@ -15,7 +15,10 @@ export default async function getArticleFromId(id: string): Promise<{
 }> {
   try {
     const response = await fetchEntryGraphQL<ValidArticle>(
-      `article-${id}`,
+      {
+        key: "article",
+        id,
+      },
       `query article($id: String!) {
         article(id: $id) {
           sys {
@@ -67,11 +70,11 @@ export default async function getArticleFromId(id: string): Promise<{
     );
 
     return {
-      article: isValidArticle(response?.data?.[`article-${id}`])
-        ? response.data[`article-${id}`]
+      article: isValidArticle(response?.data?.article)
+        ? response.data.article
         : undefined,
       error: undefined,
-      draft: !response?.data?.[`article-${id}`]?.articleText,
+      draft: !response?.data?.article?.articleText,
     };
   } catch (error) {
     console.error(

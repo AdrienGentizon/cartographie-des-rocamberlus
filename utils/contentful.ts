@@ -15,8 +15,9 @@ export default function contentful() {
   return client;
 }
 
-export type EntryTag = `article-${string}`;
-export type CollectionTag = "articleCollection";
+type EntryContentType = "article";
+export type EntryTag = `${EntryContentType}-${string}`;
+export type CollectionTag = `${EntryContentType}Collection`;
 
 type CollectionData<K extends CollectionTag, T = unknown> = {
   data?: Record<
@@ -27,7 +28,7 @@ type CollectionData<K extends CollectionTag, T = unknown> = {
   >;
 };
 
-type EntryData<K extends EntryTag, T = unknown> = {
+type EntryData<K extends EntryContentType, T = unknown> = {
   data?: Record<K, T>;
 };
 
@@ -61,7 +62,10 @@ export async function fetchCollectionGraphQL<T>(
 }
 
 export async function fetchEntryGraphQL<T>(
-  tag: EntryTag,
+  tag: {
+    key: EntryContentType;
+    id: string;
+  },
   query: string,
   variables?: Record<string, unknown>
 ) {
@@ -76,10 +80,10 @@ export async function fetchEntryGraphQL<T>(
           Authorization: `Bearer ${env().CONTENTFUL_DELIVERY_API_KEY}`,
         },
         body: JSON.stringify({ query, variables }),
-        next: { tags: [tag] },
+        next: { tags: [`${tag.key}-${tag.id}` satisfies EntryTag] },
       }
     );
-    return response.json() as Promise<EntryData<typeof tag, T>>;
+    return response.json() as Promise<EntryData<typeof tag.key, T>>;
   } catch (error) {
     console.error(
       "[ERROR:CONTENTFUL]",
