@@ -1,8 +1,6 @@
-import React from "react";
-
 import Image from "next/image";
 
-import { ContentfulAsset } from "../../../../utils/types";
+import { ContentfulAsset } from "@/utils/types";
 
 export default function GalleryItem({
   asset,

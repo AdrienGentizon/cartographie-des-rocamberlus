@@ -1,9 +1,6 @@
 import Image from "next/image";
 
 import H3 from "../components/H3/H3";
-import Header from "../components/Header/Header";
-import { Main } from "../components/Main/Main";
-import getHeaderContent from "../utils/getHeaderContent";
 import getHomePageContent from "../utils/getHomePageContent";
 import { ContentfulAsset } from "../utils/types";
 
@@ -31,7 +28,6 @@ function Separator({
 }
 
 export default async function HomePage() {
-  const header = await getHeaderContent();
   const { homePage, error, brouette, tertiary, truelle } =
     await getHomePageContent();
 
@@ -64,60 +60,50 @@ export default async function HomePage() {
   if (error || !homePage) return <p>Error!</p>;
 
   return (
-    <>
-      <Header
-        title={homePage?.title === null ? undefined : homePage?.title}
-        mainTitlePicture={homePage?.mainTitlePicture}
-        assets={header.assets}
-        asSearch
-      />
-      <Main>
-        <section className="px-4 pb-8">
-          <div className="pt-8 pb-0 lg:px-24">
-            {tertiary ? (
-              <>
-                <h2 className="sr-only">{homePage.mainTextTitle}</h2>
-                <Image
-                  src={tertiary.url}
-                  alt={homePage.mainTextTitle ?? "site description"}
-                  width={tertiary.width}
-                  height={tertiary.height}
-                  priority
-                />
-              </>
-            ) : (
-              <H3>{homePage.mainTextTitle}</H3>
-            )}
-          </div>
-          {brouette && (
+    <section className="px-4 pb-8">
+      <div className="pt-8 pb-0 lg:px-24">
+        {tertiary ? (
+          <>
+            <h2 className="sr-only">{homePage.mainTextTitle}</h2>
             <Image
-              className="mx-auto max-h-40 object-contain"
-              alt="dessin d'une brouette"
-              src={brouette.url}
-              width={brouette.width}
-              height={brouette.height}
+              src={tertiary.url}
+              alt={homePage.mainTextTitle ?? "site description"}
+              width={tertiary.width}
+              height={tertiary.height}
+              priority
             />
-          )}
-          <div>
-            {homeContent.map(({ tag, value }, n) => {
-              if (tag === "p") {
-                return (
-                  <span key={`home-p-${n}`}>
-                    <p className="py-4 text-justify text-sm font-light lg:text-base lg:font-extralight">
-                      {value}
-                    </p>
-                    {n < homeContent.length - 2 && (
-                      <Separator asset={truelle} flip={(n & 1) === 0} />
-                    )}
-                  </span>
-                );
-              }
+          </>
+        ) : (
+          <H3>{homePage.mainTextTitle}</H3>
+        )}
+      </div>
+      {brouette && (
+        <Image
+          className="mx-auto max-h-40 object-contain"
+          alt="dessin d'une brouette"
+          src={brouette.url}
+          width={brouette.width}
+          height={brouette.height}
+        />
+      )}
+      <div>
+        {homeContent.map(({ tag, value }, n) => {
+          if (tag === "p") {
+            return (
+              <span key={`home-p-${n}`}>
+                <p className="py-4 text-justify text-sm font-light lg:text-base lg:font-extralight">
+                  {value}
+                </p>
+                {n < homeContent.length - 2 && (
+                  <Separator asset={truelle} flip={(n & 1) === 0} />
+                )}
+              </span>
+            );
+          }
 
-              return <></>;
-            })}
-          </div>
-        </section>
-      </Main>
-    </>
+          return <></>;
+        })}
+      </div>
+    </section>
   );
 }

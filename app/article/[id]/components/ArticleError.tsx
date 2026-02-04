@@ -1,6 +1,4 @@
-import React from "react";
-
-import Link from "../../../../components/Link/Link";
+import Link from "@/components/Link/Link";
 
 export default function ArticleError() {
   return (
