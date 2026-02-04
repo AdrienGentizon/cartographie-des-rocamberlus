@@ -60,11 +60,11 @@ export default function Map({ locations }: PropsType) {
   return (
     <div
       id="map"
-      className="purpl absolute mt-4 w-full max-w-2xl rounded-lg border-4 border-black bg-black"
+      className="relative mt-4 w-full max-w-2xl rounded-lg border-4 border-black bg-black"
       ref={mapRef}
     >
       <dialog
-        className={`absolute top-0 z-40 mt-4 rounded p-2 shadow-xl ${
+        className={`absolute top-0 left-1/2 z-40 mt-4 -translate-x-1/2 rounded p-2 shadow-xl ${
           hoveredLocation ? "visible opacity-100" : "invisible opacity-0"
         } transition-opacity duration-300 ease-in-out`}
         open
