@@ -120,7 +120,9 @@ export default function Search({ artists }: PropsType) {
                 key={`search-result-${n}`}
                 className="cursor-pointer overflow-x-hidden px-2 py-1 text-ellipsis whitespace-nowrap transition-colors ease-in-out hover:bg-gray-50 hover:text-gray-700"
               >
-                <Link href={`/article/${articleId}`}>{name}</Link>
+                <Link href={`/article/${articleId}`} prefetch={false}>
+                  {name}
+                </Link>
               </li>
             ))}
           </ul>
