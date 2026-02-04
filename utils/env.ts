@@ -4,6 +4,7 @@ type Env = {
   CONTENTFUL_ENVIRONMENT: string;
   CONTENTFUL_WEBHOOK_HEADER_KEY: string;
   CONTENTFUL_WEBHOOK_SECRET: string;
+  BASE_URL: string;
 };
 
 let envVars: undefined | Env = undefined;
@@ -22,6 +23,7 @@ export default function env() {
       CONTENTFUL_ENVIRONMENT: getEnvVar("CONTENTFUL_ENVIRONMENT"),
       CONTENTFUL_WEBHOOK_HEADER_KEY: getEnvVar("CONTENTFUL_WEBHOOK_HEADER_KEY"),
       CONTENTFUL_WEBHOOK_SECRET: getEnvVar("CONTENTFUL_WEBHOOK_SECRET"),
+      BASE_URL: getEnvVar("BASE_URL"),
     };
   }
 
