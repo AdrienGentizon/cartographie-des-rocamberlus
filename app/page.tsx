@@ -83,6 +83,7 @@ export default async function HomePage() {
                   alt={homePage.mainTextTitle ?? "site description"}
                   width={tertiary.width}
                   height={tertiary.height}
+                  priority
                 />
               </>
             ) : (

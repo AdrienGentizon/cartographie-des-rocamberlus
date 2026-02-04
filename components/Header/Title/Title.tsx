@@ -21,6 +21,7 @@ export default function Title({ title, mainTitlePicture }: PropsType) {
           alt={""}
           width={mainTitlePicture.width}
           height={mainTitlePicture.height}
+          priority
         />
       </Link>
     );
