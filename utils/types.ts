@@ -185,3 +185,8 @@ export type Context = {
   readArticles: ReadArticle[];
   addReadArticle: (article: Article) => void;
 };
+
+export type SearchResult = {
+  name: string;
+  articleId: string;
+};
