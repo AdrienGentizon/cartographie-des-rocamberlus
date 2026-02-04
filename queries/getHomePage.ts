@@ -43,6 +43,7 @@ export default async function getHomePage(): Promise<{
           query: GET_HOME_PAGE_QUERY,
           variables: { id: PAGES.home },
         }),
+        next: { tags: ["homePage"] },
       }
     );
     const { data } = await response.json();

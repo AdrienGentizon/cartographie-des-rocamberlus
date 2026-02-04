@@ -46,6 +46,7 @@ export default async function getLocations(): Promise<{
         method: "POST",
         headers: getContentfulGraphqlQueryHeaders(),
         body: JSON.stringify({ query: GET_LOCATIONS_QUERY }),
+        next: { tags: ["articleCollection"] },
       }
     );
     const { data } = (await response.json()) as unknown as {
