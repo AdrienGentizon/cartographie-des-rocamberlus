@@ -77,7 +77,7 @@ export default async function HomePage() {
           <div className="pt-8 pb-0 lg:px-24">
             {tertiary ? (
               <>
-                <h2 className="hide-me">{homePage.mainTextTitle}</h2>
+                <h2 className="sr-only">{homePage.mainTextTitle}</h2>
                 <Image
                   src={tertiary.url}
                   alt={homePage.mainTextTitle ?? "site description"}

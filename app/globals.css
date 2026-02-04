@@ -158,16 +158,6 @@ li.nav-link img {
   }
 }
 
-/* Utilities */
-.hide-me {
-  position: absolute;
-  height: 0;
-  width: 0;
-  opacity: 0;
-  pointer-events: none;
-  z-index: -1000;
-}
-
 @keyframes rotation {
   from {
     rotate: 0deg;

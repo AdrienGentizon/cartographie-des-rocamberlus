@@ -88,7 +88,6 @@ export default function Search({ artists }: PropsType) {
 
   return (
     <div className="relative flex items-center border-b border-gray-400 px-2 py-1 transition-colors ease-in-out focus-within:border-gray-600 hover:border-gray-600">
-      <label className="hide-me" htmlFor="artist-search-input" />
       <input
         id="artist-search-input"
         name="artist-search-input"
@@ -127,28 +126,6 @@ export default function Search({ artists }: PropsType) {
           </ul>
         </dialog>
       )}
-      <ul className="hide-me">
-        {artists
-          .map(computeResultName)
-          .filter(filteroutUnnamedResult)
-          .map(({ name, articleId }, n) => (
-            <li key={`search-result-${n}`}>
-              <Link
-                style={{
-                  width: 0,
-                  height: 0,
-                  pointerEvents: "none",
-                  opacity: 0,
-                  position: "absolute",
-                  zIndex: -10000,
-                }}
-                href={`/article/${articleId}`}
-              >
-                {name}
-              </Link>
-            </li>
-          ))}
-      </ul>
     </div>
   );
 }

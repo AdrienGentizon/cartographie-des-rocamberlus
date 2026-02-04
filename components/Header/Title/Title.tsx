@@ -13,7 +13,7 @@ export default function Title({ title, mainTitlePicture }: PropsType) {
   if (mainTitlePicture)
     return (
       <Link href={`/`}>
-        <h1 className="hide-me">{title}</h1>
+        <h1 className="sr-only">{title}</h1>
         <Image
           aria-hidden
           style={{ cursor: "pointer" }}
