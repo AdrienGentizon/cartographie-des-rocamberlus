@@ -68,7 +68,6 @@ export default async function HomePage() {
       <Header
         title={homePage?.title === null ? undefined : homePage?.title}
         mainTitlePicture={homePage?.mainTitlePicture}
-        artists={header.artists}
         assets={header.assets}
         asSearch
       />

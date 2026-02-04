@@ -1,13 +1,10 @@
-import React from "react";
-
-import { ArtistsHookType, ContentfulAsset } from "../../utils/types";
+import { ContentfulAsset } from "../../utils/types";
 import Nav from "./Nav/Nav";
 import Title from "./Title/Title";
 
 interface PropsType {
   title?: string;
   mainTitlePicture?: { url: string; width: number; height: number } | null;
-  artists: ArtistsHookType[];
   assets: {
     contact?: ContentfulAsset;
     carte?: ContentfulAsset;
@@ -19,7 +16,6 @@ interface PropsType {
 export default function Header({
   title,
   mainTitlePicture,
-  artists,
   assets,
   asSearch = false,
 }: PropsType) {
@@ -32,7 +28,7 @@ export default function Header({
       }}
     >
       <Title title={title} mainTitlePicture={mainTitlePicture} />
-      <Nav artists={artists} assets={assets} asSearch={asSearch} />
+      <Nav assets={assets} asSearch={asSearch} />
     </header>
   );
 }

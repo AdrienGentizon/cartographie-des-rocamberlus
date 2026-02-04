@@ -17,7 +17,6 @@ export default async function RootLayout({
       <Header
         title={homePage?.title === null ? undefined : homePage?.title}
         mainTitlePicture={homePage?.mainTitlePicture}
-        artists={header.artists}
         assets={header.assets}
       />
       <Main>{children}</Main>
