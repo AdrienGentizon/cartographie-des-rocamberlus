@@ -73,10 +73,11 @@ export default async function HomePage() {
           <H3>{homePage.mainTextTitle}</H3>
         )}
       </div>
+
       {brouette && (
         <div>
           <ContentfulImage
-            className="mx-auto w-auto max-h-40 object-contain"
+            className="mx-auto max-h-40 w-auto object-contain"
             alt="dessin d'une brouette"
             asset={brouette}
             sizes="132px"
