@@ -39,6 +39,7 @@ export default async function getContactPage(): Promise<{
           query: GET_CONTACT_PAGE_QUERY,
           variables: { id: PAGES.contact },
         }),
+        cache: "force-cache",
         next: { tags: ["contactPage"] },
       }
     );

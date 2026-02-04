@@ -33,6 +33,7 @@ export default async function getAssetFromId(
           query: GET_ASSET_QUERY,
           variables: { id },
         }),
+        cache: "force-cache",
         next: { tags: [`asset-${id}`] },
       }
     );

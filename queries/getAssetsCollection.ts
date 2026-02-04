@@ -37,6 +37,7 @@ export default async function getAssetsCollection(
           query: GET_ASSETS_QUERY,
           variables: { ids },
         }),
+        cache: "force-cache",
         next: { tags: ["assetCollection"] },
       }
     );

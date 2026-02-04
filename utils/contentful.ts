@@ -48,6 +48,7 @@ export async function fetchCollectionGraphQL<T>(
           Authorization: `Bearer ${env().CONTENTFUL_DELIVERY_API_KEY}`,
         },
         body: JSON.stringify({ query }),
+        cache: "force-cache",
         next: { tags: [tag], revalidate },
       }
     );
@@ -80,6 +81,7 @@ export async function fetchEntryGraphQL<T>(
           Authorization: `Bearer ${env().CONTENTFUL_DELIVERY_API_KEY}`,
         },
         body: JSON.stringify({ query, variables }),
+        cache: "force-cache",
         next: { tags: [`${tag.key}-${tag.id}` satisfies EntryTag] },
       }
     );
