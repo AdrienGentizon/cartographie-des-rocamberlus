@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import Image from "next/image";
 
-import CustomBorderDiv from "../../../../components/CustomBorderDiv/CustomBorderDiv";
-import { ContentfulAsset } from "../../../../utils/types";
+import CustomBorderDiv from "@/components/CustomBorderDiv/CustomBorderDiv";
+import { ContentfulAsset } from "@/utils/types";
+
 import PreviewScrollBar from "./PreviewScrollBar";
 import SlideShow from "./SlideShow";
 

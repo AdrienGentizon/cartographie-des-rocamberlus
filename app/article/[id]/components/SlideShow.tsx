@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-import { customBorderCssProperties } from "../../../../components/CustomBorderDiv/CustomBorderDiv";
-import { Dialog } from "../../../../components/Dialog/Dialog";
-import { ContentfulAsset } from "../../../../utils/types";
+import { customBorderCssProperties } from "@/components/CustomBorderDiv/CustomBorderDiv";
+import { Dialog } from "@/components/Dialog/Dialog";
+import { ContentfulAsset } from "@/utils/types";
+
 import CloseButton from "./CloseButton";
 import GalleryItem from "./GalleryItem";
 import Pagination from "./Pagination";

@@ -1,6 +1,5 @@
-import React from "react";
+import { ContentfulAsset } from "@/utils/types";
 
-import { ContentfulAsset } from "../../../../utils/types";
 import GalleryItem from "./GalleryItem";
 
 interface PropsType {

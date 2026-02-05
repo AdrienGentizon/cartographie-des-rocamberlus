@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
-import { useStorageContext } from "../../../../components/contexts/StorageContext";
-import { ContentfulAsset, ValidArticle } from "../../../../utils/types";
+import { useStorageContext } from "@/components/contexts/StorageContext";
+import { ContentfulAsset, ValidArticle } from "@/utils/types";
+
 import ArticleContent from "./ArticleContent";
 import ArticleDraft from "./ArticleDraft";
 import ArticleError from "./ArticleError";

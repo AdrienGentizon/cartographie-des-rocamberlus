@@ -27,14 +27,23 @@ export async function POST(req: NextRequest) {
         };
       };
     };
+    if (payload.sys.contentType.sys.id === "homePage") {
+      revalidateTag("homePage", "max");
+      console.log(`[Caching] updated tag: homePage`);
+    }
 
     if (payload.sys.contentType.sys.id === "article") {
       revalidateTag(`article-${payload.sys.id}` satisfies EntryTag, "max");
-      revalidateTag(`articleCollection` satisfies CollectionTag, "max");
-      console.log(
-        `[Caching] updated tags: article-${payload.sys.id}, articleCollection`
-      );
+      const revalidatedTags = [`article-${payload.sys.id}`];
+
+      if (["publish", "unpublish", "delete"].includes(topic?.split(".").at(-1) ?? "")) {
+        revalidateTag(`articleCollection` satisfies CollectionTag, "max");
+        revalidatedTags.push("articleCollection");
+      }
+
+      console.log(`[Caching] updated tags: ${revalidatedTags.join(", ")}`);
     }
+
     return NextResponse.json(
       { message: "webhook has been received" },
       { status: 200 }

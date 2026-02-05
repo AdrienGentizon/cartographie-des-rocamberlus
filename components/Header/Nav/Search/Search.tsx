@@ -3,7 +3,8 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import { usePathname } from "next/navigation";
 
-import { ArtistsHookType } from "../../../../utils/types";
+import { SearchResult } from "@/utils/types";
+
 import Link from "../../../Link/Link";
 
 function Icon() {
@@ -28,50 +29,12 @@ function Icon() {
   );
 }
 
-interface SearchResult {
-  name: string;
-  articleId: string;
-}
-
-const getResultName = ({ artistName, articleTitle }: ArtistsHookType) => {
-  if (!articleTitle && artistName) return `${artistName}`;
-  if (articleTitle && !artistName) return `${articleTitle}`;
-  if (articleTitle && artistName) return `${artistName} - ${articleTitle}`;
-  return undefined;
-};
-const computeResultName = (
-  artist: ArtistsHookType
-): SearchResult | undefined => {
-  const name = getResultName(artist);
-  if (!name) return undefined;
-  return {
-    name,
-    articleId: artist.articleId,
-  };
-};
-const filteroutUnnamedResult = (
-  a: SearchResult | undefined
-): a is SearchResult => a !== undefined;
-
-const filterResultNameMatchingSearch =
-  (e: ChangeEvent<HTMLInputElement>) =>
-  ({ name }: SearchResult) =>
-    name?.toLowerCase().includes(e.target.value.toLowerCase());
-
-const sortResultsInPlace = (
-  { name: a }: SearchResult,
-  { name: b }: SearchResult
-) => a.toUpperCase().localeCompare(b.toUpperCase());
-
-interface PropsType {
-  artists: ArtistsHookType[];
-}
-
-export default function Search({ artists }: PropsType) {
+export default function Search() {
   const [results, setResults] = useState<{ name: string; articleId: string }[]>(
     []
   );
   const [open, setOpen] = useState(false);
+  const [_loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const pathname = usePathname();
 
@@ -82,9 +45,10 @@ export default function Search({ artists }: PropsType) {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     closeDialog();
   }, [pathname]);
+
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   return (
     <div className="relative flex items-center border-b border-gray-400 px-2 py-1 transition-colors ease-in-out focus-within:border-gray-600 hover:border-gray-600">
@@ -93,18 +57,29 @@ export default function Search({ artists }: PropsType) {
         name="artist-search-input"
         ref={inputRef}
         type="search"
-        onChange={(e) => {
-          const results = artists
-            .map(computeResultName)
-            .filter(filteroutUnnamedResult)
-            .filter(filterResultNameMatchingSearch(e));
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          const searchValue = e.target.value;
 
-          if (results.length === 0 || e.target.value === "")
-            return closeDialog(true);
+          if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
 
-          setOpen(true);
-          results.sort(sortResultsInPlace);
-          setResults(results);
+          if (searchValue.length < 3) return closeDialog(true);
+
+          searchTimeoutRef.current = setTimeout(async () => {
+            try {
+              setLoading(true);
+
+              const response = await fetch(`/api/artists?q=${searchValue}`);
+              if (!response.ok) return { artists: [] };
+              setResults((await response.json()) as Awaited<SearchResult[]>);
+
+              setOpen(true);
+            } catch (error) {
+              console.error("[Search] failed to fetch artists:", error);
+              closeDialog();
+            } finally {
+              setLoading(false);
+            }
+          }, 300);
         }}
         className="w-full font-extralight text-gray-700 outline-none"
       />

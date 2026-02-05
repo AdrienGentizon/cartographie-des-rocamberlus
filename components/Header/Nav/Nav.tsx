@@ -1,12 +1,9 @@
-import React from "react";
-
 import { CONTACT_URL, HOME_URL, MAP_URL } from "../../../utils/routes";
-import { ArtistsHookType, ContentfulAsset } from "../../../utils/types";
+import { ContentfulAsset } from "../../../utils/types";
 import MenuItem from "./MenuItem/MenuItem";
 import Search from "./Search/Search";
 
 interface PropsType {
-  artists: ArtistsHookType[];
   assets: {
     contact?: ContentfulAsset;
     carte?: ContentfulAsset;
@@ -16,7 +13,6 @@ interface PropsType {
 }
 
 export default function Nav({
-  artists,
   assets: { contact, carte, accueil },
   asSearch = false,
 }: PropsType) {
@@ -44,7 +40,7 @@ export default function Nav({
       </ul>
       {asSearch && (
         <div className="search-container">
-          <Search artists={artists} />
+          <Search />
         </div>
       )}
     </nav>

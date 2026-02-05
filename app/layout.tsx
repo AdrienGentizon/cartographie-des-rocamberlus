@@ -2,7 +2,11 @@ import React from "react";
 
 import { Metadata } from "next";
 
+import Header from "@/components/Header/Header";
+import { Main } from "@/components/Main/Main";
 import getAssetsCollection from "@/queries/getAssetsCollection";
+import getHeaderContent from "@/utils/getHeaderContent";
+import getHomePageContent from "@/utils/getHomePageContent";
 
 import Container from "../components/Container/Container";
 import Loader from "../components/Link/Loader/Loader";
@@ -28,12 +32,21 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const assets = await getAssets();
+  const { homePage } = await getHomePageContent();
+  const header = await getHeaderContent();
 
   return (
     <html lang="fr">
       <StorageProvider>
         <body>
-          <Container assets={assets}>{children}</Container>
+          <Container assets={assets}>
+            <Header
+              title={homePage?.title === null ? undefined : homePage?.title}
+              mainTitlePicture={homePage?.mainTitlePicture}
+              assets={header.assets}
+            />
+            <Main>{children}</Main>
+          </Container>
           <Loader />
         </body>
       </StorageProvider>
