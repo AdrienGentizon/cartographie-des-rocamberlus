@@ -27,6 +27,10 @@ export async function POST(req: NextRequest) {
         };
       };
     };
+    if (payload.sys.contentType.sys.id === "homePage") {
+      revalidateTag("homePage", "max");
+      console.log(`[Caching] updated tag: homePage`);
+    }
 
     if (payload.sys.contentType.sys.id === "article") {
       revalidateTag(`article-${payload.sys.id}` satisfies EntryTag, "max");
@@ -39,6 +43,7 @@ export async function POST(req: NextRequest) {
 
       console.log(`[Caching] updated tags: ${revalidatedTags.join(", ")}`);
     }
+
     return NextResponse.json(
       { message: "webhook has been received" },
       { status: 200 }
