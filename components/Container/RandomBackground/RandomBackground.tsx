@@ -115,8 +115,6 @@ export default function RandomBackground({ assets }: Props) {
   const [maxHeight, setMaxheight] = useState(0);
   const pathname = usePathname();
 
-  assets.forEach((asset) => console.log(asset.sys.id, asset.title));
-
   useEffect(() => {
     const abortController = new AbortController();
     // eslint-disable-next-line react-hooks/set-state-in-effect
