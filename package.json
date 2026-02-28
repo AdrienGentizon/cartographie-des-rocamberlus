@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "npx tsc --noEmit --skipLibCheck"
+    "typecheck": "tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^17.1.6",
