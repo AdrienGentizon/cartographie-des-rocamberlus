@@ -164,7 +164,12 @@ export default function RandomBackground({ assets }: Props) {
                   {cell.hidden || !cell.png ? (
                     <></>
                   ) : (
-                    <ContentfulImage asset={cell.png} alt="drawings" />
+                    <ContentfulImage
+                      asset={cell.png}
+                      alt=""
+                      aria-hidden
+                      sizes="(max-width: 639px) 0vw, 100px"
+                    />
                   )}
                 </li>
               );

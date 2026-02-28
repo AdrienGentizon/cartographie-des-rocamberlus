@@ -1,7 +1,7 @@
 import React from "react";
 
-import Link from "../../Link/Link";
 import { ContentfulImage } from "../../../components/ContentfulImage/ContentfulImage";
+import Link from "../../Link/Link";
 
 interface PropsType {
   title?: string;
@@ -17,8 +17,9 @@ export default function Title({ title, mainTitlePicture }: PropsType) {
           asset={mainTitlePicture}
           alt=""
           aria-hidden
+          preload
           style={{ cursor: "pointer" }}
-          priority
+          sizes="(max-width: 768px) 359px, 688px"
         />
       </Link>
     );

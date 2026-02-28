@@ -19,6 +19,7 @@ function Separator({
         margin: "0 auto",
         transform: flip ? `rotateY(180deg)` : undefined,
       }}
+      sizes="56px"
     />
   );
 }
@@ -64,7 +65,8 @@ export default async function HomePage() {
             <ContentfulImage
               asset={tertiary}
               alt={homePage.mainTextTitle ?? "site description"}
-              priority
+              preload
+              sizes="(max-width: 768px) 343px, 480px"
             />
           </>
         ) : (
@@ -72,11 +74,14 @@ export default async function HomePage() {
         )}
       </div>
       {brouette && (
-        <ContentfulImage
-          className="mx-auto max-h-40 object-contain"
-          alt="dessin d'une brouette"
-          asset={brouette}
-        />
+        <div>
+          <ContentfulImage
+            className="mx-auto w-auto max-h-40 object-contain"
+            alt="dessin d'une brouette"
+            asset={brouette}
+            sizes="132px"
+          />
+        </div>
       )}
       <div>
         {homeContent.map(({ tag, value }, n) => {

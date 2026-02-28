@@ -1,8 +1,8 @@
 import { CSSProperties } from "react";
 
 import { ContentfulAsset } from "../../utils/types";
-import CustomBorderDiv from "../CustomBorderDiv/CustomBorderDiv";
 import { ContentfulImage } from "../ContentfulImage/ContentfulImage";
+import CustomBorderDiv from "../CustomBorderDiv/CustomBorderDiv";
 
 interface PropsType {
   asset: ContentfulAsset;
@@ -18,12 +18,13 @@ export function Asset({ asset, imageStyle }: PropsType) {
 
   return (
     <div>
-      <CustomBorderDiv className="relative flex aspect-square min-h-96 min-w-40">
+      <CustomBorderDiv className="relative flex aspect-square">
         <ContentfulImage
           className="object-cover"
           asset={asset}
           fill
           sizes="(max-width: 768px) 90dvw, 720px"
+          preload
           style={{
             boxShadow: "inset 0 0 10px white",
           }}
