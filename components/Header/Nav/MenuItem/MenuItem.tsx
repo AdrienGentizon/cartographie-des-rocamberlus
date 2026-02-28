@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+import { ContentfulImage } from "../../../../components/ContentfulImage/ContentfulImage";
 import { ContentfulAsset } from "../../../../utils/types";
 import Link from "../../../Link/Link";
 
@@ -22,13 +22,7 @@ export default function MenuItem({ url, asset, title }: MenuItemProps) {
         <Link href={url}>
           <span className="sr-only">{title}</span>
           {asset && (
-            <Image
-              src={asset.url}
-              alt={asset.description ?? asset.title ?? ""}
-              width={asset.width}
-              height={asset.height}
-              aria-hidden
-            />
+            <ContentfulImage asset={asset} aria-hidden />
           )}
           {!asset && <>{title}</>}
         </Link>

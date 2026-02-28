@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+import { ContentfulImage } from "@/components/ContentfulImage/ContentfulImage";
 import { ContentfulAsset } from "@/utils/types";
 
 const CELL_HEIGHT = 224; // h-56
@@ -164,12 +164,7 @@ export default function RandomBackground({ assets }: Props) {
                   {cell.hidden || !cell.png ? (
                     <></>
                   ) : (
-                    <Image
-                      src={cell.png.url}
-                      width={cell.png.width}
-                      height={cell.png.height}
-                      alt="drawings"
-                    />
+                    <ContentfulImage asset={cell.png} alt="drawings" />
                   )}
                 </li>
               );

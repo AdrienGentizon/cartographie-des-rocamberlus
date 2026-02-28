@@ -1,5 +1,4 @@
-import Image from "next/image";
-
+import { ContentfulImage } from "@/components/ContentfulImage/ContentfulImage";
 import { ContentfulAsset } from "@/utils/types";
 
 export default function GalleryItem({
@@ -11,7 +10,8 @@ export default function GalleryItem({
 }) {
   if (!asset?.url) return <></>;
   return (
-    <Image
+    <ContentfulImage
+      asset={asset}
       style={
         isThumbnail
           ? {
@@ -26,10 +26,6 @@ export default function GalleryItem({
               objectFit: "contain",
             }
       }
-      src={asset.url}
-      width={asset.width}
-      height={asset.height}
-      alt={asset.description ?? asset.title ?? ""}
     />
   );
 }

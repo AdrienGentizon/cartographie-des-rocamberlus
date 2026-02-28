@@ -6,7 +6,7 @@ import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 
 import React, { ReactNode } from "react";
 
-import Image from "next/image";
+import { ContentfulImage } from "@/components/ContentfulImage/ContentfulImage";
 
 import { ContentfulAsset, ValidArticle } from "@/utils/types";
 
@@ -37,15 +37,13 @@ function Section({
       }}
     >
       {icon ? (
-        <Image
-          src={icon.url}
+        <ContentfulImage
+          asset={icon}
+          alt={icon.description ?? ""}
           style={{
             scale: 0.5,
             transformOrigin: "left",
           }}
-          width={icon.width}
-          height={icon.height}
-          alt={icon.description ?? ""}
         />
       ) : (
         <p

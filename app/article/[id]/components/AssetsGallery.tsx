@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import Image from "next/image";
-
+import { ContentfulImage } from "@/components/ContentfulImage/ContentfulImage";
 import CustomBorderDiv from "@/components/CustomBorderDiv/CustomBorderDiv";
 import { ContentfulAsset } from "@/utils/types";
 
@@ -29,16 +28,13 @@ export default function AssetsGallery({ assets = [], icons }: PropsType) {
   return (
     <div className="assets-gallery">
       {icons.gallery ? (
-        <Image
-          src={icons.gallery.url}
+        <ContentfulImage
+          asset={icons.gallery}
           style={{
             width: "8rem",
             margin: "0 auto",
             padding: "1.5rem 0 0.5rem 0",
           }}
-          width={icons.gallery.width}
-          height={icons.gallery.height}
-          alt={icons.gallery.description ?? icons.gallery.title ?? ""}
         />
       ) : (
         <h4

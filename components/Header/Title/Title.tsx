@@ -1,8 +1,7 @@
 import React from "react";
 
-import Image from "next/image";
-
 import Link from "../../Link/Link";
+import { ContentfulImage } from "../../../components/ContentfulImage/ContentfulImage";
 
 interface PropsType {
   title?: string;
@@ -14,13 +13,11 @@ export default function Title({ title, mainTitlePicture }: PropsType) {
     return (
       <Link href={`/`}>
         <h1 className="sr-only">{title}</h1>
-        <Image
+        <ContentfulImage
+          asset={mainTitlePicture}
+          alt=""
           aria-hidden
           style={{ cursor: "pointer" }}
-          src={mainTitlePicture.url}
-          alt={""}
-          width={mainTitlePicture.width}
-          height={mainTitlePicture.height}
           priority
         />
       </Link>

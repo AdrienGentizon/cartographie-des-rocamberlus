@@ -1,9 +1,8 @@
 import { CSSProperties } from "react";
 
-import Image from "next/image";
-
 import { ContentfulAsset } from "../../utils/types";
 import CustomBorderDiv from "../CustomBorderDiv/CustomBorderDiv";
+import { ContentfulImage } from "../ContentfulImage/ContentfulImage";
 
 interface PropsType {
   asset: ContentfulAsset;
@@ -20,10 +19,9 @@ export function Asset({ asset, imageStyle }: PropsType) {
   return (
     <div>
       <CustomBorderDiv className="relative flex aspect-square min-h-96 min-w-40">
-        <Image
+        <ContentfulImage
           className="object-cover"
-          src={asset.url}
-          alt={asset.description ?? asset.title ?? ""}
+          asset={asset}
           fill
           sizes="(max-width: 768px) 90dvw, 720px"
           style={{
