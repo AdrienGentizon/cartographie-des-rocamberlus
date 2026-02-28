@@ -1,5 +1,4 @@
-import Image from "next/image";
-
+import { ContentfulImage } from "../components/ContentfulImage/ContentfulImage";
 import H3 from "../components/H3/H3";
 import getHomePageContent from "../utils/getHomePageContent";
 import { ContentfulAsset } from "../utils/types";
@@ -13,16 +12,14 @@ function Separator({
 }) {
   if (!asset) return <div className="mx-auto w-2 border-b border-gray-500" />;
   return (
-    <Image
-      src={asset.url}
-      alt={asset.description ?? asset.title ?? ""}
-      width={asset.width}
-      height={asset.height}
+    <ContentfulImage
+      asset={asset}
       style={{
         width: "56px",
         margin: "0 auto",
         transform: flip ? `rotateY(180deg)` : undefined,
       }}
+      sizes="56px"
     />
   );
 }
@@ -65,12 +62,11 @@ export default async function HomePage() {
         {tertiary ? (
           <>
             <h2 className="sr-only">{homePage.mainTextTitle}</h2>
-            <Image
-              src={tertiary.url}
+            <ContentfulImage
+              asset={tertiary}
               alt={homePage.mainTextTitle ?? "site description"}
-              width={tertiary.width}
-              height={tertiary.height}
-              priority
+              preload
+              sizes="(max-width: 768px) 343px, 480px"
             />
           </>
         ) : (
@@ -78,13 +74,14 @@ export default async function HomePage() {
         )}
       </div>
       {brouette && (
-        <Image
-          className="mx-auto max-h-40 object-contain"
-          alt="dessin d'une brouette"
-          src={brouette.url}
-          width={brouette.width}
-          height={brouette.height}
-        />
+        <div>
+          <ContentfulImage
+            className="mx-auto w-auto max-h-40 object-contain"
+            alt="dessin d'une brouette"
+            asset={brouette}
+            sizes="132px"
+          />
+        </div>
       )}
       <div>
         {homeContent.map(({ tag, value }, n) => {

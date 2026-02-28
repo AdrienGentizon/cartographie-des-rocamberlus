@@ -6,8 +6,7 @@ import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 
 import React, { ReactNode } from "react";
 
-import Image from "next/image";
-
+import { ContentfulImage } from "@/components/ContentfulImage/ContentfulImage";
 import { ContentfulAsset, ValidArticle } from "@/utils/types";
 
 interface PropsType {
@@ -30,41 +29,18 @@ function Section({
   children,
 }: React.PropsWithChildren<SectionPropsType>) {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className="flex flex-col">
       {icon ? (
-        <Image
-          src={icon.url}
-          style={{
-            scale: 0.5,
-            transformOrigin: "left",
-          }}
-          width={icon.width}
-          height={icon.height}
+        <ContentfulImage
+          asset={icon}
           alt={icon.description ?? ""}
+          className="h-auto w-56 origin-left object-contain"
+          sizes="224px"
         />
       ) : (
-        <p
-          style={{
-            textDecoration: "underline",
-          }}
-        >
-          {title}:
-        </p>
+        <p className="underline">{title}:</p>
       )}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.5rem",
-        }}
-      >
-        {children}
-      </div>
+      <div className="flex flex-col gap-2">{children}</div>
     </div>
   );
 }
@@ -95,12 +71,7 @@ export default function BottomNotes({ article, icons }: PropsType) {
     },
   };
   return (
-    <ul
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <ul className="flex flex-col gap-5">
       {article.articleReferences && (
         <li>
           <Section icon={icons.references} title="Quelques références">
