@@ -34,7 +34,6 @@ export default async function getArticleFromId(id: string): Promise<{
           artistName
           artistPseudo
           artistBirthDate
-          artistPseudo
           artistDeathDate
           artistDescription
           artistPicture {
