@@ -31,9 +31,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const assets = await getAssets();
-  const { homePage } = await getHomePageContent();
-  const header = await getHeaderContent();
+  const [assets, { homePage }, header] = await Promise.all([
+    getAssets(),
+    getHomePageContent(),
+    getHeaderContent(),
+  ]);
 
   return (
     <html lang="fr">
