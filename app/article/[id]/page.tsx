@@ -63,10 +63,10 @@ export default async function Article({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { article, error, draft, artistPicture } = await getArticleContent(
-    await params
-  );
-  const icons = await getIcons();
+  const [{ article, error, draft, artistPicture }, icons] = await Promise.all([
+    getArticleContent(await params),
+    getIcons(),
+  ]);
   const assets = await getArticleAssets(article);
   return (
     <ArticlePage
