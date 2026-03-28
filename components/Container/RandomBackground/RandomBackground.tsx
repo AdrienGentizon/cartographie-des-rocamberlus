@@ -73,7 +73,7 @@ function getRandomPNG(assets: ContentfulAsset[]) {
   if (random < 0.5) return assets.find(({ sys }) => sys.id === Brouette.id);
   if (random < 0.6) return assets.find(({ sys }) => sys.id === Shark.id);
   if (random < 0.7) return assets.find(({ sys }) => sys.id === Duck.id);
-  if (random < 0.7) return assets.find(({ sys }) => sys.id === Popeye.id);
+  if (random < 0.8) return assets.find(({ sys }) => sys.id === Popeye.id);
   return;
 }
 
