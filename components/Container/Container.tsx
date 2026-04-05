@@ -1,4 +1,4 @@
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 
 import { ContentfulAsset } from "../../utils/types";
 import RandomBackground from "./RandomBackground/RandomBackground";
@@ -31,9 +31,9 @@ export default function Wrapper({
   children: ReactNode;
 }) {
   return (
-    <Suspense fallback={<Container>{children}</Container>}>
+    <>
       <Container>{children}</Container>
       <RandomBackground assets={assets}></RandomBackground>
-    </Suspense>
+    </>
   );
 }

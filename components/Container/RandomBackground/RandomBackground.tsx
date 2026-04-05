@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";
 
@@ -110,7 +110,7 @@ type Props = {
   assets: ContentfulAsset[];
 };
 
-export default function RandomBackground({ assets }: Props) {
+function RandomBackground({ assets }: Props) {
   const [cells, setCells] = useState<Cell[][]>(makeCells(0, assets));
   const [maxHeight, setMaxheight] = useState(0);
   const pathname = usePathname();
@@ -178,5 +178,13 @@ export default function RandomBackground({ assets }: Props) {
         );
       })}
     </div>
+  );
+}
+
+export default function Suspenser({ assets }: Props) {
+  return (
+    <Suspense fallback={<></>}>
+      <RandomBackground assets={assets} />
+    </Suspense>
   );
 }
