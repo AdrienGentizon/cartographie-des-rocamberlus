@@ -1,7 +1,7 @@
 "use client";
-import { CSSProperties, PropsWithChildren, useEffect } from "react";
+import { ComponentProps, useEffect } from "react";
 
-import NextLink, { LinkProps } from "next/link";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 
 import { hideLoader, showLoader } from "./Loader/Loader";
@@ -10,7 +10,7 @@ export default function Link({
   children,
   onClick,
   ...props
-}: PropsWithChildren<LinkProps & { style?: CSSProperties }>) {
+}: ComponentProps<typeof NextLink>) {
   const pathname = usePathname();
   const loader =
     typeof document === "undefined"
