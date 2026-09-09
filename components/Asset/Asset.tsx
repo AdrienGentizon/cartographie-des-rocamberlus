@@ -12,7 +12,6 @@ interface PropsType {
 export function Asset({ asset, imageStyle }: PropsType) {
   const getDescription = () => {
     if (asset.description && asset.description !== "") return asset.description;
-    if (asset.title && asset.title !== "") return asset.title;
     return null;
   };
 

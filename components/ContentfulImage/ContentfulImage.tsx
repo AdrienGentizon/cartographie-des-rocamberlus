@@ -34,7 +34,7 @@ export function ContentfulImage({ asset, alt, ...props }: Props) {
   return (
     <Image
       src={asset.url}
-      alt={alt ?? asset.description ?? asset.title ?? ""}
+      alt={alt ?? asset.description ?? ""}
       loader={contentfulImageLoader}
       {...sizeProps}
       {...props}
