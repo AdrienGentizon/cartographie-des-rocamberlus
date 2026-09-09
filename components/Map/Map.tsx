@@ -3,11 +3,11 @@ import { ComponentRef, useEffect, useRef, useState } from "react";
 
 import { usePathname, useRouter } from "next/navigation";
 
+import createMap from "@/mapping/createMap";
 import { ContentfulLocation } from "@/utils/types";
 
-import { hideLoader, showLoader } from "../../../components/Link/Loader/Loader";
-import { useStorageContext } from "../../../components/contexts/StorageContext";
-import createMap from "../../../mapping/createMap";
+import { hideLoader, showLoader } from "../Link/Loader/Loader";
+import { useStorageContext } from "../contexts/StorageContext";
 
 interface PropsType {
   locations: ContentfulLocation[];

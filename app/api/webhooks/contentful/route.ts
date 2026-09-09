@@ -36,7 +36,11 @@ export async function POST(req: NextRequest) {
       revalidateTag(`article-${payload.sys.id}` satisfies EntryTag, "max");
       const revalidatedTags = [`article-${payload.sys.id}`];
 
-      if (["publish", "unpublish", "delete"].includes(topic?.split(".").at(-1) ?? "")) {
+      if (
+        ["publish", "unpublish", "delete"].includes(
+          topic?.split(".").at(-1) ?? ""
+        )
+      ) {
         revalidateTag(`articleCollection` satisfies CollectionTag, "max");
         revalidatedTags.push("articleCollection");
       }

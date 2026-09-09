@@ -1,4 +1,5 @@
-import { ContentfulLocation } from "../../../utils/types";
+import { ContentfulLocation } from "@/utils/types";
+
 import Map from "./Map";
 
 interface PropsType {

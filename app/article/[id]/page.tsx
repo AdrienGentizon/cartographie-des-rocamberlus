@@ -1,13 +1,12 @@
 import { Metadata } from "next";
 
+import ArticlePage from "@/components/Pages/ArticlePage";
 import getArticleFromId from "@/queries/getArticleFromId";
 import getArtists from "@/queries/getArtists";
 import getAssetFromId from "@/queries/getAssetFromId";
 import getAssetsCollection from "@/queries/getAssetsCollection";
 import { TITLES } from "@/utils/assetsIds";
 import { ValidArticle } from "@/utils/types";
-
-import ArticlePage from "./components/ArticlePage";
 
 export const metadata: Metadata = {
   alternates: {

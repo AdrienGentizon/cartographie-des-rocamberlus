@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 
+import ContactPage from "@/components/Pages/ContactPage";
+
 import getContactPage from "../../queries/getContactPage";
-import ContactPage from "./components/ContactPage";
 
 export const metadata: Metadata = {
   alternates: {

@@ -14,10 +14,11 @@ import React, {
   useState,
 } from "react";
 
+import { ContactPageProps } from "@/utils/types";
+
 import CustomBorderDiv, {
   customBorderCssProperties,
-} from "../../../components/CustomBorderDiv/CustomBorderDiv";
-import { ContactPageProps } from "../../../utils/types";
+} from "../CustomBorderDiv/CustomBorderDiv";
 
 export type ValidInputs = {
   contact_name: string;

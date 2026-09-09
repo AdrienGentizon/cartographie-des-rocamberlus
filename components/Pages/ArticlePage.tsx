@@ -5,9 +5,9 @@ import { useEffect } from "react";
 import { useStorageContext } from "@/components/contexts/StorageContext";
 import { ContentfulAsset, ValidArticle } from "@/utils/types";
 
-import ArticleContent from "./ArticleContent";
-import ArticleDraft from "./ArticleDraft";
-import ArticleError from "./ArticleError";
+import ArticleContent from "../Article/ArticleContent";
+import ArticleDraft from "../Article/ArticleDraft";
+import ArticleError from "../Article/ArticleError";
 
 interface PropsType {
   article: ValidArticle | undefined;

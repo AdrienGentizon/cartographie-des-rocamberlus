@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 
+import MapPage from "@/components/Map/MapPage";
+
 import getLocations from "../../queries/getLocations";
-import MapPage from "./components/MapPage";
 
 export const metadata: Metadata = {
   alternates: {

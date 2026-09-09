@@ -22,7 +22,11 @@ export default function MenuItem({ url, asset, title }: MenuItemProps) {
         <Link href={url}>
           <span className="sr-only">{title}</span>
           {asset && (
-            <ContentfulImage asset={asset} aria-hidden sizes="(max-width: 768px) 70px, 128px" />
+            <ContentfulImage
+              asset={asset}
+              aria-hidden
+              sizes="(max-width: 768px) 70px, 128px"
+            />
           )}
           {!asset && <>{title}</>}
         </Link>
