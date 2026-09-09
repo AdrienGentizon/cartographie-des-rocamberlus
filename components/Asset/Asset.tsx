@@ -3,13 +3,15 @@ import { CSSProperties } from "react";
 import { ContentfulAsset } from "../../utils/types";
 import { ContentfulImage } from "../ContentfulImage/ContentfulImage";
 import CustomBorderDiv from "../CustomBorderDiv/CustomBorderDiv";
+import LightBoxButton from "./LightBoxButton";
 
 interface PropsType {
   asset: ContentfulAsset;
   imageStyle?: CSSProperties;
+  withLightBox?: boolean;
 }
 
-export function Asset({ asset, imageStyle }: PropsType) {
+export function Asset({ asset, imageStyle, withLightBox = false }: PropsType) {
   const getDescription = () => {
     if (asset.description && asset.description !== "") return asset.description;
     return null;
@@ -17,18 +19,26 @@ export function Asset({ asset, imageStyle }: PropsType) {
 
   return (
     <div>
-      <CustomBorderDiv className="relative flex aspect-square">
-        <ContentfulImage
-          className="object-cover"
-          asset={asset}
-          fill
-          sizes="(max-width: 768px) 90dvw, 720px"
-          preload
-          style={{
-            boxShadow: "inset 0 0 10px white",
-          }}
-        />
-      </CustomBorderDiv>
+      <div className="relative">
+        <CustomBorderDiv className="relative flex aspect-square">
+          <ContentfulImage
+            className="object-cover"
+            asset={asset}
+            fill
+            sizes="(max-width: 768px) 90dvw, 720px"
+            preload
+            style={{
+              boxShadow: "inset 0 0 10px white",
+            }}
+          />
+        </CustomBorderDiv>
+        {withLightBox && (
+          <LightBoxButton
+            asset={asset}
+            dialogLabel={getDescription() ?? asset.title ?? "Image en entier"}
+          />
+        )}
+      </div>
       {getDescription() !== null && (
         <p
           style={{

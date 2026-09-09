@@ -84,7 +84,7 @@ export default function ArticleContent({
           ({ sys: { id } }) => id === node.data.target.sys.id
         );
         if (!asset) return <></>;
-        return <Asset asset={asset} />;
+        return <Asset asset={asset} withLightBox />;
       },
     },
   };
