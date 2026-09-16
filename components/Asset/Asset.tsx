@@ -13,7 +13,11 @@ interface PropsType {
 
 export function Asset({ asset, imageStyle, withLightBox = false }: PropsType) {
   const getDescription = () => {
+    const useTitleAsFallBack = true;
     if (asset.description && asset.description !== "") return asset.description;
+    if (useTitleAsFallBack && asset.title && asset.title !== "")
+      return asset.title;
+
     return null;
   };
 
