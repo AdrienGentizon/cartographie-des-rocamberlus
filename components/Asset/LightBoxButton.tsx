@@ -7,7 +7,26 @@ import styles from "./Asset.module.css";
 
 interface PropsType {
   asset: ContentfulAsset;
-  dialogLabel: string;
+  caption?: string;
+  attribution?: string;
+}
+
+const DEFAULT_DIALOG_LABEL = "Image en entier";
+
+function LightboxCaption({
+  caption,
+  attribution,
+}: {
+  caption?: string;
+  attribution?: string;
+}) {
+  if (!caption && !attribution) return null;
+  return (
+    <figcaption className="pt-2 text-center text-xs font-light text-white">
+      {caption && <p>{caption}</p>}
+      {attribution && <p className="attribution">{attribution}</p>}
+    </figcaption>
+  );
 }
 
 function LightboxCloseButton({ onClose }: { onClose: () => void }) {
@@ -39,7 +58,11 @@ function LightboxCloseButton({ onClose }: { onClose: () => void }) {
   );
 }
 
-export default function LightBoxButton({ asset, dialogLabel }: PropsType) {
+export default function LightBoxButton({
+  asset,
+  caption,
+  attribution,
+}: PropsType) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const openLightbox = () => dialogRef.current?.showModal();
@@ -60,18 +83,20 @@ export default function LightBoxButton({ asset, dialogLabel }: PropsType) {
         ref={dialogRef}
         className={`${styles.dialog} m-auto border-none bg-transparent p-0`}
         onClick={closeOnBackdropClick}
-        aria-label={dialogLabel}
+        aria-label={caption ?? DEFAULT_DIALOG_LABEL}
       >
-        <div className="relative inline-block">
+        <figure className="relative inline-block">
           <LightboxCloseButton onClose={closeLightbox} />
           <ContentfulImage
-            className="max-h-[90vh] max-w-[90vw] object-contain"
+            className="max-h-[80vh] max-w-[90vw] object-contain"
             asset={asset}
+            alt={caption ?? ""}
             width={asset.width}
             height={asset.height}
             sizes="100vw"
           />
-        </div>
+          <LightboxCaption caption={caption} attribution={attribution} />
+        </figure>
       </dialog>
     </>
   );

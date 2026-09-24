@@ -11,17 +11,26 @@ interface PropsType {
   withLightBox?: boolean;
 }
 
-const DEFAULT_DIALOG_LABEL = "Image en entier";
+const UNTITLED_ASSET_TITLE = "untitled";
 
 function toNonEmptyText(value: string | null | undefined) {
   const text = value?.trim();
   return text ? text : undefined;
 }
 
+function isUntitled(title: string) {
+  return title.toLowerCase() === UNTITLED_ASSET_TITLE;
+}
+
+function toCaption(title: string | null | undefined) {
+  const text = toNonEmptyText(title);
+  return text && !isUntitled(text) ? text : undefined;
+}
+
 export function Asset({ asset, imageStyle, withLightBox = false }: PropsType) {
-  const description = toNonEmptyText(asset.description);
-  const attribution = toNonEmptyText(asset.title);
-  const hasCaption = description !== undefined || attribution !== undefined;
+  const caption = toCaption(asset.title);
+  const attribution = toNonEmptyText(asset.description);
+  const hasCaption = caption !== undefined || attribution !== undefined;
   const captionTextStyle: CSSProperties = {
     fontWeight: 100,
     fontSize: "0.75rem",
@@ -37,7 +46,7 @@ export function Asset({ asset, imageStyle, withLightBox = false }: PropsType) {
           <ContentfulImage
             className="object-cover"
             asset={asset}
-            alt={description ?? ""}
+            alt={caption ?? ""}
             fill
             sizes="(max-width: 768px) 90dvw, 720px"
             preload
@@ -49,13 +58,14 @@ export function Asset({ asset, imageStyle, withLightBox = false }: PropsType) {
         {withLightBox && (
           <LightBoxButton
             asset={asset}
-            dialogLabel={description ?? DEFAULT_DIALOG_LABEL}
+            caption={caption}
+            attribution={attribution}
           />
         )}
       </div>
       {hasCaption && (
         <figcaption>
-          {description && <p style={captionTextStyle}>{description}</p>}
+          {caption && <p style={captionTextStyle}>{caption}</p>}
           {attribution && (
             <p className="attribution" style={captionTextStyle}>
               {attribution}
