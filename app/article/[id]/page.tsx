@@ -56,6 +56,29 @@ function getArticleTitle(article: ValidArticle) {
   return title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 }
 
+const OPEN_GRAPH_IMAGE_WIDTH = 1200;
+const OPEN_GRAPH_IMAGE_HEIGHT = 630;
+
+function findFirstEmbeddedAssetId(article: ValidArticle) {
+  const firstEmbeddedAsset = article.articleText.json.content.find(
+    (node) => node.nodeType === BLOCKS.EMBEDDED_ASSET
+  );
+  return firstEmbeddedAsset?.data.target.sys.id as string | undefined;
+}
+
+async function getOpenGraphImage(article: ValidArticle) {
+  const assetId = findFirstEmbeddedAssetId(article);
+  if (!assetId) return undefined;
+  const asset = await getAssetFromId(assetId);
+  if (!asset?.url || !asset.contentType?.startsWith("image/")) return undefined;
+  return {
+    url: `${asset.url}?w=${OPEN_GRAPH_IMAGE_WIDTH}&h=${OPEN_GRAPH_IMAGE_HEIGHT}&fit=fill&fm=jpg`,
+    width: OPEN_GRAPH_IMAGE_WIDTH,
+    height: OPEN_GRAPH_IMAGE_HEIGHT,
+    alt: asset.title ?? article.title ?? SITE_TITLE,
+  };
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -67,10 +90,29 @@ export async function generateMetadata({
 
   if (!article) return { alternates: { canonical } };
 
+  const title = getArticleTitle(article);
+  const description = getArticleDescription(article);
+  const image = await getOpenGraphImage(article);
+
   return {
-    title: getArticleTitle(article),
-    description: getArticleDescription(article),
+    title,
+    description,
     alternates: { canonical },
+    openGraph: {
+      type: "article",
+      locale: "fr_FR",
+      siteName: SITE_TITLE,
+      url: canonical,
+      title,
+      description,
+      images: image ? [image] : undefined,
+    },
+    twitter: {
+      card: image ? "summary_large_image" : "summary",
+      title,
+      description,
+      images: image ? [image.url] : undefined,
+    },
   };
 }
 
