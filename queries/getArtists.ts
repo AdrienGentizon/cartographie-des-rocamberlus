@@ -8,16 +8,17 @@ export default async function getArtists(): Promise<{
 }> {
   try {
     const artists = await fetchCollectionGraphQL<{
-      sys: { id: string };
+      sys: { id: string; publishedAt: string };
       title: string | null;
       artistName: string | null;
     }>(
       `articleCollection`,
       `query artists {
-        articleCollection(where: { articleText_exists: true }) {
+        articleCollection(limit: 1000, where: { articleText_exists: true }) {
           items {
             sys {
               id
+              publishedAt
             }
             title
             artistName
@@ -28,14 +29,7 @@ export default async function getArtists(): Promise<{
 
     return {
       artists: (artists?.data?.articleCollection.items ?? []).reduce(
-        (
-          acc: {
-            articleId: string;
-            articleTitle: string;
-            artistName: string;
-          }[],
-          curr
-        ) => {
+        (acc: ArtistsHookType[], curr) => {
           if (!curr.title) return acc;
           const handle = curr.artistName ?? curr.title;
           if (!handle) return acc;
@@ -45,6 +39,7 @@ export default async function getArtists(): Promise<{
               articleId: curr.sys.id,
               articleTitle: curr.title,
               artistName: handle,
+              publishedAt: curr.sys.publishedAt,
             },
           ];
         },

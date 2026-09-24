@@ -11,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${env().BASE_URL}/map` },
     ...artists.map((artist) => ({
       url: `${env().BASE_URL}/article/${artist.articleId}`,
+      lastModified: artist.publishedAt,
     })),
   ];
 }

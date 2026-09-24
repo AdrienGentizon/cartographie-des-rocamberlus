@@ -109,6 +109,7 @@ export interface ArtistsHookType {
   artistName: string;
   articleId: string;
   articleTitle: string;
+  publishedAt: string;
 }
 
 export interface HomePageType {

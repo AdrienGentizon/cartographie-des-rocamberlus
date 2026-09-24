@@ -4,7 +4,7 @@ import { ContentfulLocation } from "../utils/types";
 
 const GET_LOCATIONS_QUERY = `
   query {
-    articleCollection {
+    articleCollection(limit: 1000) {
       items {
         sys {
           id
