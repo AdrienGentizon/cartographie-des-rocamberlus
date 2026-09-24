@@ -1,6 +1,29 @@
 import { fetchEntryGraphQL } from "../utils/contentful";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
-import { Article, ValidArticle } from "../utils/types";
+import { Article, ContentfulAsset, ValidArticle } from "../utils/types";
+
+const ASSET_FIELDS = `
+  sys {
+    id
+  }
+  title
+  description
+  contentType
+  fileName
+  size
+  url
+  width
+  height
+`;
+
+type QueriedAsset = Omit<ContentfulAsset, "sys"> & { sys: { id: string } };
+
+type QueriedArticle = Article & {
+  artistPicture?: QueriedAsset | null;
+  articleText?: {
+    links?: { assets?: { block?: (QueriedAsset | null)[] } };
+  } | null;
+};
 
 function isValidArticle(
   article: Article | null | undefined
@@ -8,13 +31,35 @@ function isValidArticle(
   return article?.articleText !== undefined && article?.articleText !== null;
 }
 
+function toContentfulAsset(asset: QueriedAsset): ContentfulAsset {
+  return { ...asset, sys: { ...asset.sys, __typename: "Sys" } };
+}
+
+function isQueriedAsset(asset: QueriedAsset | null): asset is QueriedAsset {
+  return asset !== null;
+}
+
+function extractEmbeddedAssets(article: QueriedArticle) {
+  return (article.articleText?.links?.assets?.block ?? [])
+    .filter(isQueriedAsset)
+    .map(toContentfulAsset);
+}
+
+function extractArtistPicture(article: QueriedArticle) {
+  return article.artistPicture
+    ? toContentfulAsset(article.artistPicture)
+    : undefined;
+}
+
 export default async function getArticleFromId(id: string): Promise<{
   article?: ValidArticle;
+  assets: ContentfulAsset[];
+  artistPicture?: ContentfulAsset;
   error?: Error;
   draft?: boolean;
 }> {
   try {
-    const response = await fetchEntryGraphQL<ValidArticle>(
+    const response = await fetchEntryGraphQL<QueriedArticle>(
       {
         key: "article",
         id,
@@ -37,15 +82,17 @@ export default async function getArticleFromId(id: string): Promise<{
           artistDeathDate
           artistDescription
           artistPicture {
-            sys {
-              id
-            }
-            url
-            title
-            description
+            ${ASSET_FIELDS}
           }
           articleText {
             json
+            links {
+              assets {
+                block {
+                  ${ASSET_FIELDS}
+                }
+              }
+            }
           }
           articleReferences {
             json
@@ -68,18 +115,23 @@ export default async function getArticleFromId(id: string): Promise<{
       { id }
     );
 
+    const queriedArticle = response?.data?.article;
+
     return {
-      article: isValidArticle(response?.data?.article)
-        ? response.data.article
+      article: isValidArticle(queriedArticle) ? queriedArticle : undefined,
+      assets: queriedArticle ? extractEmbeddedAssets(queriedArticle) : [],
+      artistPicture: queriedArticle
+        ? extractArtistPicture(queriedArticle)
         : undefined,
       error: undefined,
-      draft: !response?.data?.article?.articleText,
+      draft: !queriedArticle?.articleText,
     };
   } catch (error) {
     console.error(
       convertErrorFromUnknownType(error, `[Error] getArticleFromId: ${id}`)
     );
     return {
+      assets: [],
       error: convertErrorFromUnknownType(
         error,
         `[Error] getArticleFromId: ${id}`

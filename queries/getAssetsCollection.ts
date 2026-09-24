@@ -1,6 +1,7 @@
-import env from "@/utils/env";
-import getContentfulGraphqlQueryHeaders from "@/utils/getContentfulGraphqlQueryHeaders";
+import { ASSET_TAG, fetchContentfulGraphQL } from "@/utils/contentful";
 import { ContentfulAsset } from "@/utils/types";
+
+const ASSET_COLLECTION_TAG = "assetCollection";
 
 const GET_ASSETS_QUERY = `
   query AssetsCollection($ids: [String!]!) {
@@ -22,42 +23,24 @@ const GET_ASSETS_QUERY = `
   }
 `;
 
+type QueriedAsset = Omit<ContentfulAsset, "sys"> & { sys: { id: string } };
+
+function toContentfulAsset(item: QueriedAsset): ContentfulAsset {
+  return { ...item, sys: { ...item.sys, __typename: "Sys" } };
+}
+
 export default async function getAssetsCollection(
   ids: string[]
 ): Promise<ContentfulAsset[]> {
   if (ids.length === 0) return [];
 
-  try {
-    const response = await fetch(
-      `https://graphql.contentful.com/content/v1/spaces/${env().CONTENTFUL_SPACE_ID}`,
-      {
-        method: "POST",
-        headers: getContentfulGraphqlQueryHeaders(),
-        body: JSON.stringify({
-          query: GET_ASSETS_QUERY,
-          variables: { ids },
-        }),
-        cache: "force-cache",
-        next: { tags: ["assetCollection"] },
-      }
-    );
+  const { data } = await fetchContentfulGraphQL<{
+    assetCollection: { items: QueriedAsset[] };
+  }>({
+    query: GET_ASSETS_QUERY,
+    variables: { ids },
+    tags: [ASSET_COLLECTION_TAG, ASSET_TAG],
+  });
 
-    const { data } = (await response.json()) as {
-      data?: {
-        assetCollection: {
-          items: Array<Omit<ContentfulAsset, "sys"> & { sys: { id: string } }>;
-        };
-      };
-    };
-
-    if (!data?.assetCollection?.items) return [];
-
-    return data.assetCollection.items.map((item) => ({
-      ...item,
-      sys: { ...item.sys, __typename: "Sys" as const },
-    }));
-  } catch (error) {
-    console.error("[ERROR:CONTENTFUL] getAssetsCollection", error);
-    return [];
-  }
+  return (data?.assetCollection?.items ?? []).map(toContentfulAsset);
 }

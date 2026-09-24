@@ -4,7 +4,8 @@ import getArtists from "@/queries/getArtists";
 import env from "@/utils/env";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { artists } = await getArtists();
+  const { artists, error } = await getArtists();
+  if (error) throw error;
 
   return [
     { url: env().BASE_URL },

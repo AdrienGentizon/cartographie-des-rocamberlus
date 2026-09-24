@@ -1,6 +1,6 @@
+import { fetchContentfulGraphQL } from "../utils/contentful";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
 import { PAGES } from "../utils/entriesIds";
-import getContentfulGraphqlQueryHeaders from "../utils/getContentfulGraphqlQueryHeaders";
 import { ContactPageProps, RawContactPage } from "../utils/types";
 
 const GET_CONTACT_PAGE_QUERY = `
@@ -30,20 +30,13 @@ export default async function getContactPage(): Promise<{
   error?: Error;
 }> {
   try {
-    const response = await fetch(
-      `${process.env.CONTENTFUL_GRAPHQL_ENDPOINT}/${process.env.CONTENTFUL_SPACE_ID}`,
-      {
-        method: "POST",
-        headers: getContentfulGraphqlQueryHeaders(),
-        body: JSON.stringify({
-          query: GET_CONTACT_PAGE_QUERY,
-          variables: { id: PAGES.contact },
-        }),
-        cache: "force-cache",
-        next: { tags: ["contactPage"] },
-      }
-    );
-    const { data } = await response.json();
+    const { data } = await fetchContentfulGraphQL<{
+      contactPage: RawContactPage | null;
+    }>({
+      query: GET_CONTACT_PAGE_QUERY,
+      variables: { id: PAGES.contact },
+      tags: ["contactPage"],
+    });
     return {
       contactPage:
         data && isValidContactPage(data.contactPage)

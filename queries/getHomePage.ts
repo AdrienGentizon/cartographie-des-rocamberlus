@@ -1,6 +1,6 @@
+import { ASSET_TAG, fetchContentfulGraphQL } from "../utils/contentful";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
 import { PAGES } from "../utils/entriesIds";
-import getContentfulGraphqlQueryHeaders from "../utils/getContentfulGraphqlQueryHeaders";
 import { HomePageType } from "../utils/types";
 
 const GET_HOME_PAGE_QUERY = `
@@ -34,20 +34,11 @@ export default async function getHomePage(): Promise<{
   error?: Error;
 }> {
   try {
-    const response = await fetch(
-      `${process.env.CONTENTFUL_GRAPHQL_ENDPOINT}/${process.env.CONTENTFUL_SPACE_ID}`,
-      {
-        method: "POST",
-        headers: getContentfulGraphqlQueryHeaders(),
-        body: JSON.stringify({
-          query: GET_HOME_PAGE_QUERY,
-          variables: { id: PAGES.home },
-        }),
-        cache: "force-cache",
-        next: { tags: ["homePage"] },
-      }
-    );
-    const { data } = await response.json();
+    const { data } = await fetchContentfulGraphQL<{ homePage?: HomePageType }>({
+      query: GET_HOME_PAGE_QUERY,
+      variables: { id: PAGES.home },
+      tags: ["homePage", ASSET_TAG],
+    });
 
     return {
       homePage: data?.homePage,

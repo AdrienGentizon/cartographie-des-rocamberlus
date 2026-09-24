@@ -6,11 +6,10 @@ import { notFound } from "next/navigation";
 import ArticlePage from "@/components/Pages/ArticlePage";
 import getArticleFromId from "@/queries/getArticleFromId";
 import getArtists from "@/queries/getArtists";
-import getAssetFromId from "@/queries/getAssetFromId";
 import getAssetsCollection from "@/queries/getAssetsCollection";
 import { TITLES } from "@/utils/assetsIds";
 import env from "@/utils/env";
-import { ValidArticle } from "@/utils/types";
+import { ContentfulAsset, ValidArticle } from "@/utils/types";
 
 const SITE_TITLE = "Cartographie des rocamberlus";
 const DESCRIPTION_MAX_LENGTH = 155;
@@ -66,16 +65,15 @@ function findFirstEmbeddedAssetId(article: ValidArticle) {
   return firstEmbeddedAsset?.data.target.sys.id as string | undefined;
 }
 
-async function getOpenGraphImage(article: ValidArticle) {
+function getOpenGraphImage(article: ValidArticle, assets: ContentfulAsset[]) {
   const assetId = findFirstEmbeddedAssetId(article);
-  if (!assetId) return undefined;
-  const asset = await getAssetFromId(assetId);
+  const asset = assets.find(({ sys }) => sys.id === assetId);
   if (!asset?.url || !asset.contentType?.startsWith("image/")) return undefined;
   return {
     url: `${asset.url}?w=${OPEN_GRAPH_IMAGE_WIDTH}&h=${OPEN_GRAPH_IMAGE_HEIGHT}&fit=fill&fm=jpg`,
     width: OPEN_GRAPH_IMAGE_WIDTH,
     height: OPEN_GRAPH_IMAGE_HEIGHT,
-    alt: asset.title ?? article.title ?? SITE_TITLE,
+    alt: article.title?.trim() || SITE_TITLE,
   };
 }
 
@@ -85,14 +83,15 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const { article } = await getArticleFromId(id);
+  const { article, assets, error } = await getArticleFromId(id);
   const canonical = `${env().BASE_URL}/article/${id}`;
 
+  if (error) throw error;
   if (!article) return { alternates: { canonical } };
 
   const title = getArticleTitle(article);
   const description = getArticleDescription(article);
-  const image = await getOpenGraphImage(article);
+  const image = getOpenGraphImage(article, assets);
 
   return {
     title,
@@ -116,19 +115,6 @@ export async function generateMetadata({
   };
 }
 
-async function getArticleContent(params: { id: string }) {
-  const { article, error, draft } = await getArticleFromId(params.id ?? "");
-  if (article?.artistPicture?.sys?.id) {
-    return {
-      article,
-      error,
-      draft,
-      artistPicture: await getAssetFromId(article.artistPicture.sys.id),
-    };
-  }
-  return { article, error, draft, artistPicture: undefined };
-}
-
 async function getIcons() {
   const assets = await getAssetsCollection(Object.values(TITLES));
 
@@ -140,20 +126,9 @@ async function getIcons() {
   };
 }
 
-async function getArticleAssets(article: ValidArticle | undefined) {
-  if (!article) return [];
-  const ids = article.articleText.json.content.reduce((acc: string[], curr) => {
-    if (curr.nodeType === "embedded-asset-block") {
-      return [...acc, curr.data.target.sys.id];
-    }
-    return acc;
-  }, []);
-
-  return await getAssetsCollection(ids);
-}
-
 export async function generateStaticParams() {
-  const { artists } = await getArtists();
+  const { artists, error } = await getArtists();
+  if (error) throw error;
 
   return artists.map((artist) => ({
     id: artist.articleId,
@@ -165,12 +140,11 @@ export default async function Article({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const [{ article, error, draft, artistPicture }, icons] = await Promise.all([
-    getArticleContent(await params),
-    getIcons(),
-  ]);
-  if (!article && !error) notFound();
-  const assets = await getArticleAssets(article);
+  const { id } = await params;
+  const [{ article, assets, artistPicture, error, draft }, icons] =
+    await Promise.all([getArticleFromId(id), getIcons()]);
+  if (error) throw error;
+  if (!article) notFound();
   return (
     <ArticlePage
       article={article}
@@ -178,7 +152,6 @@ export default async function Article({
       assets={assets}
       icons={icons}
       draft={draft ?? false}
-      error={error}
     />
   );
 }

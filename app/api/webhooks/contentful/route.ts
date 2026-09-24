@@ -1,8 +1,12 @@
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-import { CollectionTag, EntryTag } from "@/utils/contentful";
+import { ASSET_TAG, CollectionTag, EntryTag } from "@/utils/contentful";
 import env from "@/utils/env";
+
+function getTopicEntity(topic: string | null) {
+  return topic?.split(".").at(1);
+}
 
 export async function POST(req: NextRequest) {
   console.log(`[Operation]`, req.method, req.url);
@@ -20,19 +24,29 @@ export async function POST(req: NextRequest) {
       sys: {
         type: ({} & string) | "Entry";
         id: string;
-        contentType: {
+        contentType?: {
           sys: {
             id: ({} & string) | "article";
           };
         };
       };
     };
-    if (payload.sys.contentType.sys.id === "homePage") {
+
+    if (getTopicEntity(topic) === "Asset") {
+      revalidateTag(ASSET_TAG, "max");
+      console.log(`[Caching] updated tag: ${ASSET_TAG}`);
+      return NextResponse.json(
+        { message: "webhook has been received" },
+        { status: 200 }
+      );
+    }
+
+    if (payload.sys.contentType?.sys.id === "homePage") {
       revalidateTag("homePage", "max");
       console.log(`[Caching] updated tag: homePage`);
     }
 
-    if (payload.sys.contentType.sys.id === "article") {
+    if (payload.sys.contentType?.sys.id === "article") {
       revalidateTag(`article-${payload.sys.id}` satisfies EntryTag, "max");
       const revalidatedTags = [`article-${payload.sys.id}`];
 

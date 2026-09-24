@@ -1,5 +1,5 @@
+import { ASSET_TAG, fetchContentfulGraphQL } from "../utils/contentful";
 import convertErrorFromUnknownType from "../utils/convertErrorFromUnknownType";
-import getContentfulGraphqlQueryHeaders from "../utils/getContentfulGraphqlQueryHeaders";
 import { ContentfulLocation } from "../utils/types";
 
 const GET_LOCATIONS_QUERY = `
@@ -40,23 +40,12 @@ export default async function getLocations(): Promise<{
   error?: Error;
 }> {
   try {
-    const response = await fetch(
-      `${process.env.CONTENTFUL_GRAPHQL_ENDPOINT}/${process.env.CONTENTFUL_SPACE_ID}`,
-      {
-        method: "POST",
-        headers: getContentfulGraphqlQueryHeaders(),
-        body: JSON.stringify({ query: GET_LOCATIONS_QUERY }),
-        cache: "force-cache",
-        next: { tags: ["articleCollection"] },
-      }
-    );
-    const { data } = (await response.json()) as unknown as {
-      data?: {
-        articleCollection: {
-          items: ContentfulLocation[];
-        };
-      };
-    };
+    const { data } = await fetchContentfulGraphQL<{
+      articleCollection: { items: ContentfulLocation[] };
+    }>({
+      query: GET_LOCATIONS_QUERY,
+      tags: ["articleCollection", ASSET_TAG],
+    });
 
     return {
       locations: data?.articleCollection?.items ?? [],

@@ -41,7 +41,8 @@ function byTitle(a: ArtistsHookType, b: ArtistsHookType) {
 }
 
 async function getSortedArticles() {
-  const { artists } = await getArtists();
+  const { artists, error } = await getArtists();
+  if (error) throw error;
   return artists.toSorted(byTitle);
 }
 
