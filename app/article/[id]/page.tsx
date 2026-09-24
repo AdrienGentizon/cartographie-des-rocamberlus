@@ -7,6 +7,7 @@ import ArticlePage from "@/components/Pages/ArticlePage";
 import getArticleFromId from "@/queries/getArticleFromId";
 import getArtists from "@/queries/getArtists";
 import getAssetsCollection from "@/queries/getAssetsCollection";
+import { findFirstEmbeddedAssetId } from "@/utils/article";
 import { TITLES } from "@/utils/assetsIds";
 import env from "@/utils/env";
 import { ContentfulAsset, ValidArticle } from "@/utils/types";
@@ -57,13 +58,6 @@ function getArticleTitle(article: ValidArticle) {
 
 const OPEN_GRAPH_IMAGE_WIDTH = 1200;
 const OPEN_GRAPH_IMAGE_HEIGHT = 630;
-
-function findFirstEmbeddedAssetId(article: ValidArticle) {
-  const firstEmbeddedAsset = article.articleText.json.content.find(
-    (node) => node.nodeType === BLOCKS.EMBEDDED_ASSET
-  );
-  return firstEmbeddedAsset?.data.target.sys.id as string | undefined;
-}
 
 function getOpenGraphImage(article: ValidArticle, assets: ContentfulAsset[]) {
   const assetId = findFirstEmbeddedAssetId(article);

@@ -1,7 +1,9 @@
 import React, { HTMLAttributes } from "react";
 
+export const CUSTOM_BORDER_WIDTH = 8;
+
 export const customBorderCssProperties: React.CSSProperties = {
-  borderWidth: 8,
+  borderWidth: CUSTOM_BORDER_WIDTH,
   borderImageOutset: 0,
   borderImageSource: "url(/picture-frame.png)",
   borderImageSlice: 16,

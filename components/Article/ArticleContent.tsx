@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 
 import { Asset } from "@/components/Asset/Asset";
 import YoutubeVideoEmbedder from "@/components/YoutubeVideoEmbedder/YoutubeVideoEmbedder";
+import { findFirstEmbeddedAssetId } from "@/utils/article";
 import { ContentfulAsset, ValidArticle } from "@/utils/types";
 
 import BottomNotes from "./BottomNotes";
@@ -35,6 +36,8 @@ export default function ArticleContent({
   const locationName = article?.locationName
     ? article?.locationName
     : undefined;
+  const preloadedAssetId =
+    artistPicture?.sys.id ?? findFirstEmbeddedAssetId(article);
 
   const renderOptions = {
     renderNode: {
@@ -84,7 +87,9 @@ export default function ArticleContent({
           ({ sys: { id } }) => id === node.data.target.sys.id
         );
         if (!asset) return <></>;
-        return <Asset asset={asset} withLightBox />;
+        return (
+          <Asset asset={asset} preload={asset.sys.id === preloadedAssetId} />
+        );
       },
     },
   };
@@ -129,7 +134,7 @@ export default function ArticleContent({
         )}
       </div>
       <div>
-        {artistPicture && <Asset asset={artistPicture} />}
+        {artistPicture && <Asset asset={artistPicture} preload />}
         {documentToReactComponents(article.articleText.json, renderOptions)}
         <BottomNotes article={article} icons={icons} />
       </div>
