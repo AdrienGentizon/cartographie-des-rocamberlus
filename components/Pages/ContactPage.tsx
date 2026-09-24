@@ -121,6 +121,7 @@ export default function ContactPage({ contactPage }: PropsType) {
 
   return (
     <>
+      <h1 className="sr-only">Contact</h1>
       <div className="px-16 py-2 lg:py-8">
         {contactPage ? (
           documentToReactComponents(contactPage.message.json, renderOptions)

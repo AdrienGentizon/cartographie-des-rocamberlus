@@ -14,7 +14,7 @@ export default async function getArtists(): Promise<{
     }>(
       `articleCollection`,
       `query artists {
-        articleCollection {
+        articleCollection(where: { articleText_exists: true }) {
           items {
             sys {
               id

@@ -1,6 +1,7 @@
 import { BLOCKS, Block, Inline, Text } from "@contentful/rich-text-types";
 
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import ArticlePage from "@/components/Pages/ArticlePage";
 import getArticleFromId from "@/queries/getArticleFromId";
@@ -126,6 +127,7 @@ export default async function Article({
     getArticleContent(await params),
     getIcons(),
   ]);
+  if (!article && !error) notFound();
   const assets = await getArticleAssets(article);
   return (
     <ArticlePage
