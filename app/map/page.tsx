@@ -3,10 +3,11 @@ import { Metadata } from "next";
 import MapPage from "@/components/Map/MapPage";
 
 import getLocations from "../../queries/getLocations";
+import env from "../../utils/env";
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: `https://www.cartographie-des-rocamberlus.com/map/`,
+    canonical: `${env().BASE_URL}/map`,
   },
 };
 

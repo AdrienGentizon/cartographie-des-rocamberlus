@@ -21,9 +21,6 @@ async function getAssets() {
 export const metadata: Metadata = {
   title: "Cartographie des rocamberlus",
   description: "La cartographie des environnements d'art singulier",
-  alternates: {
-    canonical: `https://www.cartographie-des-rocamberlus.com/`,
-  },
 };
 
 export default async function RootLayout({

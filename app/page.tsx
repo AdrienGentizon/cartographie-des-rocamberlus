@@ -1,7 +1,16 @@
+import { Metadata } from "next";
+
 import { ContentfulImage } from "../components/ContentfulImage/ContentfulImage";
 import H3 from "../components/H3/H3";
 import getHomePageContent from "../utils/getHomePageContent";
+import env from "../utils/env";
 import { ContentfulAsset } from "../utils/types";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: env().BASE_URL,
+  },
+};
 
 function Separator({
   asset,

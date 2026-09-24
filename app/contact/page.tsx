@@ -3,10 +3,11 @@ import { Metadata } from "next";
 import ContactPage from "@/components/Pages/ContactPage";
 
 import getContactPage from "../../queries/getContactPage";
+import env from "../../utils/env";
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: `https://www.cartographie-des-rocamberlus.com/contact/`,
+    canonical: `${env().BASE_URL}/contact`,
   },
   robots: {
     index: false,

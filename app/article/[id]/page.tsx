@@ -6,13 +6,29 @@ import getArtists from "@/queries/getArtists";
 import getAssetFromId from "@/queries/getAssetFromId";
 import getAssetsCollection from "@/queries/getAssetsCollection";
 import { TITLES } from "@/utils/assetsIds";
+import env from "@/utils/env";
 import { ValidArticle } from "@/utils/types";
 
-export const metadata: Metadata = {
-  alternates: {
-    canonical: `https://www.cartographie-des-rocamberlus.com/article/1tSKGhWoQldll52ToIw4uh`,
-  },
-};
+const SITE_TITLE = "Cartographie des rocamberlus";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const { article } = await getArticleFromId(id);
+  const canonical = `${env().BASE_URL}/article/${id}`;
+
+  if (!article) return { alternates: { canonical } };
+
+  return {
+    title: article.title ? `${article.title} | ${SITE_TITLE}` : SITE_TITLE,
+    description: article.artistDescription ?? undefined,
+    alternates: { canonical },
+  };
+}
+
 async function getArticleContent(params: { id: string }) {
   const { article, error, draft } = await getArticleFromId(params.id ?? "");
   if (article?.artistPicture?.sys?.id) {
