@@ -8,7 +8,14 @@ import { ArtistsHookType } from "@/utils/types";
 import getLocations from "../../queries/getLocations";
 import env from "../../utils/env";
 
+const MAP_TITLE =
+  "Carte des environnements d'art singulier | Cartographie des rocamberlus";
+const MAP_DESCRIPTION =
+  "Carte des environnements d'art singulier visités en France : jardins sculptés, maisons décorées et sites d'art brut, avec la liste complète des lieux.";
+
 export const metadata: Metadata = {
+  title: MAP_TITLE,
+  description: MAP_DESCRIPTION,
   alternates: {
     canonical: `${env().BASE_URL}/map`,
   },
