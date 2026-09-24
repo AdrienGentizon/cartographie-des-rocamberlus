@@ -1,6 +1,10 @@
+"use client";
 import React from "react";
 
+import { usePathname } from "next/navigation";
+
 import { ContentfulImage } from "../../../components/ContentfulImage/ContentfulImage";
+import { HOME_URL } from "../../../utils/routes";
 import Link from "../../Link/Link";
 
 interface PropsType {
@@ -9,10 +13,13 @@ interface PropsType {
 }
 
 export default function Title({ title, mainTitlePicture }: PropsType) {
+  const pathname = usePathname();
+  const Heading = pathname === HOME_URL ? "h1" : "p";
+
   if (mainTitlePicture)
     return (
       <Link href={`/`}>
-        <h1 className="sr-only">{title}</h1>
+        <Heading className="sr-only">{title}</Heading>
         <ContentfulImage
           asset={mainTitlePicture}
           alt=""
@@ -34,14 +41,14 @@ export default function Title({ title, mainTitlePicture }: PropsType) {
             cursor: "pointer",
           }}
         >
-          <h1
+          <Heading
             style={{
               textTransform: "uppercase",
               fontWeight: 100,
             }}
           >
             {title}
-          </h1>
+          </Heading>
         </div>
       </Link>
     );

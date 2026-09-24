@@ -290,14 +290,14 @@ export default function ContactPage({ contactPage }: PropsType) {
               padding: "1.5rem 3rem",
             }}
           >
-            <h1
+            <h2
               style={{
                 fontWeight: 300,
                 fontSize: "1.5rem",
               }}
             >
               {postResult.title}
-            </h1>
+            </h2>
             <p
               style={{
                 fontWeight: 200,

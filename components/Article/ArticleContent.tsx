@@ -106,7 +106,7 @@ export default function ArticleContent({
           justifyContent: "center",
         }}
       >
-        <h2
+        <h1
           style={{
             fontSize: "1.5rem",
             lineHeight: "2rem",
@@ -115,7 +115,7 @@ export default function ArticleContent({
           }}
         >
           {article.title}
-        </h2>
+        </h1>
         {locationName && (
           <p
             style={{

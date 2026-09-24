@@ -2,6 +2,8 @@ import { ContentfulLocation } from "@/utils/types";
 
 import Map from "./Map";
 
+const MAP_HEADING = "Carte des environnements d'art singulier";
+
 interface PropsType {
   locations: ContentfulLocation[];
   error?: Error;
@@ -10,6 +12,10 @@ interface PropsType {
 export default function MapPage({ locations, error }: PropsType) {
   if (error) return <p>Error!</p>;
 
-  if (locations.length > 0) return <Map locations={locations} />;
-  return <></>;
+  return (
+    <>
+      <h1 className="sr-only">{MAP_HEADING}</h1>
+      {locations.length > 0 && <Map locations={locations} />}
+    </>
+  );
 }
