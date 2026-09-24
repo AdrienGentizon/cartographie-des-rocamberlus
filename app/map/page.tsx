@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 
+import Link from "@/components/Link/Link";
 import MapPage from "@/components/Map/MapPage";
+import getArtists from "@/queries/getArtists";
+import { ArtistsHookType } from "@/utils/types";
 
 import getLocations from "../../queries/getLocations";
 import env from "../../utils/env";
@@ -11,12 +14,59 @@ export const metadata: Metadata = {
   },
 };
 
+const LEADING_QUOTES = /^["«“'\s]+/;
+
 async function getMapLocations() {
   const { locations, error } = await getLocations();
   return { locations, error };
 }
 
+function toSortableTitle(title: string) {
+  return title.replace(LEADING_QUOTES, "");
+}
+
+function byTitle(a: ArtistsHookType, b: ArtistsHookType) {
+  return toSortableTitle(a.articleTitle).localeCompare(
+    toSortableTitle(b.articleTitle),
+    "fr",
+    { sensitivity: "base" }
+  );
+}
+
+async function getSortedArticles() {
+  const { artists } = await getArtists();
+  return artists.toSorted(byTitle);
+}
+
 export default async function Map() {
-  const { locations, error } = await getMapLocations();
-  return <MapPage locations={locations} error={error} />;
+  const [{ locations, error }, articles] = await Promise.all([
+    getMapLocations(),
+    getSortedArticles(),
+  ]);
+
+  return (
+    <>
+      <MapPage locations={locations} error={error} />
+      {articles.length > 0 && (
+        <section className="px-4 py-8 text-left lg:px-24">
+          <h2 className="pb-4 text-center text-lg font-thin uppercase">
+            Les environnements
+          </h2>
+          <ul className="flex flex-col gap-1 text-sm font-light lg:text-base lg:font-extralight">
+            {articles.map(({ articleId, articleTitle }) => (
+              <li key={articleId}>
+                <Link
+                  href={`/article/${articleId}`}
+                  prefetch={false}
+                  className="landscape:hover:underline"
+                >
+                  {articleTitle.trim()}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </>
+  );
 }
