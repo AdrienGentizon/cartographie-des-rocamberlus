@@ -12,32 +12,32 @@
     "validate": "pnpm format && pnpm typecheck"
   },
   "dependencies": {
-    "@contentful/rich-text-react-renderer": "^16.1.6",
-    "@contentful/rich-text-types": "^17.2.5",
+    "@contentful/rich-text-react-renderer": "^16.2.2",
+    "@contentful/rich-text-types": "^17.2.7",
     "@formspree/react": "^3.0.0",
-    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "25.0.1",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "autoprefixer": "10.4.22",
-    "contentful": "^11.10.3",
-    "next": "^16.1.6",
-    "ol": "^10.7.0",
-    "postcss": "^8.5.6",
+    "contentful": "^11.12.10",
+    "next": "^16.3.6",
+    "ol": "^10.10.0",
+    "postcss": "^8.5.28",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "sharp": "^0.34.5",
-    "tailwindcss": "^4.1.18",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4.3.3",
     "typescript": "5.9.3"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
-    "@eslint/js": "^9.39.2",
-    "@trivago/prettier-plugin-sort-imports": "^6.0.0",
+    "@eslint/eslintrc": "^3.3.7",
+    "@eslint/js": "^9.39.5",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "eslint": "9.39.1",
-    "eslint-config-next": "16.0.10",
-    "prettier": "^3.7.4",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "typescript-eslint": "^8.49.0"
+    "eslint-config-next": "16.3.6",
+    "prettier": "^3.9.9",
+    "prettier-plugin-tailwindcss": "^0.7.4",
+    "typescript-eslint": "^8.70.1"
   }
 }
