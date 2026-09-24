@@ -1,21 +1,16 @@
 import { CONTACT_URL, HOME_URL, MAP_URL } from "../../../utils/routes";
 import { ContentfulAsset } from "../../../utils/types";
 import MenuItem from "./MenuItem/MenuItem";
-import Search from "./Search/Search";
 
-interface PropsType {
+export default function Nav({
+  assets: { contact, carte, accueil },
+}: {
   assets: {
     contact?: ContentfulAsset;
     carte?: ContentfulAsset;
     accueil?: ContentfulAsset;
   };
-  asSearch?: boolean;
-}
-
-export default function Nav({
-  assets: { contact, carte, accueil },
-  asSearch = false,
-}: PropsType) {
+}) {
   return (
     <nav
       style={{
@@ -38,11 +33,6 @@ export default function Nav({
         <MenuItem url={MAP_URL} title="Carte" asset={carte} />
         <MenuItem url={CONTACT_URL} title="Contact" asset={contact} />
       </ul>
-      {asSearch && (
-        <div className="search-container">
-          <Search />
-        </div>
-      )}
     </nav>
   );
 }

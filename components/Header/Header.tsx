@@ -2,7 +2,11 @@ import { ContentfulAsset } from "../../utils/types";
 import Nav from "./Nav/Nav";
 import Title from "./Title/Title";
 
-interface PropsType {
+export default function Header({
+  title,
+  mainTitlePicture,
+  assets,
+}: {
   title?: string;
   mainTitlePicture?: { url: string; width: number; height: number } | null;
   assets: {
@@ -10,15 +14,7 @@ interface PropsType {
     carte?: ContentfulAsset;
     accueil?: ContentfulAsset;
   };
-  asSearch?: boolean;
-}
-
-export default function Header({
-  title,
-  mainTitlePicture,
-  assets,
-  asSearch = false,
-}: PropsType) {
+}) {
   return (
     <header
       style={{
@@ -28,7 +24,7 @@ export default function Header({
       }}
     >
       <Title title={title} mainTitlePicture={mainTitlePicture} />
-      <Nav assets={assets} asSearch={asSearch} />
+      <Nav assets={assets} />
     </header>
   );
 }
