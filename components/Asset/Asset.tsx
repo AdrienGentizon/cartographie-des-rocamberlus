@@ -11,23 +11,33 @@ interface PropsType {
   withLightBox?: boolean;
 }
 
-export function Asset({ asset, imageStyle, withLightBox = false }: PropsType) {
-  const getDescription = () => {
-    const useTitleAsFallBack = true;
-    if (asset.description && asset.description !== "") return asset.description;
-    if (useTitleAsFallBack && asset.title && asset.title !== "")
-      return asset.title;
+const DEFAULT_DIALOG_LABEL = "Image en entier";
 
-    return null;
+function toNonEmptyText(value: string | null | undefined) {
+  const text = value?.trim();
+  return text ? text : undefined;
+}
+
+export function Asset({ asset, imageStyle, withLightBox = false }: PropsType) {
+  const description = toNonEmptyText(asset.description);
+  const attribution = toNonEmptyText(asset.title);
+  const hasCaption = description !== undefined || attribution !== undefined;
+  const captionTextStyle: CSSProperties = {
+    fontWeight: 100,
+    fontSize: "0.75rem",
+    lineHeight: "1rem",
+    maxWidth: imageStyle?.maxWidth,
+    margin: "0 auto",
   };
 
   return (
-    <div>
+    <figure>
       <div className="relative">
         <CustomBorderDiv className="relative flex aspect-square">
           <ContentfulImage
             className="object-cover"
             asset={asset}
+            alt={description ?? ""}
             fill
             sizes="(max-width: 768px) 90dvw, 720px"
             preload
@@ -39,23 +49,20 @@ export function Asset({ asset, imageStyle, withLightBox = false }: PropsType) {
         {withLightBox && (
           <LightBoxButton
             asset={asset}
-            dialogLabel={getDescription() ?? asset.title ?? "Image en entier"}
+            dialogLabel={description ?? DEFAULT_DIALOG_LABEL}
           />
         )}
       </div>
-      {getDescription() !== null && (
-        <p
-          style={{
-            fontWeight: 100,
-            fontSize: "0.75rem",
-            lineHeight: "1rem",
-            maxWidth: imageStyle?.maxWidth,
-            margin: "0 auto",
-          }}
-        >
-          {getDescription()}
-        </p>
+      {hasCaption && (
+        <figcaption>
+          {description && <p style={captionTextStyle}>{description}</p>}
+          {attribution && (
+            <p className="attribution" style={captionTextStyle}>
+              {attribution}
+            </p>
+          )}
+        </figcaption>
       )}
-    </div>
+    </figure>
   );
 }
