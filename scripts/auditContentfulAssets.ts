@@ -1,7 +1,6 @@
+import { createClient } from "contentful";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-
-import { createClient } from "contentful";
 
 const OUTPUT_PATH = path.join(
   import.meta.dirname,

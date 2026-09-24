@@ -1,3 +1,5 @@
+import { BLOCKS, Block, Inline, Text } from "@contentful/rich-text-types";
+
 import { Metadata } from "next";
 
 import ArticlePage from "@/components/Pages/ArticlePage";
@@ -10,6 +12,48 @@ import env from "@/utils/env";
 import { ValidArticle } from "@/utils/types";
 
 const SITE_TITLE = "Cartographie des rocamberlus";
+const DESCRIPTION_MAX_LENGTH = 155;
+
+function extractText(node: Block | Inline | Text): string {
+  if (node.nodeType === "text") return (node as Text).value;
+  return (node as Block | Inline).content.map(extractText).join("");
+}
+
+function extractParagraphsText(article: ValidArticle) {
+  return article.articleText.json.content
+    .filter((node) => node.nodeType === BLOCKS.PARAGRAPH)
+    .map(extractText)
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function truncateOnWord(text: string, maxLength: number) {
+  if (text.length <= maxLength) return text;
+  const truncated = text.slice(0, maxLength);
+  const lastSpaceIndex = truncated.lastIndexOf(" ");
+  const cutIndex = lastSpaceIndex > 0 ? lastSpaceIndex : maxLength;
+  return `${truncated.slice(0, cutIndex)}…`;
+}
+
+function buildVisitSentence(title: string | undefined) {
+  return title
+    ? `Visite de l'environnement « ${title} ».`
+    : "Visite d'un environnement d'art singulier.";
+}
+
+function getArticleDescription(article: ValidArticle) {
+  const visitSentence = buildVisitSentence(article.title?.trim() || undefined);
+  const description = [visitSentence, extractParagraphsText(article)]
+    .filter(Boolean)
+    .join(" ");
+  return truncateOnWord(description, DESCRIPTION_MAX_LENGTH);
+}
+
+function getArticleTitle(article: ValidArticle) {
+  const title = article.title?.trim();
+  return title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+}
 
 export async function generateMetadata({
   params,
@@ -23,8 +67,8 @@ export async function generateMetadata({
   if (!article) return { alternates: { canonical } };
 
   return {
-    title: article.title ? `${article.title} | ${SITE_TITLE}` : SITE_TITLE,
-    description: article.artistDescription ?? undefined,
+    title: getArticleTitle(article),
+    description: getArticleDescription(article),
     alternates: { canonical },
   };
 }
