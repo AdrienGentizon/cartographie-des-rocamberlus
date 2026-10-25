@@ -11,6 +11,7 @@ out
 
 # Generated files
 *.types.ts
+next-env.d.ts
 
 # Logs
 *.log

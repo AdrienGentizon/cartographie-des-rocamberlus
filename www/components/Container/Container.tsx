@@ -31,9 +31,9 @@ export default function Wrapper({
   children: ReactNode;
 }) {
   return (
-    <>
+    <div className="relative">
       <Container>{children}</Container>
       <RandomBackground assets={assets}></RandomBackground>
-    </>
+    </div>
   );
 }
