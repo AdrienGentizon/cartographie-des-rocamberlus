@@ -9,5 +9,13 @@
   ],
   "importOrder": ["^react", "^[a-zA-Z]", "^@/(.*)$", "^[./]"],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "overrides": [
+    {
+      "files": "www/**",
+      "options": {
+        "tailwindStylesheet": "./www/app/globals.css"
+      }
+    }
+  ]
 }

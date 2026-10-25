@@ -1,43 +1,27 @@
 {
   "name": "cartographie-des-rocamberlus",
-  "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit --skipLibCheck",
-    "format": "prettier . --write",
-    "validate": "pnpm format && pnpm typecheck"
-  },
-  "dependencies": {
-    "@contentful/rich-text-react-renderer": "^16.2.2",
-    "@contentful/rich-text-types": "^17.2.7",
-    "@formspree/react": "^3.0.0",
-    "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "25.0.1",
-    "@types/react": "19.2.7",
-    "@types/react-dom": "19.2.3",
-    "autoprefixer": "10.4.22",
-    "contentful": "^11.12.10",
-    "next": "^16.3.6",
-    "ol": "^10.10.0",
-    "postcss": "^8.5.28",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "sharp": "^0.35.4",
-    "tailwindcss": "^4.3.3",
-    "typescript": "5.9.3"
+    "format": "prettier . --write --log-level silent",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "validate": "pnpm format && pnpm lint && pnpm typecheck"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.7",
-    "@eslint/js": "^9.39.5",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "eslint": "9.39.1",
-    "eslint-config-next": "16.3.6",
-    "prettier": "^3.9.9",
-    "prettier-plugin-tailwindcss": "^0.7.4",
-    "typescript-eslint": "^8.70.1"
-  }
+    "eslint": "catalog:",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "typescript": "catalog:",
+    "typescript-eslint": "^8.72.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.15.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.15.0"
 }

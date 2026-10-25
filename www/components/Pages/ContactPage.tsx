@@ -6,13 +6,7 @@ import {
 import { BLOCKS } from "@contentful/rich-text-types";
 import { useForm } from "@formspree/react";
 
-import React, {
-  ChangeEvent,
-  MouseEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ChangeEvent, MouseEvent, useRef, useState } from "react";
 
 import { ContactPageProps } from "@/utils/types";
 
@@ -41,20 +35,29 @@ interface PropsType {
   error?: Error;
 }
 
+type PostResult = {
+  error: boolean;
+  title: string;
+  message: string;
+};
+
+const SUCCESS_RESULT: PostResult = {
+  error: false,
+  title: "Merci",
+  message: "Votre message a bien été envoyé.",
+};
+
 export default function ContactPage({ contactPage }: PropsType) {
-  const [submitted, setSubmitted] = useState(false);
+  const [successDismissed, setSuccessDismissed] = useState(false);
   const [formSubmissionState, submitForm] = useForm(
     process.env.NEXT_PUBLIC_FORMSPREE_CONTRIBUTION_FORM_ID!
   );
 
-  const [postResult, setPostResult] = useState<
-    | {
-        error: boolean;
-        title: string;
-        message: string;
-      }
-    | undefined
-  >(undefined);
+  const [errorResult, setErrorResult] = useState<PostResult | undefined>(
+    undefined
+  );
+  const showSuccess = formSubmissionState.succeeded && !successDismissed;
+  const postResult = errorResult ?? (showSuccess ? SUCCESS_RESULT : undefined);
   const [inputs, setInputs] = useState<Inputs>({
     contact_name: "",
     contact_email: "",
@@ -73,11 +76,10 @@ export default function ContactPage({ contactPage }: PropsType) {
 
   const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setPostResult(undefined);
-    setSubmitted(false);
+    setErrorResult(undefined);
 
     if (!isValidInputs(inputs))
-      return setPostResult({
+      return setErrorResult({
         error: true,
         title: "Oups",
         message: `
@@ -87,20 +89,9 @@ export default function ContactPage({ contactPage }: PropsType) {
           `,
       });
 
+    setSuccessDismissed(false);
     submitForm(event);
   };
-
-  useEffect(() => {
-    if (formSubmissionState.succeeded && !submitted) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setSubmitted(true);
-      setPostResult({
-        error: false,
-        title: "Merci",
-        message: "Votre message a bien été envoyé.",
-      });
-    }
-  }, [formSubmissionState, submitted]);
 
   const renderOptions: Options = {
     renderNode: {
@@ -334,7 +325,7 @@ export default function ContactPage({ contactPage }: PropsType) {
                   if (name.current) name.current.value = "";
                   if (email.current) email.current.value = "";
                   if (message.current) message.current.value = "";
-                  return setPostResult(undefined);
+                  return setSuccessDismissed(true);
                 }
               }}
             >
