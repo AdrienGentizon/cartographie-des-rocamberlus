@@ -177,7 +177,7 @@ catalogs:
       specifier: ^9.39.5
       version: 9.39.5
     eslint-config-next:
-      specifier: 16.4.3
+      specifier: ^16.4.3
       version: 16.4.3
     next:
       specifier: ^16.4.3
