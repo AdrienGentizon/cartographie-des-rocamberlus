@@ -6,7 +6,7 @@ import {
 import { BLOCKS } from "@contentful/rich-text-types";
 import { useForm } from "@formspree/react";
 
-import React, { ChangeEvent, MouseEvent, useRef, useState } from "react";
+import React, { ChangeEvent, SubmitEvent, useRef, useState } from "react";
 
 import { ContactPageProps } from "@/utils/types";
 
@@ -74,7 +74,7 @@ export default function ContactPage({ contactPage }: PropsType) {
     setInputs({ ...inputs, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = async (event: MouseEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorResult(undefined);
 
